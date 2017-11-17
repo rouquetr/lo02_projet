@@ -1,9 +1,8 @@
 package model.actions;
 
-public class ChangerSens implements Action {
+public class ChangerSens extends Action {
 
-	@Override
-	public void action() {
+	public static void action() {
 		System.out.println("Le sens de la partie change");
 		
 	}

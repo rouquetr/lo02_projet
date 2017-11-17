@@ -1,9 +1,8 @@
 package model.actions;
 
-public class Rejouer implements Action{
+public class Rejouer extends Action{
 
-	@Override
-	public void action() {
+	public static void action() {
 		System.out.println("Vous rejouez");
 		
 	}

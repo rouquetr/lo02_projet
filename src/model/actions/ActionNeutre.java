@@ -1,9 +1,8 @@
 package model.actions;
 
-public class ActionNeutre implements Action{
+public class ActionNeutre extends Action{
 	
-	@Override
-	public void action() {
+	public static void action() {
 		System.out.println("Il ne se passe rien de particulier");
 		
 	}

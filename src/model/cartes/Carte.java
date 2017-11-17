@@ -1,4 +1,6 @@
-package model;
+package model.cartes;
+
+import model.actions.Action;
 
 public class Carte {
 	
@@ -6,11 +8,13 @@ public class Carte {
 	private int couleur;
 	private int points;
 	
-	public Carte(int valeur, int couleur, int points) {
-		super();
+	private Action action;
+	
+	public Carte(int valeur, int couleur, int points, Action action) {
 		this.valeur = valeur;
 		this.couleur = couleur;
 		this.points = points;
+		this.action = action;
 	}
 	
 	public int getValeur() {
@@ -30,6 +34,14 @@ public class Carte {
 	}
 	public void setPoints(int points) {
 		this.points = points;
+	}
+
+	public Action getAction() {
+		return action;
+	}
+
+	public void setAction(Action action) {
+		this.action = action;
 	}
 	
 }

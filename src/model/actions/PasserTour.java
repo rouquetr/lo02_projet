@@ -1,9 +1,8 @@
 package model.actions;
 
-public class PasserTour implements Action {
+public class PasserTour extends Action {
 	
-	@Override
-	public void action() {
+	public static void action() {
 		System.out.println("Le joueur suivant passe son tour");
 		
 	}

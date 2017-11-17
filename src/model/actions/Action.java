@@ -1,7 +1,5 @@
 package model.actions;
 
-public interface Action {
-	
-	public void action();
+public abstract class Action {
 
 }

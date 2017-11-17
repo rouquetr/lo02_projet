@@ -1,9 +1,8 @@
 package model.actions;
 
-public class Piocher2 implements Action {
+public class Piocher2 extends Action {
 
-	@Override
-	public void action() {
+	public static void action() {
 		System.out.println("Piocher deux cartes");
 		
 	}
