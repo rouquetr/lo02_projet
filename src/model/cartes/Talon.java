@@ -1,15 +1,16 @@
 package model.cartes;
 
-import java.util.TreeSet;
-
 public class Talon extends Paquet {
 	
-	public Talon() {
+	private static Talon uniqueInstance;
+	
+	private Talon() {
 		super();
 	}
-
-	public Talon(TreeSet<Carte> cartes) {
-		super(cartes);
+	
+	public static Talon getInstance() {
+		if(uniqueInstance == null) uniqueInstance = new Talon();
+		return uniqueInstance;
 	}
 
 }
