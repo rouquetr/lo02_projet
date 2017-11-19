@@ -1,11 +1,13 @@
 package model.joueurs;
 
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 import model.cartes.Pioche;
 import model.cartes.Talon;
 
 public class Partie {
+	
+	private static Partie uniqueInstance;
 	
 	private boolean sens = true;
 	private int numeroTour = 0;
@@ -13,43 +15,51 @@ public class Partie {
 	private Talon talon = Talon.getInstance();
 	private Pioche pioche;
 	
-	private TreeSet<Joueur> joueurs;
+	private LinkedHashSet<Joueur> joueurs = new LinkedHashSet<Joueur>();
 	
-	public Partie(Pioche pioche, TreeSet<Joueur> joueurs) {
-		this.pioche = pioche;
-		this.joueurs = joueurs;
+	private Partie() {	}
+	
+	public static Partie getInstance() {
+		if(uniqueInstance == null) uniqueInstance = new Partie();
+		return uniqueInstance;
 	}
 	
 	public boolean getSens() {
 		return sens;
 	}
-	public void setSens(boolean sens) {
-		this.sens = sens;
+	
+	public void changerSens() {
+		sens = !sens;
 	}
+	
 	public int getNumeroTour() {
 		return numeroTour;
-	}
-	public void setNumeroTour(int numeroTour) {
-		this.numeroTour = numeroTour;
 	}
 	
 	public Talon getTalon() {
 		return talon;
 	}
-	public void setTalon(Talon talon) {
-		this.talon = talon;
-	}
+	
 	public Pioche getPioche() {
 		return pioche;
 	}
+	
 	public void setPioche(Pioche pioche) {
 		this.pioche = pioche;
 	}
-	public TreeSet<Joueur> getJoueurs() {
+	
+	public LinkedHashSet<Joueur> getJoueurs() {
 		return joueurs;
 	}
-	public void setJoueurs(TreeSet<Joueur> joueurs) {
-		this.joueurs = joueurs;
+	
+	public void ajouterJoueur(Joueur joueur) {
+		joueurs.add(joueur);
+	}	
+	
+	@Override
+	public String toString() {
+		return "Partie [sens=" + sens + ", numeroTour=" + numeroTour + ", talon=" + talon + ", pioche=" + pioche
+				+ ", joueurs=" + joueurs + "]";
 	}
 	
 }

@@ -1,24 +1,24 @@
 package model.cartes;
 
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public abstract class Paquet {
 	
-	private TreeSet<Carte> cartes;
+	private LinkedHashSet<Carte> cartes;
 	
 	public Paquet() {
-		this.cartes = new TreeSet<Carte>();
+		this.cartes = new LinkedHashSet<Carte>();
 	}
 	
-	public Paquet(TreeSet<Carte> cartes) {
+	public Paquet(LinkedHashSet<Carte> cartes) {
 		this.cartes = cartes;
 	}
 
-	public TreeSet<Carte> getCartes() {
+	public LinkedHashSet<Carte> getCartes() {
 		return cartes;
 	}
 
-	public void setCartes(TreeSet<Carte> cartes) {
+	public void setCartes(LinkedHashSet<Carte> cartes) {
 		this.cartes = cartes;
 	}
 

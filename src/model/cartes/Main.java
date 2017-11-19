@@ -1,6 +1,6 @@
 package model.cartes;
 
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public class Main extends Paquet {
 	
@@ -8,7 +8,7 @@ public class Main extends Paquet {
 		super();
 	}
 
-	public Main(TreeSet<Carte> cartes) {
+	public Main(LinkedHashSet<Carte> cartes) {
 		super(cartes);
 	}
 	

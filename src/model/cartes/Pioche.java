@@ -1,6 +1,6 @@
 package model.cartes;
 
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public class Pioche extends Paquet {
 	
@@ -8,7 +8,7 @@ public class Pioche extends Paquet {
 		super();
 	}
 
-	public Pioche(TreeSet<Carte> cartes) {
+	public Pioche(LinkedHashSet<Carte> cartes) {
 		super(cartes);
 	}
 

@@ -44,4 +44,9 @@ public class Joueur {
 		this.main = main;
 	}
 
+	@Override
+	public String toString() {
+		return "Joueur [nom=" + nom + ", position=" + position + ", points=" + points + ", main=" + main + "]";
+	}
+
 }
