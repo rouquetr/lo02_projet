@@ -21,5 +21,9 @@ public abstract class Paquet {
 	public void setCartes(LinkedHashSet<Carte> cartes) {
 		this.cartes = cartes;
 	}
+	
+	public void addCarte(Carte carte) {
+		this.cartes.add(carte);
+	}
 
 }

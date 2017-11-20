@@ -11,7 +11,7 @@ public class Main {
 
 		PartieController controller = new PartieController();
 		
-		VueLigneDeCommande vueLigneDeCommande = new VueLigneDeCommande(controller);
+		VueLigneDeCommande vueLigneDeCommande = new VueLigneDeCommande();
 		
 		Map<String, String> initialisation = vueLigneDeCommande.initialiserPartie();
 		
