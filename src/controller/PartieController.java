@@ -22,8 +22,11 @@ public class PartieController {
 			partie.ajouterJoueur(new Joueur(nomsOrdinateur[i], i + 1));
 		
 		partie.setPioche(new PiocheDeBase());
+		partie.getPioche().melanger();
 		
-		System.out.println(partie.toString());
+		partie.getPioche().distribuerCarte(partie.getJoueurs());
+		
+		System.out.println(partie.getPioche().toString());
 	}
 	
 }

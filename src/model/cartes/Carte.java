@@ -3,7 +3,7 @@ package model.cartes;
 import model.actions.Action;
 
 public class Carte {
-	
+
 	private int valeur;
 	private int couleur;
 	private int points;
@@ -42,6 +42,11 @@ public class Carte {
 
 	public void setAction(Action action) {
 		this.action = action;
+	}
+	
+	@Override
+	public String toString() {
+		return "Carte [valeur=" + valeur + ", couleur=" + couleur + ", points=" + points + ", action=" + action + "]";
 	}
 	
 }
