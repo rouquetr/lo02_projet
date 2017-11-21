@@ -36,12 +36,8 @@ public class Carte {
 		this.points = points;
 	}
 
-	public Action getAction() {
-		return action;
-	}
-
-	public void setAction(Action action) {
-		this.action = action;
+	public void effectuerAction() {
+		action.action();
 	}
 	
 	@Override

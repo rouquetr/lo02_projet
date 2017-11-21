@@ -36,7 +36,7 @@ public class PartieController {
 		
 		Iterator<Joueur> iterator = partie.getJoueurs().iterator();
 		while (iterator.hasNext()) {
-			
+			iterator.next().jouerCarte(1);
 		}
 		
 	}

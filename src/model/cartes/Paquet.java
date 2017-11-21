@@ -1,7 +1,6 @@
 package model.cartes;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
@@ -19,10 +18,6 @@ public abstract class Paquet {
 
 	public LinkedHashSet<Carte> getCartes() {
 		return cartes;
-	}
-
-	public void setCartes(LinkedHashSet<Carte> cartes) {
-		this.cartes = cartes;
 	}
 	
 	public void addCarte(Carte carte) {

@@ -1,5 +1,8 @@
 package model.joueurs;
 
+import java.util.Iterator;
+
+import model.cartes.Carte;
 import model.cartes.Main;
 
 public class Joueur {
@@ -32,8 +35,8 @@ public class Joueur {
 	public int getPoints() {
 		return points;
 	}
-	public void setPoints(int points) {
-		this.points = points;
+	public void addPoints(int points) {
+		this.points += points;
 	}
 
 	public Main getMain() {
@@ -53,8 +56,13 @@ public class Joueur {
 		this.main.addCarte(Partie.getInstance().getPioche().recupererPremiereCarte());
 	}
 	
-	public void jouerCarte() {
+	public void jouerCarte(int numeroCarte) {
+		Carte carteVoulue = null;
 		
+		Iterator<Carte> iterator = this.getMain().getCartes().iterator();
+		for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
+		System.out.println(carteVoulue.toString());
+		carteVoulue.effectuerAction();
 	}
 
 }
