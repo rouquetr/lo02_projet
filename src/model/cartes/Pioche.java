@@ -9,15 +9,14 @@ public abstract class Pioche extends Paquet {
 	
 	public void distribuerCarte(LinkedHashSet<Joueur> joueurs) {
 		
-		Iterator<Joueur> iterator = joueurs.iterator();
-		
-		while(iterator.hasNext()) {
-			iterator.next().getMain().addCarte(piocher());
+		for (int i = 0; i < 8; i++) {
+			Iterator<Joueur> iterator = joueurs.iterator();
+			while(iterator.hasNext()) iterator.next().piocher();
 		}
 		
 	}
 	
-	public Carte piocher() {
+	public Carte recupererPremiereCarte() {
 		Iterator<Carte> iterator = this.getCartes().iterator();
 		
 		Carte cartePiochee = iterator.next();

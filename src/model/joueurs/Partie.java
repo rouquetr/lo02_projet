@@ -16,6 +16,7 @@ public class Partie {
 	private Pioche pioche;
 	
 	private LinkedHashSet<Joueur> joueurs = new LinkedHashSet<Joueur>();
+	private Joueur joueurEnCours = null;
 	
 	private Partie() {	}
 	

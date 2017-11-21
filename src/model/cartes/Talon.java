@@ -12,5 +12,11 @@ public class Talon extends Paquet {
 		if(uniqueInstance == null) uniqueInstance = new Talon();
 		return uniqueInstance;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 
 }

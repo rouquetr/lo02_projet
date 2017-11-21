@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Iterator;
+
 import model.cartes.PiocheDeBase;
 import model.joueurs.Joueur;
 import model.joueurs.Partie;
@@ -22,11 +24,21 @@ public class PartieController {
 			partie.ajouterJoueur(new Joueur(nomsOrdinateur[i], i + 1));
 		
 		partie.setPioche(new PiocheDeBase());
+	}
+	
+	public void lancerPartie() {
 		partie.getPioche().melanger();
-		
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
-		System.out.println(partie.getPioche().toString());
+		partie.getTalon().addCarte(partie.getPioche().recupererPremiereCarte());
+		
+		System.out.println(partie.getTalon().toString());
+		
+		Iterator<Joueur> iterator = partie.getJoueurs().iterator();
+		while (iterator.hasNext()) {
+			
+		}
+		
 	}
 	
 }

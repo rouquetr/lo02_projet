@@ -16,6 +16,7 @@ public class Main {
 		Map<String, String> initialisation = vueLigneDeCommande.initialiserPartie();
 		
 		controller.initialiserPartie(Integer.parseInt(initialisation.get("nombreJoueurs")), initialisation.get("nomJoueur"));
+		controller.lancerPartie();
 		
 	}
 

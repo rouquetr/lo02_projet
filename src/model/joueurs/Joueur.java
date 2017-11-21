@@ -48,5 +48,13 @@ public class Joueur {
 	public String toString() {
 		return "Joueur [nom=" + nom + ", position=" + position + ", points=" + points + ", main=" + main + "]";
 	}
+	
+	public void piocher() {
+		this.main.addCarte(Partie.getInstance().getPioche().recupererPremiereCarte());
+	}
+	
+	public void jouerCarte() {
+		
+	}
 
 }
