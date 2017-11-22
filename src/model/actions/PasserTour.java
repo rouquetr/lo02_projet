@@ -2,7 +2,7 @@ package model.actions;
 
 import model.joueurs.Joueur;
 
-public class PasserTour extends Action {
+public class PasserTour implements Action {
 	
 	private static Joueur joueur;
 	

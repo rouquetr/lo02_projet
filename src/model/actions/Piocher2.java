@@ -1,6 +1,6 @@
 package model.actions;
 
-public class Piocher2 extends Action {
+public class Piocher2 implements Action {
 
 	public void action() {
 		System.out.println("Piocher deux cartes");

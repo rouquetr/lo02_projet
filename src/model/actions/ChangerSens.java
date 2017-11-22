@@ -2,7 +2,7 @@ package model.actions;
 
 import model.joueurs.Partie;
 
-public class ChangerSens extends Action {
+public class ChangerSens implements Action {
 
 	private static Partie partie;
 	

@@ -17,10 +17,10 @@ public abstract class Pioche extends Paquet {
 	}
 	
 	public Carte recupererPremiereCarte() {
-		Iterator<Carte> iterator = this.getCartes().iterator();
+		Iterator<Carte> iterator = this.iterator();
 		
 		Carte cartePiochee = iterator.next();
-		this.getCartes().remove(cartePiochee);
+		this.remove(cartePiochee);
 		
 		return cartePiochee;
 	}

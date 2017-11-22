@@ -1,17 +1,7 @@
 package model.actions;
 
-import model.joueurs.Partie;
-
-public abstract class Action {
+public interface Action {
 	
-	static Partie partie = Partie.getInstance();
-	
-	public void action() {
-		
-	}
-	
-	public static Partie getPartie() {
-		return partie;
-	}	
+	public void action();
 
 }

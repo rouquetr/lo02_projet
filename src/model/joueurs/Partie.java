@@ -55,7 +55,19 @@ public class Partie {
 	
 	public void ajouterJoueur(Joueur joueur) {
 		joueurs.add(joueur);
-	}	
+	}
+	
+	public Joueur getJoueurEnCours() {
+		return joueurEnCours;
+	}
+	
+	public void setJoueurEnCours(Joueur joueurEnCours) {
+		this.joueurEnCours = joueurEnCours;
+	}
+	
+	public void incrementerNumeroTour() {
+		numeroTour++;
+	}
 	
 	@Override
 	public String toString() {

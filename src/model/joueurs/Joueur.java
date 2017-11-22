@@ -53,13 +53,12 @@ public class Joueur {
 	}
 	
 	public void piocher() {
-		this.main.addCarte(Partie.getInstance().getPioche().recupererPremiereCarte());
+		this.main.add(Partie.getInstance().getPioche().recupererPremiereCarte());
 	}
 	
 	public void jouerCarte(int numeroCarte) {
 		Carte carteVoulue = null;
-		
-		Iterator<Carte> iterator = this.getMain().getCartes().iterator();
+		Iterator<Carte> iterator = this.getMain().iterator();
 		for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
 		System.out.println(carteVoulue.toString());
 		carteVoulue.effectuerAction();

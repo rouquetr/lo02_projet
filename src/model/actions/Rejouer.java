@@ -2,7 +2,7 @@ package model.actions;
 
 import model.joueurs.Joueur;
 
-public class Rejouer extends Action{
+public class Rejouer implements Action{
 
 	private static Joueur joueur; 
 	

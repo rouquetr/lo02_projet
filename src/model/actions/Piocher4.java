@@ -1,8 +1,6 @@
 package model.actions;
 
-import model.cartes.Pioche;
-
-public class Piocher4 extends Action {
+public class Piocher4 implements Action {
 	
 	public void action() {
 		System.out.println("Piocher quatre cartes");
