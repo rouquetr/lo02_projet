@@ -16,10 +16,8 @@ public abstract class Pioche extends Paquet {
 		
 	}
 	
-	public Carte recupererPremiereCarte() {
-		Iterator<Carte> iterator = this.iterator();
-		
-		Carte cartePiochee = iterator.next();
+	public Carte tirerUneCarte() {
+		Carte cartePiochee = this.getFirstElement();
 		this.remove(cartePiochee);
 		
 		return cartePiochee;

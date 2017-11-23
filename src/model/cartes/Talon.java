@@ -13,10 +13,7 @@ public class Talon extends Paquet {
 		return uniqueInstance;
 	}
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public Carte voirDerniereCarteJouee() {
+		return this.getLastElement();
 	}
-
 }

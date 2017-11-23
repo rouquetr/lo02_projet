@@ -10,6 +10,9 @@ public class Carte {
 	
 	private Action action;
 	
+	private String[] valeurs = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
+	private String[] couleurs = {"Coeur", "Carreau", "Pique", "Trèfle"};
+	
 	public Carte(int valeur, int couleur, int points, Action action) {
 		this.valeur = valeur;
 		this.couleur = couleur;
@@ -43,6 +46,10 @@ public class Carte {
 	@Override
 	public String toString() {
 		return "Carte [valeur=" + valeur + ", couleur=" + couleur + ", points=" + points + ", action=" + action + "]";
+	}
+	
+	public String afficherCarte() {
+		return valeurs[valeur] + " de " + couleurs[couleur];
 	}
 	
 }

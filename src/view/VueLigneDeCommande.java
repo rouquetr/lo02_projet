@@ -36,6 +36,7 @@ public class VueLigneDeCommande {
 	
 	public void lancerPartie() {
 		controller.lancerPartie();
+		System.out.println(partie);
 		effectuerTourDeJeu();
 	}
 	
@@ -44,8 +45,7 @@ public class VueLigneDeCommande {
 		while (iteratorJoueurs.hasNext()) {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
 
-			int carteAJouer = partie.getJoueurEnCours().getClass() != Ordinateur.class ? faireJouerJoueur() : 5;
-			System.out.println(carteAJouer);
+			int carteAJouer = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
 			controller.faireJouer(partie.getJoueurEnCours(), carteAJouer);
 		}
 		this.partie.incrementerNumeroTour();
@@ -56,7 +56,7 @@ public class VueLigneDeCommande {
 		int numeroCarte = 1;
 		
 		System.out.println("Indiquez le numéro de la carte que vous voulez jouer:");
-		while (iteratorCartes.hasNext()) System.out.println(numeroCarte++ + ": " + iteratorCartes.next().toString());
+		while (iteratorCartes.hasNext()) System.out.println(numeroCarte++ + ": " + iteratorCartes.next().afficherCarte());
 		return scanner.nextInt();
 	}
 }
