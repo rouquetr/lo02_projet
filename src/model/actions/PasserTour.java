@@ -8,7 +8,7 @@ public class PasserTour implements Action {
 	
 	public void action() {
 		System.out.println("Le joueur suivant passe son tour");
-		joueur.setPosition(joueur.getPosition()+2);			//Le joueur +1 passe son tour, c'est au tour du joueur +2
+		//joueur.setPosition(joueur.getPosition()+2);			//Le joueur +1 passe son tour, c'est au tour du joueur +2
 	}
 
 }

@@ -37,7 +37,11 @@ public class VueLigneDeCommande {
 	public void lancerPartie() {
 		controller.lancerPartie();
 		System.out.println(partie);
-		effectuerTourDeJeu();
+		try {
+			effectuerTourDeJeu();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 	public void effectuerTourDeJeu() {

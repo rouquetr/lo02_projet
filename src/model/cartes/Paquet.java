@@ -9,7 +9,7 @@ public abstract class Paquet extends LinkedHashSet<Carte> {
 	public void melanger() {
 		ArrayList<Carte> liste = new ArrayList<Carte>(this);
 		Collections.shuffle(liste);
-		this.removeAll(this);
+		this.clear();
 		this.addAll(liste);
 	}
 	
