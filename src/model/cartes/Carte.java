@@ -3,6 +3,25 @@ package model.cartes;
 import model.actions.Action;
 
 public class Carte {
+	
+    public final static int PIC = 0;
+    public final static int COEUR = 1;
+    public final static int CARREAU = 2;
+    public final static int TREFLE = 3;
+
+    public final static int AS = 1;
+    public final static int DEUX = 2;
+    public final static int TROIS = 3;
+    public final static int QUATRE = 4;
+    public final static int CINQ = 5;
+    public final static int SIX = 6;
+    public final static int SEPT = 7;
+    public final static int HUIT = 8;
+    public final static int NEUF = 9;
+    public final static int DIX = 10;
+    public final static int VALET = 11;
+    public final static int DAME = 12;
+    public final static int ROI = 13;
 
 	private int valeur;
 	private int couleur;
@@ -10,8 +29,8 @@ public class Carte {
 	
 	private Action action;
 	
-	private String[] valeurs = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
-	private String[] couleurs = {"Coeur", "Carreau", "Pique", "Trèfle"};
+	public final static String[] VALEURS = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
+	public final static String[] COULEURS = {"Coeur", "Carreau", "Pique", "Trèfle"};
 	
 	public Carte(int valeur, int couleur, int points, Action action) {
 		this.valeur = valeur;
@@ -49,7 +68,11 @@ public class Carte {
 	}
 	
 	public String afficherCarte() {
-		return valeurs[valeur] + " de " + couleurs[couleur];
+		return VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+	}
+	
+	public String afficherCarteAvecDeterminant() {
+		return (this.valeur == DAME ? "la " : "le ") +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
 	}
 	
 }

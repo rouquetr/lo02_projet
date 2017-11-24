@@ -35,12 +35,18 @@ public class PartieController {
 		partie.getTalon().add(partie.getPioche().tirerUneCarte());
 	}
 	
-	public void faireJouer(Joueur joueur, int numeroCarte) {
-		Carte carteVoulue = null;
-		Iterator<Carte> iterator = joueur.getMain().iterator();
-		for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
-		System.out.println(carteVoulue.toString());
-		joueur.jouerCarte(carteVoulue);
+	public boolean faireJouer(Joueur joueur, int numeroCarte) {
+		if(numeroCarte == 0) {
+			joueur.piocher();
+			return false;
+		}
+		else {
+			Carte carteVoulue = null;
+			Iterator<Carte> iterator = joueur.getMain().iterator();
+			for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
+			joueur.jouerCarte(carteVoulue);
+			return true;
+		}
 	}
 	
 }

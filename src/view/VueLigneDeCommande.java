@@ -44,9 +44,9 @@ public class VueLigneDeCommande {
 		Iterator<Joueur> iteratorJoueurs = partie.getJoueurs().iterator();
 		while (iteratorJoueurs.hasNext()) {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
-
-			int carteAJouer = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
-			controller.faireJouer(partie.getJoueurEnCours(), carteAJouer);
+			
+			int action = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
+			afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));
 		}
 		this.partie.incrementerNumeroTour();
 	}
@@ -54,9 +54,19 @@ public class VueLigneDeCommande {
 	public int faireJouerJoueur() {
 		Iterator<Carte> iteratorCartes = partie.getJoueurEnCours().getMain().iterator();
 		int numeroCarte = 1;
-		
+		afficherTalon();
 		System.out.println("Indiquez le numéro de la carte que vous voulez jouer:");
+		System.out.println("0: Piocher");
 		while (iteratorCartes.hasNext()) System.out.println(numeroCarte++ + ": " + iteratorCartes.next().afficherCarte());
 		return scanner.nextInt();
+	}
+	
+	public void afficherActionEffectuee(boolean action) {
+		if (action == false) System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLastElement().afficherCarteAvecDeterminant());
+		else System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
+	}
+	
+	public void afficherTalon() {
+		System.out.println("La carte visible du talon est " + partie.getTalon().afficherTalon());
 	}
 }

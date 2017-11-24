@@ -3,6 +3,7 @@ package model.cartes;
 public class Talon extends Paquet {
 	
 	private static Talon uniqueInstance;
+	private Carte derniereCarteJouee;
 	
 	private Talon() {
 		super();
@@ -13,7 +14,21 @@ public class Talon extends Paquet {
 		return uniqueInstance;
 	}
 	
-	public Carte voirDerniereCarteJouee() {
-		return this.getLastElement();
+	public Carte getDerniereCarteJouee() {
+		return derniereCarteJouee;
 	}
+
+	@Override
+	public boolean add(Carte carte) {
+		if (this.size() == 0 || this.derniereCarteJouee.getValeur() == carte.getValeur() || this.derniereCarteJouee.getCouleur() == carte.getCouleur()) {
+			this.derniereCarteJouee = carte;
+			return super.add(carte);
+		}
+		else return false;
+	}
+	
+	public String afficherTalon() {
+		return this.derniereCarteJouee.afficherCarteAvecDeterminant();
+	}
+	
 }
