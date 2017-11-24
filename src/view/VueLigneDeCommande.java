@@ -37,11 +37,7 @@ public class VueLigneDeCommande {
 	public void lancerPartie() {
 		controller.lancerPartie();
 		System.out.println(partie);
-		try {
-			effectuerTourDeJeu();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		effectuerTourDeJeu();
 	}
 	
 	public void effectuerTourDeJeu() {
@@ -50,9 +46,17 @@ public class VueLigneDeCommande {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
 			
 			int action = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
-			afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));
+			afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));		
+			verifierSiPartieTerminee();
 		}
-		this.partie.incrementerNumeroTour();
+	}
+	
+	public void verifierSiPartieTerminee() {
+		if(partie.getJoueurEnCours().getMain().size() == 0) System.out.println("Fin de la partie");
+		else if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) {
+			this.partie.incrementerNumeroTour();
+			effectuerTourDeJeu();
+		}
 	}
 	
 	public int faireJouerJoueur() {
