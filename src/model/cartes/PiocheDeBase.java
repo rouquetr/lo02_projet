@@ -7,7 +7,7 @@ public class PiocheDeBase extends Pioche {
 	public PiocheDeBase() {
 		super();
 				
-		for (int i = 1; i < 13; i++)
+		for (int i = 1; i < 5; i++)
 			for (int k = 0; k < 4; k++) 
 				this.add(new Carte(i, k, i, new ActionNeutre()));
 	}

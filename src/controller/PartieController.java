@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import model.cartes.Carte;
 import model.cartes.PiocheDeBase;
@@ -38,6 +39,7 @@ public class PartieController {
 	public boolean faireJouer(Joueur joueur, int numeroCarte) {
 		if(numeroCarte == 0) {
 			joueur.piocher();
+			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
 			return false;
 		}
 		else {

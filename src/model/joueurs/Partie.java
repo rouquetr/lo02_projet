@@ -69,10 +69,8 @@ public class Partie {
 		numeroTour++;
 	}
 	
-	@Override
-	public String toString() {
-		return "Partie [sens=" + sens + ", numeroTour=" + numeroTour + ", talon=" + talon + ", pioche=" + pioche
-				+ ", joueurs=" + joueurs + "]";
+	public String afficherPartie() {
+		return "La partie est composée de: " + joueurs.size() + " joueurs, la pioche comporte " + pioche.size() + " cartes";
 	}
 	
 }

@@ -2,6 +2,7 @@ package view;
 
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import controller.PartieController;
@@ -36,7 +37,7 @@ public class VueLigneDeCommande {
 	
 	public void lancerPartie() {
 		controller.lancerPartie();
-		System.out.println(partie);
+		System.out.println(partie.afficherPartie());
 		effectuerTourDeJeu();
 	}
 	
@@ -46,7 +47,11 @@ public class VueLigneDeCommande {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
 			
 			int action = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
-			afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));		
+			try {
+				afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));		
+			} catch (NoSuchElementException e) {
+				System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+			}
 			verifierSiPartieTerminee();
 		}
 	}
@@ -70,7 +75,7 @@ public class VueLigneDeCommande {
 	}
 	
 	public void afficherActionEffectuee(boolean action) {
-		if (action == false) System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLastElement().afficherCarteAvecDeterminant());
+		if (action == false) System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
 		else System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
 	}
 	

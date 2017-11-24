@@ -1,9 +1,13 @@
 package model.cartes;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import model.joueurs.Partie;
+
 public class Talon extends Paquet {
 	
 	private static Talon uniqueInstance;
-	private Carte derniereCarteJouee;
 	
 	private Talon() {
 		super();
@@ -13,22 +17,24 @@ public class Talon extends Paquet {
 		if(uniqueInstance == null) uniqueInstance = new Talon();
 		return uniqueInstance;
 	}
-	
-	public Carte getDerniereCarteJouee() {
-		return derniereCarteJouee;
-	}
 
 	@Override
 	public boolean add(Carte carte) {
-		if (this.size() == 0 || this.derniereCarteJouee.getValeur() == carte.getValeur() || this.derniereCarteJouee.getCouleur() == carte.getCouleur()) {
-			this.derniereCarteJouee = carte;
+		if (size() == 0 || getLast().getValeur() == carte.getValeur() || getLast().getCouleur() == carte.getCouleur()) 
 			return super.add(carte);
-		}
 		else return false;
 	}
 	
 	public String afficherTalon() {
-		return this.derniereCarteJouee.afficherCarteAvecDeterminant();
+		return getLast().afficherCarteAvecDeterminant();
+	}
+	
+	public void transformerEnPioche() throws NoSuchElementException {
+		Pioche pioche = Partie.getInstance().getPioche();
+		Iterator<Carte> iterator = iterator();
+		while (iterator.hasNext()) pioche.add(iterator.next());
+		pioche.remove(getLast());
+		removeAll(pioche);
 	}
 	
 }
