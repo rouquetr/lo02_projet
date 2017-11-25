@@ -1,6 +1,7 @@
 package view;
 
 
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -25,12 +26,8 @@ public class VueLigneDeCommande {
 	}
 	
 	public void initialiserPartie() {
-				
-		System.out.println("Saisissez votre nom de joueur");
-		String nomJoueur = scanner.nextLine();
-		
-		System.out.println("Combien de joueurs doit comporter la partie?");
-		int nombreJoueurs = scanner.nextInt();
+		String nomJoueur = demanderString("Saisissez votre nom de joueur");
+		int nombreJoueurs = demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
 		
 		controller.initialiserPartie(nombreJoueurs, nomJoueur);
 	}
@@ -68,10 +65,10 @@ public class VueLigneDeCommande {
 		Iterator<Carte> iteratorCartes = partie.getJoueurEnCours().getMain().iterator();
 		int numeroCarte = 1;
 		afficherTalon();
-		System.out.println("Indiquez le numéro de la carte que vous voulez jouer:");
-		System.out.println("0: Piocher");
-		while (iteratorCartes.hasNext()) System.out.println(numeroCarte++ + ": " + iteratorCartes.next().afficherCarte());
-		return scanner.nextInt();
+		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
+		while (iteratorCartes.hasNext()) message += (numeroCarte++ + ": " + iteratorCartes.next().afficherCarte() + "\n");
+		
+		return demanderInt(message, 0, partie.getJoueurEnCours().getMain().size());
 	}
 	
 	public void afficherActionEffectuee(int action) {
@@ -81,8 +78,10 @@ public class VueLigneDeCommande {
 			break;
 		case 1:
 			System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
+			break;
 		case 2:
 			System.out.println("Vous ne pouvez pas jouer cette carte");
+			break;
 		default:
 			break;
 		}
@@ -90,5 +89,24 @@ public class VueLigneDeCommande {
 	
 	public void afficherTalon() {
 		System.out.println("La carte visible du talon est " + partie.getTalon().afficherTalon());
+	}
+	
+	public String demanderString(String message) {
+		System.out.println(message);
+		return scanner.nextLine();
+	}
+	
+	public int demanderInt(String message, int min, int max) {
+		int saisie = -1;
+		while (saisie < min || saisie > max) {
+			System.out.println(message);
+			try {
+				saisie = scanner.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("Veuillez entrer une valeur valide");
+				scanner.nextLine();
+			}
+		}
+		return saisie;
 	}
 }

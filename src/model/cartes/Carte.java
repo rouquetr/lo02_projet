@@ -72,7 +72,14 @@ public class Carte {
 	}
 	
 	public String afficherCarteAvecDeterminant() {
-		return (this.valeur == DAME ? "la " : "le ") +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+		switch (this.valeur) {
+		case DAME:
+			return "la " +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+		case AS:
+			return "l'" +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+		default:
+			return "le " +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+		}
 	}
 	
 }

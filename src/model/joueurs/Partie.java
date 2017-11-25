@@ -1,6 +1,7 @@
 package model.joueurs;
 
-import java.util.LinkedHashSet;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import model.cartes.Pioche;
 import model.cartes.Talon;
@@ -8,15 +9,17 @@ import model.cartes.Talon;
 public class Partie {
 	
 	private static Partie uniqueInstance;
-	
-	private boolean sens = true;
+
 	private int numeroTour = 0;
 	
 	private Talon talon = Talon.getInstance();
 	private Pioche pioche;
 	
-	private LinkedHashSet<Joueur> joueurs = new LinkedHashSet<Joueur>();
+	private LinkedList<Joueur> joueurs = new LinkedList<Joueur>();
 	private Joueur joueurEnCours = null;
+	
+    public final static int MINJOUEUR = 1;
+    public final static int MAXJOUEUR = 5;
 	
 	private Partie() {	}
 	
@@ -25,12 +28,8 @@ public class Partie {
 		return uniqueInstance;
 	}
 	
-	public boolean getSens() {
-		return sens;
-	}
-	
 	public void changerSens() {
-		sens = !sens;
+		Collections.reverse(joueurs);
 	}
 	
 	public int getNumeroTour() {
@@ -49,7 +48,7 @@ public class Partie {
 		this.pioche = pioche;
 	}
 	
-	public LinkedHashSet<Joueur> getJoueurs() {
+	public LinkedList<Joueur> getJoueurs() {
 		return joueurs;
 	}
 	

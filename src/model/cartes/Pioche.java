@@ -1,13 +1,13 @@
 package model.cartes;
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import model.joueurs.Joueur;
 
 public abstract class Pioche extends Paquet {
 	
-	public void distribuerCarte(LinkedHashSet<Joueur> joueurs) {
+	public void distribuerCarte(LinkedList<Joueur> joueurs) {
 		
 		for (int i = 0; i < 8; i++) {
 			Iterator<Joueur> iterator = joueurs.iterator();
