@@ -1,6 +1,7 @@
 package model.joueurs;
 
 import model.cartes.Carte;
+import model.cartes.CarteNonCompatibleException;
 import model.cartes.Main;
 
 public class Joueur {
@@ -49,10 +50,11 @@ public class Joueur {
 		this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
 	}
 	
-	public void jouerCarte(Carte carte) {
-		this.main.remove(carte);
-		Partie.getInstance().getTalon().add(carte);
-		carte.effectuerAction();
+	public void jouerCarte(Carte carte) throws CarteNonCompatibleException {
+		if(Partie.getInstance().getTalon().add(carte)) {
+			this.main.remove(carte);
+			carte.effectuerAction();
+		} else throw new CarteNonCompatibleException("La carte jouée n'est pas compatible avec le talon.");
 	}
 
 }

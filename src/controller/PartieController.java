@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import model.cartes.Carte;
+import model.cartes.CarteNonCompatibleException;
 import model.cartes.PiocheDeBase;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
@@ -36,18 +37,22 @@ public class PartieController {
 		partie.getTalon().add(partie.getPioche().tirerUneCarte());
 	}
 	
-	public boolean faireJouer(Joueur joueur, int numeroCarte) {
+	public int faireJouer(Joueur joueur, int numeroCarte) {
 		if(numeroCarte == 0) {
 			joueur.piocher();
 			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
-			return false;
+			return 0;
 		}
 		else {
 			Carte carteVoulue = null;
 			Iterator<Carte> iterator = joueur.getMain().iterator();
 			for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
-			joueur.jouerCarte(carteVoulue);
-			return true;
+			try {
+				joueur.jouerCarte(carteVoulue);
+				return 1;
+			} catch (CarteNonCompatibleException e) {
+				return 2;
+			}
 		}
 	}
 	

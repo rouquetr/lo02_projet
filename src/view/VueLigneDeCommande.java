@@ -74,9 +74,18 @@ public class VueLigneDeCommande {
 		return scanner.nextInt();
 	}
 	
-	public void afficherActionEffectuee(boolean action) {
-		if (action == false) System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
-		else System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
+	public void afficherActionEffectuee(int action) {
+		switch (action) {
+		case 0:
+			System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
+			break;
+		case 1:
+			System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
+		case 2:
+			System.out.println("Vous ne pouvez pas jouer cette carte");
+		default:
+			break;
+		}
 	}
 	
 	public void afficherTalon() {
