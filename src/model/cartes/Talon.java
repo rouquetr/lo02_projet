@@ -20,7 +20,7 @@ public class Talon extends Paquet {
 
 	@Override
 	public boolean add(Carte carte) {
-		if (size() == 0 || getLast().getValeur() == carte.getValeur() || getLast().getCouleur() == carte.getCouleur()) 
+		if (size() == 0 || Carte.ComparerCarte(getLast(), carte)) 
 			return super.add(carte);
 		else return false;
 	}

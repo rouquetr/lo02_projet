@@ -67,6 +67,11 @@ public class Carte {
 		return "Carte [valeur=" + valeur + ", couleur=" + couleur + ", points=" + points + ", action=" + action + "]";
 	}
 	
+	public static boolean ComparerCarte(Carte carte1, Carte carte2) { 
+		if(carte1.getCouleur() == carte2.getCouleur() || carte1.getValeur() == carte2.getValeur()) return true;
+		else return false;
+	}
+	
 	public String afficherCarte() {
 		return VALEURS[valeur - 1] + " de " + COULEURS[couleur];
 	}

@@ -4,23 +4,21 @@ import java.util.Iterator;
 
 import model.cartes.Carte;
 import model.cartes.CarteNonCompatibleException;
+import model.cartes.Paquet;
 import model.cartes.Talon;
 
 public class Ordinateur extends Joueur {
 
-	
-	
 	public Ordinateur(String nom, int position) {
 		super(nom, position);
 	}
 
 	public int jouerCarte() throws CarteNonCompatibleException {
 		Carte carteAJouer = null;
-		Talon talon = Talon.getInstance();
 		Iterator<Carte> it = this.getMain().iterator();
 		while(it.hasNext()) {
 			Carte carteATester = it.next();
-			if(talon.ComparerCarte(carteATester, Talon.getInstance().getLast()))
+			if(Carte.ComparerCarte(carteATester, Talon.getInstance().getLast()))
 				carteAJouer = carteATester;
 		}
 				
