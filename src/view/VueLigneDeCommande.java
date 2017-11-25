@@ -43,9 +43,12 @@ public class VueLigneDeCommande {
 		while (iteratorJoueurs.hasNext()) {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
 			
-			int action = (partie.getJoueurEnCours().getClass() != Ordinateur.class) ? faireJouerJoueur() : 5;
 			try {
-				afficherActionEffectuee(controller.faireJouer(partie.getJoueurEnCours(), action));		
+				afficherActionEffectuee(
+						(partie.getJoueurEnCours().getClass() != Ordinateur.class) 
+							? controller.faireJouer(partie.getJoueurEnCours(), faireJouerJoueur())
+							: controller.faireJouer((Ordinateur) partie.getJoueurEnCours())
+						);		
 			} catch (NoSuchElementException e) {
 				System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
 			}
@@ -72,15 +75,16 @@ public class VueLigneDeCommande {
 	}
 	
 	public void afficherActionEffectuee(int action) {
+		String nomJoueur = partie.getJoueurEnCours().getNom();
 		switch (action) {
 		case 0:
-			System.out.println("Vous avez pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
+			System.out.println(nomJoueur + " a pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
 			break;
 		case 1:
-			System.out.println(partie.getJoueurEnCours().getNom() + " a joué " + partie.getTalon().afficherTalon());
+			System.out.println(nomJoueur + " a joué " + partie.getTalon().afficherTalon());
 			break;
 		case 2:
-			System.out.println("Vous ne pouvez pas jouer cette carte");
+			System.out.println(nomJoueur + " ne peut pas jouer cette carte");
 			break;
 		default:
 			break;

@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import model.cartes.Carte;
 import model.cartes.CarteNonCompatibleException;
@@ -53,6 +52,14 @@ public class PartieController {
 			} catch (CarteNonCompatibleException e) {
 				return 2;
 			}
+		}
+	}
+	
+	public int faireJouer(Ordinateur ordinateur) {
+		try {
+			return ordinateur.jouerCarte();
+		} catch (CarteNonCompatibleException e) {
+			return 2;
 		}
 	}
 	

@@ -20,12 +20,12 @@ public class Ordinateur extends Joueur {
 		Iterator<Carte> it = this.getMain().iterator();
 		while(it.hasNext()) {
 			Carte carteATester = it.next();
-			if(talon.ComparerCarte(carteATester, talon.getFirst()))
+			if(talon.ComparerCarte(carteATester, Talon.getInstance().getLast()))
 				carteAJouer = carteATester;
 		}
 				
 		if(carteAJouer == null) {
-			this.piocher();
+			piocher();
 			return 0;
 		}
 		else {
