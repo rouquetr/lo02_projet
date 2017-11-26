@@ -25,11 +25,10 @@ public class PartieController {
 		
 		for (int i = 0; i < nombreDeJoueurs - 1; i++) 
 			partie.ajouterJoueur(new Ordinateur(nomsOrdinateur[i], i + 1));
-			
-		partie.setPioche(new PiocheDeBase());
 	}
 	
 	public void lancerPartie() {
+		partie.setPioche(new PiocheDeBase());
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
@@ -61,6 +60,15 @@ public class PartieController {
 		} catch (CarteNonCompatibleException e) {
 			return 2;
 		}
+	}
+	
+	public int verifierSiPartieTerminee() {
+		if(partie.getJoueurEnCours().getMain().size() == 0) {
+			partie.mettreAJourScores();
+			return 1;
+		}
+		if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) this.partie.incrementerNumeroTour();
+		return 0;
 	}
 	
 }

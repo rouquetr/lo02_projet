@@ -1,5 +1,7 @@
 package model.joueurs;
 
+import java.util.Iterator;
+
 import model.cartes.Carte;
 import model.cartes.CarteNonCompatibleException;
 import model.cartes.Main;
@@ -30,9 +32,6 @@ public class Joueur {
 	public int getPoints() {
 		return points;
 	}
-	public void addPoints(int points) {
-		this.points += points;
-	}
 
 	public Main getMain() {
 		return main;
@@ -55,6 +54,13 @@ public class Joueur {
 			this.main.remove(carte);
 			carte.effectuerAction();
 		} else throw new CarteNonCompatibleException("La carte jouée n'est pas compatible avec le talon.");
+	}
+	
+	public void compterPoints() {
+		Iterator<Carte> iterator = main.iterator();
+		while (iterator.hasNext()) {
+			points += iterator.next().getPoints();
+		}
 	}
 
 }

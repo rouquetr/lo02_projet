@@ -1,6 +1,8 @@
 package view;
 
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -52,15 +54,40 @@ public class VueLigneDeCommande {
 			} catch (NoSuchElementException e) {
 				System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
 			}
-			verifierSiPartieTerminee();
+			int partieTerminee = controller.verifierSiPartieTerminee();
+			if (partieTerminee == 1) afficherFinDePartie();
+			else if (partieTerminee == 0) effectuerTourDeJeu();
 		}
 	}
 	
-	public void verifierSiPartieTerminee() {
-		if(partie.getJoueurEnCours().getMain().size() == 0) System.out.println("Fin de la partie");
-		else if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) {
-			this.partie.incrementerNumeroTour();
-			effectuerTourDeJeu();
+	public void afficherFinDePartie() {
+		System.out.println("Les scores sont: ");
+		ArrayList<Joueur> classement = new ArrayList<Joueur>(partie.getJoueurs());
+		classement.sort(new Comparator<Joueur>() {
+			@Override
+			public int compare(Joueur o1, Joueur o2) {
+				return Integer.compare(o1.getPoints(), o2.getPoints());
+			}
+		});
+		Iterator<Joueur> iterator = classement.iterator();
+		while (iterator.hasNext()) {
+			Joueur joueur = iterator.next();
+			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
+		}
+		String message = "Voulez-vous: \n" 
+						 + "1: relancer une partie?\n"
+						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
+						 + "3: Arrêter de jouer?";
+		switch (demanderInt(message, 1, 3)) {
+		case 1:
+			lancerPartie();
+			break;
+		case 2:
+			initialiserPartie();
+			break;
+		case 3:
+			System.exit(0);
+			break;
 		}
 	}
 	

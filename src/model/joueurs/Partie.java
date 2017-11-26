@@ -1,6 +1,7 @@
 package model.joueurs;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import model.cartes.Pioche;
@@ -70,6 +71,11 @@ public class Partie {
 	
 	public String afficherPartie() {
 		return "La partie est composée de: " + joueurs.size() + " joueurs, la pioche comporte " + pioche.size() + " cartes";
+	}
+	
+	public void mettreAJourScores() {
+		Iterator<Joueur> iterator = joueurs.iterator();
+		while (iterator.hasNext()) 	iterator.next().compterPoints();
 	}
 	
 }
