@@ -1,8 +1,5 @@
 package view;
 
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -61,19 +58,7 @@ public class VueLigneDeCommande {
 	}
 	
 	public void afficherFinDePartie() {
-		System.out.println("Les scores sont: ");
-		ArrayList<Joueur> classement = new ArrayList<Joueur>(partie.getJoueurs());
-		classement.sort(new Comparator<Joueur>() {
-			@Override
-			public int compare(Joueur o1, Joueur o2) {
-				return Integer.compare(o1.getPoints(), o2.getPoints());
-			}
-		});
-		Iterator<Joueur> iterator = classement.iterator();
-		while (iterator.hasNext()) {
-			Joueur joueur = iterator.next();
-			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
-		}
+		afficherScores();
 		String message = "Voulez-vous: \n" 
 						 + "1: relancer une partie?\n"
 						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
@@ -88,6 +73,15 @@ public class VueLigneDeCommande {
 		case 3:
 			System.exit(0);
 			break;
+		}
+	}
+	
+	public void afficherScores() {
+		System.out.println("Les scores sont: ");
+		Iterator<Joueur> iterator = partie.getJoueursByScore().iterator();
+		while (iterator.hasNext()) {
+			Joueur joueur = iterator.next();
+			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package model.joueurs;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -51,6 +52,17 @@ public class Partie {
 	
 	public LinkedList<Joueur> getJoueurs() {
 		return joueurs;
+	}
+	
+	public LinkedList<Joueur> getJoueursByScore() {
+		LinkedList<Joueur> classement = joueurs;
+		classement.sort(new Comparator<Joueur>() {
+			@Override
+			public int compare(Joueur o1, Joueur o2) {
+				return Integer.compare(o1.getPoints(), o2.getPoints());
+			}
+		});
+		return classement;
 	}
 	
 	public void ajouterJoueur(Joueur joueur) {

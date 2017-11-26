@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import model.cartes.Carte;
 import model.cartes.CarteNonCompatibleException;
-import model.cartes.Paquet;
 import model.cartes.Talon;
 
 public class Ordinateur extends Joueur {
