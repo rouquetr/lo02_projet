@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+
 import model.cartes.Pioche;
 import model.cartes.Talon;
 
@@ -75,6 +77,16 @@ public class Partie {
 	
 	public void setJoueurEnCours(Joueur joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
+	}
+	
+	public Joueur findJoueurSuivant() {
+		Iterator<Joueur> iterator = joueurs.iterator();
+		while(iterator.hasNext()) 
+			if(iterator.next().equals(joueurEnCours)) {
+				if (!iterator.hasNext()) return joueurs.get(0);
+				return iterator.next();
+			}
+		return null;
 	}
 	
 	public void incrementerNumeroTour() {

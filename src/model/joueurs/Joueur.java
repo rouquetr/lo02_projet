@@ -39,6 +39,10 @@ public class Joueur {
 	public boolean peutJouer() {
 		return peutJouer;
 	}
+	
+	public void passerTour() {
+		peutJouer = false;
+	}
 
 	@Override
 	public String toString() {
