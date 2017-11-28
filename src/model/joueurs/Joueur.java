@@ -40,8 +40,8 @@ public class Joueur {
 		return peutJouer;
 	}
 	
-	public void passerTour() {
-		peutJouer = false;
+	public void setPeutJouer(boolean peutJouer) {
+		this.peutJouer = peutJouer;
 	}
 
 	@Override

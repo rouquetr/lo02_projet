@@ -41,19 +41,24 @@ public class VueLigneDeCommande {
 		Iterator<Joueur> iteratorJoueurs = partie.getJoueurs().iterator();
 		while (iteratorJoueurs.hasNext()) {
 			partie.setJoueurEnCours(iteratorJoueurs.next());
-			
-			try {
-				afficherActionEffectuee(
-						(partie.getJoueurEnCours().getClass() != Ordinateur.class) 
-							? controller.faireJouer(partie.getJoueurEnCours(), faireJouerJoueur())
-							: controller.faireJouer((Ordinateur) partie.getJoueurEnCours())
-						);		
-			} catch (NoSuchElementException e) {
-				System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+			if(partie.getJoueurEnCours().peutJouer())
+				try {
+					afficherActionEffectuee(
+							(partie.getJoueurEnCours().getClass() != Ordinateur.class) 
+								? controller.faireJouer(partie.getJoueurEnCours(), faireJouerJoueur())
+								: controller.faireJouer((Ordinateur) partie.getJoueurEnCours())
+							);		
+				} catch (NoSuchElementException e) {
+					System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+				}
+			else {
+				System.out.println(partie.getJoueurEnCours().getNom() + " passe son tour.");
+				partie.getJoueurEnCours().setPeutJouer(true);
 			}
 			int partieTerminee = controller.verifierSiPartieTerminee();
 			if (partieTerminee == 1) afficherFinDePartie();
 			else if (partieTerminee == 0) effectuerTourDeJeu();
+			
 		}
 	}
 	
