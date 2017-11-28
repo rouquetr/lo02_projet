@@ -79,6 +79,16 @@ public class Partie {
 		this.joueurEnCours = joueurEnCours;
 	}
 	
+	public Joueur findJoueurPrécédent() {
+		Iterator<Joueur> iterator = joueurs.descendingIterator();
+		while(iterator.hasNext()) 
+			if(iterator.next().equals(joueurEnCours)) {
+				if (!iterator.hasNext()) return joueurs.get(joueurs.size() - 1);
+				return iterator.next();
+			}
+		return null;
+	}
+	
 	public Joueur findJoueurSuivant() {
 		Iterator<Joueur> iterator = joueurs.iterator();
 		while(iterator.hasNext()) 
