@@ -1,12 +1,11 @@
 package model.actions;
 
+import model.joueurs.Partie;
+
 public class Piocher4 implements Action {
 	
 	public void action() {
-		System.out.println("Piocher quatre cartes");
-		for (int i=0;i<=4;i++) {
-			//pioche.piocher();
-		}
+		Partie.getInstance().findJoueurSuivant().piocher(4);
 	}
 	
 }

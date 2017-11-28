@@ -53,6 +53,10 @@ public class Joueur {
 		this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
 	}
 	
+	public void piocher(int nombreCartes) {
+		for (int i = 0; i < nombreCartes; i++) piocher();
+	}
+	
 	public void jouerCarte(Carte carte) throws CarteNonCompatibleException {
 		if(Partie.getInstance().getTalon().add(carte)) {
 			this.main.remove(carte);
