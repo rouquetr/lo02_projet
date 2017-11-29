@@ -8,5 +8,9 @@ public class ChangerSens implements Action {
 		Partie.getInstance().changerSens();
 	}
 	
+	public String message() {
+		return "La partie change de sens";
+	}
+	
 }
 

@@ -29,10 +29,12 @@ public class PartieController {
 	
 	public void lancerPartie() {
 		partie.setPioche(new PiocheDeBase());
+		System.out.println(partie.getPioche().size());
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
 		partie.getTalon().add(partie.getPioche().tirerUneCarte());
+		partie.setJoueurEnCours(partie.getJoueurs().getFirst());
 	}
 	
 	public int faireJouer(Joueur joueur, int numeroCarte) {
@@ -40,8 +42,7 @@ public class PartieController {
 			joueur.piocher();
 			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
 			return 0;
-		}
-		else {
+		} else {
 			Carte carteVoulue = null;
 			Iterator<Carte> iterator = joueur.getMain().iterator();
 			for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
@@ -56,19 +57,22 @@ public class PartieController {
 	
 	public int faireJouer(Ordinateur ordinateur) {
 		try {
-			return ordinateur.jouerCarte();
+			int resultat = ordinateur.jouerCarte();
+			return resultat;
 		} catch (CarteNonCompatibleException e) {
 			return 2;
 		}
 	}
 	
-	public int verifierSiPartieTerminee() {
+	public boolean verifierSiPartieTerminee() {
 		if(partie.getJoueurEnCours().getMain().size() == 0) {
 			partie.mettreAJourScores();
-			return 1;
+			return true;
 		}
-		if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) this.partie.incrementerNumeroTour();
-		return 0;
+		if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) {
+			this.partie.incrementerNumeroTour();
+		}
+		return false;
 	}
 	
 }

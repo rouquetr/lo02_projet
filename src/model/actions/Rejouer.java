@@ -1,14 +1,15 @@
 package model.actions;
 
-import model.joueurs.Joueur;
+import model.joueurs.Partie;
 
 public class Rejouer implements Action{
 
-	private static Joueur joueur; 
-	
 	public void action() {
-		System.out.println("Vous rejouez");
-		//joueur.setPosition(joueur.getPosition()-1); 			//Au prochain incrÃ©ment, c'est le joueur actuel qui rejoue
+		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrécédent());
+	}
+	
+	public String message() {
+		return Partie.getInstance().findJoueurSuivant().getNom() + " rejoue";
 	}
 	
 }

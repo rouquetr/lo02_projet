@@ -8,4 +8,8 @@ public class Piocher4 implements Action {
 		Partie.getInstance().findJoueurSuivant().piocher(4);
 	}
 	
+	public String message() {
+		return Partie.getInstance().findJoueurSuivant().getNom() + " pioche 4 cartes";
+	}
+	
 }

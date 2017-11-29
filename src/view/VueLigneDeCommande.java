@@ -2,6 +2,7 @@ package view;
 
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -19,6 +20,8 @@ public class VueLigneDeCommande {
 	private Scanner scanner = new Scanner(System.in);
 	
 	private PartieController controller;
+	
+	private Joueur joueurEnCours;
 	
 	public VueLigneDeCommande(PartieController controller) {
 		this.controller = controller;
@@ -38,28 +41,28 @@ public class VueLigneDeCommande {
 	}
 	
 	public void effectuerTourDeJeu() {
-		Iterator<Joueur> iteratorJoueurs = partie.getJoueurs().iterator();
-		while (iteratorJoueurs.hasNext()) {
-			partie.setJoueurEnCours(iteratorJoueurs.next());
-			if(partie.getJoueurEnCours().peutJouer())
-				try {
-					afficherActionEffectuee(
-							(partie.getJoueurEnCours().getClass() != Ordinateur.class) 
-								? controller.faireJouer(partie.getJoueurEnCours(), faireJouerJoueur())
-								: controller.faireJouer((Ordinateur) partie.getJoueurEnCours())
-							);		
-				} catch (NoSuchElementException e) {
-					System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
-				}
-			else {
-				System.out.println(partie.getJoueurEnCours().getNom() + " passe son tour.");
-				partie.getJoueurEnCours().setPeutJouer(true);
-			}
-			int partieTerminee = controller.verifierSiPartieTerminee();
-			if (partieTerminee == 1) afficherFinDePartie();
-			else if (partieTerminee == 0) effectuerTourDeJeu();
-			
+		while(true) {
+			joueurEnCours = partie.getJoueurEnCours();
+			tourNormal();
 		}
+	}
+	
+	public void tourNormal() {
+		if(joueurEnCours.peutJouer())
+			try {
+				afficherActionEffectuee(
+						(joueurEnCours.getClass() != Ordinateur.class)
+							? controller.faireJouer(joueurEnCours, faireJouerJoueur())
+							: controller.faireJouer((Ordinateur) joueurEnCours)
+						);		
+			} catch (NoSuchElementException e) {
+				System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+			}
+		else {
+			System.out.println(joueurEnCours.getNom() + " passe son tour.");
+			joueurEnCours.setPeutJouer(true);
+		}
+		if (controller.verifierSiPartieTerminee()) afficherFinDePartie();
 	}
 	
 	public void afficherFinDePartie() {
@@ -91,30 +94,38 @@ public class VueLigneDeCommande {
 	}
 	
 	public int faireJouerJoueur() {
-		Iterator<Carte> iteratorCartes = partie.getJoueurEnCours().getMain().iterator();
-		int numeroCarte = 1;
 		afficherTalon();
 		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
-		while (iteratorCartes.hasNext()) message += (numeroCarte++ + ": " + iteratorCartes.next().afficherCarte() + "\n");
+		message += listerCartes(joueurEnCours.getMain());
 		
-		return demanderInt(message, 0, partie.getJoueurEnCours().getMain().size());
+		return demanderInt(message, 0, joueurEnCours.getMain().size());
 	}
 	
 	public void afficherActionEffectuee(int action) {
-		String nomJoueur = partie.getJoueurEnCours().getNom();
 		switch (action) {
 		case 0:
-			System.out.println(nomJoueur + " a pioché " + partie.getJoueurEnCours().getMain().getLast().afficherCarteAvecDeterminant());
+			System.out.println(joueurEnCours.getNom() + " a pioché " + joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
+			partie.setJoueurEnCours(partie.findJoueurSuivant());
 			break;
 		case 1:
-			System.out.println(nomJoueur + " a joué " + partie.getTalon().afficherTalon());
+			System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
+			if(partie.getTalon().getLast().getActionMessage() != "") System.out.println(partie.getTalon().getLast().getActionMessage());
+			partie.setJoueurEnCours(partie.findJoueurSuivant());
 			break;
 		case 2:
-			System.out.println(nomJoueur + " ne peut pas jouer cette carte");
+			System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");
 			break;
 		default:
 			break;
 		}
+	}
+	
+	public String listerCartes(LinkedList<Carte> cartes) {
+		Iterator<Carte> iterator = cartes.iterator();
+		int numeroCarte = 1;
+		String message = "";
+		while(iterator.hasNext()) message += (numeroCarte++ + ": " + iterator.next().afficherCarte() + "\n");
+		return message;
 	}
 	
 	public void afficherTalon() {

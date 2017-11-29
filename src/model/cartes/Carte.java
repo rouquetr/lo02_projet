@@ -87,4 +87,8 @@ public class Carte {
 		}
 	}
 	
+	public String getActionMessage() {
+		return action.message();
+	}
+	
 }
