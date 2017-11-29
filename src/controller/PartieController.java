@@ -5,6 +5,7 @@ import java.util.Iterator;
 import model.cartes.Carte;
 import model.cartes.CarteNonCompatibleException;
 import model.cartes.PiocheDeBase;
+import model.cartes.PiocheMonclar;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
@@ -27,8 +28,15 @@ public class PartieController {
 			partie.ajouterJoueur(new Ordinateur(nomsOrdinateur[i], i + 1));
 	}
 	
-	public void lancerPartie() {
-		partie.setPioche(new PiocheDeBase());
+	public void lancerPartie(int numeroVariante) {
+		switch (numeroVariante) {
+		case 2:
+			partie.setPioche(new PiocheMonclar());
+			break;
+		default:
+			partie.setPioche(new PiocheDeBase());
+			break;
+		}
 		System.out.println(partie.getPioche().size());
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());

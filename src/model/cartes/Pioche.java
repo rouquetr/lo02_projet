@@ -7,6 +7,8 @@ import model.joueurs.Joueur;
 
 public abstract class Pioche extends Paquet {
 	
+	public final String nom = "Pioche";
+	
 	public void distribuerCarte(LinkedList<Joueur> joueurs) {
 		
 		for (int i = 0; i < 8; i++) {
@@ -21,6 +23,10 @@ public abstract class Pioche extends Paquet {
 		this.remove(cartePiochee);
 		
 		return cartePiochee;
+	}
+	
+	public String getNom() {
+		return nom;
 	}
 
 }

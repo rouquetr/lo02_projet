@@ -104,7 +104,7 @@ public class Partie {
 	}
 	
 	public String afficherPartie() {
-		String message = "La partie est composée de:\n";
+		String message = "La partie (variante: " + pioche.getNom() +") est composée de:\n";
 		Iterator<Joueur> iterator = joueurs.iterator();
 		while (iterator.hasNext()) {
 			Joueur joueur = iterator.next();

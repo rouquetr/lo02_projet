@@ -31,7 +31,8 @@ public class VueLigneDeCommande {
 	}
 	
 	public void lancerPartie() {
-		controller.lancerPartie();
+		int numeroVariante = utils.demanderInt("Quelle variante choisissez-vous?\n" + utils.listerVariantes(), 1, 2);
+		controller.lancerPartie(numeroVariante);
 		System.out.println(partie.afficherPartie());
 		effectuerTourDeJeu();
 	}

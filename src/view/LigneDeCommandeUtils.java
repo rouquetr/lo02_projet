@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import model.cartes.Carte;
+import model.cartes.PiocheDeBase;
+import model.cartes.PiocheMonclar;
 import model.joueurs.Joueur;
 import model.joueurs.Partie;
 
@@ -46,6 +48,13 @@ public class LigneDeCommandeUtils {
 			Joueur joueur = iteratorJoueurs.next();
 			if (joueur != Partie.getInstance().getJoueurEnCours()) message += numeroDepart++ + ": " + subMessage + joueur.getNom() + "\n";
 		}
+		return message;
+	}
+	
+	public String listerVariantes() {
+		String message = "1: Jeu de base\n";
+		message += "2: Variante de Monclar";
+		
 		return message;
 	}
 	
