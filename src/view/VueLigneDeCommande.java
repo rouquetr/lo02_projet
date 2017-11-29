@@ -90,11 +90,15 @@ public class VueLigneDeCommande {
 	}
 	
 	public int faireJouerJoueur() {
-		utils.afficherTalon();
+		System.out.println(partie.afficherPartie());
 		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
-		message += utils.listerCartes(joueurEnCours.getMain());
+		message += utils.listerCartes(joueurEnCours.getMain(), 1);
+		message += "Ou le numéro d'une action a effectuer:\n";
+		message += joueurEnCours.getMain().size() + 1 + ": Annoncer carte\n";
+		message += utils.listerJoueursOrdinateurs(joueurEnCours.getMain().size() + 2, "Contrer ");
+		int max = joueurEnCours.getMain().size() + 1 + (partie.getJoueurs().size() - 1);
 		
-		return utils.demanderInt(message, 0, joueurEnCours.getMain().size());
+		return utils.demanderInt(message, 0, max);
 	}
 	
 	public void afficherActionEffectuee(int action) {
@@ -110,6 +114,12 @@ public class VueLigneDeCommande {
 			break;
 		case 2:
 			System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");
+			break;
+		case 3:
+			System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
+			break;
+		case 4:
+			System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
 			break;
 		default:
 			break;

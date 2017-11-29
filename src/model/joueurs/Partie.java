@@ -104,7 +104,14 @@ public class Partie {
 	}
 	
 	public String afficherPartie() {
-		return "La partie est composée de: " + joueurs.size() + " joueurs, la pioche comporte " + pioche.size() + " cartes";
+		String message = "La partie est composée de:\n";
+		Iterator<Joueur> iterator = joueurs.iterator();
+		while (iterator.hasNext()) {
+			Joueur joueur = iterator.next();
+			message += joueur.getNom() + " avec " + joueur.getMain().size() + " cartes\n";
+		}
+		message += "La carte visible du talon est " + talon.afficherTalon();
+		return message;
 	}
 	
 	public void mettreAJourScores() {

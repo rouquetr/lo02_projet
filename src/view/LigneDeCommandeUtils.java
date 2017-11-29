@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import model.cartes.Carte;
+import model.joueurs.Joueur;
 import model.joueurs.Partie;
 
 public class LigneDeCommandeUtils {
@@ -31,11 +32,20 @@ public class LigneDeCommandeUtils {
 		return saisie;
 	}
 	
-	public String listerCartes(LinkedList<Carte> cartes) {
+	public String listerCartes(LinkedList<Carte> cartes, int numeroDepart) {
 		Iterator<Carte> iterator = cartes.iterator();
-		int numeroCarte = 1;
 		String message = "";
-		while(iterator.hasNext()) message += (numeroCarte++ + ": " + iterator.next().afficherCarte() + "\n");
+		while(iterator.hasNext()) message += (numeroDepart++ + ": " + iterator.next().afficherCarte() + "\n");
+		return message;
+	}
+	
+	public String listerJoueursOrdinateurs(int numeroDepart, String subMessage) {
+		Iterator<Joueur> iteratorJoueurs = Partie.getInstance().getJoueurs().iterator();
+		String message = "";
+		while(iteratorJoueurs.hasNext()) {
+			Joueur joueur = iteratorJoueurs.next();
+			if (joueur != Partie.getInstance().getJoueurEnCours()) message += numeroDepart++ + ": " + subMessage + joueur.getNom() + "\n";
+		}
 		return message;
 	}
 	

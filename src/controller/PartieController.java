@@ -42,6 +42,10 @@ public class PartieController {
 			joueur.piocher();
 			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
 			return 0;
+		} else if (numeroCarte == joueur.getMain().size() + 1) {
+			if(joueur.getMain().size() > 2) return 3;
+			joueur.setaAnnonceCarte(true);
+			return 4;
 		} else {
 			Carte carteVoulue = null;
 			Iterator<Carte> iterator = joueur.getMain().iterator();
