@@ -5,7 +5,9 @@ import model.joueurs.Partie;
 public class ChangerSens implements Action {
 	
 	public void action() {
-		Partie.getInstance().changerSens();
+		Partie partie = Partie.getInstance();
+		if(partie.getJoueurs().size() == 2) partie.findJoueurSuivant().setPeutJouer(false);
+		else partie.changerSens();
 	}
 	
 	public String message() {

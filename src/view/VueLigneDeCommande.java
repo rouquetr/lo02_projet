@@ -1,13 +1,9 @@
 package view;
 
-import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 import controller.PartieController;
-import model.cartes.Carte;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
@@ -17,19 +13,19 @@ public class VueLigneDeCommande {
 	
 	private Partie partie = Partie.getInstance();
 	
-	private Scanner scanner = new Scanner(System.in);
-	
 	private PartieController controller;
 	
 	private Joueur joueurEnCours;
+	
+	private LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
 	
 	public VueLigneDeCommande(PartieController controller) {
 		this.controller = controller;
 	}
 	
 	public void initialiserPartie() {
-		String nomJoueur = demanderString("Saisissez votre nom de joueur");
-		int nombreJoueurs = demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
+		String nomJoueur = utils.demanderString("Saisissez votre nom de joueur");
+		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
 		
 		controller.initialiserPartie(nombreJoueurs, nomJoueur);
 	}
@@ -71,7 +67,7 @@ public class VueLigneDeCommande {
 						 + "1: relancer une partie?\n"
 						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
 						 + "3: Arrêter de jouer?";
-		switch (demanderInt(message, 1, 3)) {
+		switch (utils.demanderInt(message, 1, 3)) {
 		case 1:
 			lancerPartie();
 			break;
@@ -94,11 +90,11 @@ public class VueLigneDeCommande {
 	}
 	
 	public int faireJouerJoueur() {
-		afficherTalon();
+		utils.afficherTalon();
 		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
-		message += listerCartes(joueurEnCours.getMain());
+		message += utils.listerCartes(joueurEnCours.getMain());
 		
-		return demanderInt(message, 0, joueurEnCours.getMain().size());
+		return utils.demanderInt(message, 0, joueurEnCours.getMain().size());
 	}
 	
 	public void afficherActionEffectuee(int action) {
@@ -118,36 +114,5 @@ public class VueLigneDeCommande {
 		default:
 			break;
 		}
-	}
-	
-	public String listerCartes(LinkedList<Carte> cartes) {
-		Iterator<Carte> iterator = cartes.iterator();
-		int numeroCarte = 1;
-		String message = "";
-		while(iterator.hasNext()) message += (numeroCarte++ + ": " + iterator.next().afficherCarte() + "\n");
-		return message;
-	}
-	
-	public void afficherTalon() {
-		System.out.println("La carte visible du talon est " + partie.getTalon().afficherTalon());
-	}
-	
-	public String demanderString(String message) {
-		System.out.println(message);
-		return scanner.nextLine();
-	}
-	
-	public int demanderInt(String message, int min, int max) {
-		int saisie = -1;
-		while (saisie < min || saisie > max) {
-			System.out.println(message);
-			try {
-				saisie = scanner.nextInt();
-			} catch (InputMismatchException e) {
-				System.out.println("Veuillez entrer une valeur valide");
-				scanner.nextLine();
-			}
-		}
-		return saisie;
 	}
 }

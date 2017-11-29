@@ -9,6 +9,7 @@ public class Carte {
     public final static int CARREAU = 2;
     public final static int TREFLE = 3;
 
+    public final static int JOKER = 0;
     public final static int AS = 1;
     public final static int DEUX = 2;
     public final static int TROIS = 3;
@@ -29,7 +30,7 @@ public class Carte {
 	
 	private Action action;
 	
-	public final static String[] VALEURS = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
+	public final static String[] VALEURS = {"Joker", "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
 	public final static String[] COULEURS = {"Coeur", "Carreau", "Pique", "Trèfle"};
 	
 	public Carte(int valeur, int couleur, int points, Action action) {
@@ -73,17 +74,17 @@ public class Carte {
 	}
 	
 	public String afficherCarte() {
-		return VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+		return VALEURS[valeur] + " de " + COULEURS[couleur];
 	}
 	
 	public String afficherCarteAvecDeterminant() {
 		switch (this.valeur) {
 		case DAME:
-			return "la " +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+			return "la " +	VALEURS[valeur] + " de " + COULEURS[couleur];
 		case AS:
-			return "l'" +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+			return "l'" +	VALEURS[valeur] + " de " + COULEURS[couleur];
 		default:
-			return "le " +	VALEURS[valeur - 1] + " de " + COULEURS[couleur];
+			return "le " +	VALEURS[valeur] + " de " + COULEURS[couleur];
 		}
 	}
 	

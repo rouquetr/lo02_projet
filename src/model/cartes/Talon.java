@@ -8,6 +8,7 @@ import model.joueurs.Partie;
 public class Talon extends Paquet {
 	
 	private static Talon uniqueInstance;
+	private int couleur = 5;
 	
 	private Talon() {
 		super();
@@ -20,9 +21,19 @@ public class Talon extends Paquet {
 
 	@Override
 	public boolean add(Carte carte) {
-		if (size() == 0 || Carte.ComparerCarte(getLast(), carte)) 
+		if (size() == 0 || Carte.ComparerCarte(getLast(), carte) || carte.getCouleur() == couleur) {
+			couleur = carte.getCouleur();
 			return super.add(carte);
+		}
 		else return false;
+	}
+	
+	public int getCouleur() {
+		return couleur;
+	}
+	
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
 	}
 	
 	public String afficherTalon() {
