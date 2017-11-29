@@ -7,7 +7,11 @@ import model.joueurs.Joueur;
 
 public abstract class Pioche extends Paquet {
 	
-	public final String nom = "Pioche";
+	private String nom;
+	
+	public Pioche(String nom) {
+		this.nom = nom;
+	}
 	
 	public void distribuerCarte(LinkedList<Joueur> joueurs) {
 		

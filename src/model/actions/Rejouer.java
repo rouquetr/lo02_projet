@@ -5,7 +5,7 @@ import model.joueurs.Partie;
 public class Rejouer implements Action{
 
 	public void action() {
-		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrécédent());
+		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrecedent());
 	}
 	
 	public String message() {

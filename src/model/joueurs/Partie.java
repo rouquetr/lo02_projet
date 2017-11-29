@@ -5,8 +5,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.omg.CosNaming.NamingContextPackage.NotFound;
-
 import model.cartes.Pioche;
 import model.cartes.Talon;
 
@@ -79,7 +77,7 @@ public class Partie {
 		this.joueurEnCours = joueurEnCours;
 	}
 	
-	public Joueur findJoueurPrécédent() {
+	public Joueur findJoueurPrecedent() {
 		Iterator<Joueur> iterator = joueurs.descendingIterator();
 		while(iterator.hasNext()) 
 			if(iterator.next().equals(joueurEnCours)) {
@@ -104,7 +102,7 @@ public class Partie {
 	}
 	
 	public String afficherPartie() {
-		String message = "La partie (variante: " + pioche.getNom() +") est composée de:\n";
+		String message = "La partie (variante: " + pioche.getNom() +") est composÃ©e de:\n";
 		Iterator<Joueur> iterator = joueurs.iterator();
 		while (iterator.hasNext()) {
 			Joueur joueur = iterator.next();

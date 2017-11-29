@@ -31,7 +31,7 @@ public class Carte {
 	private Action action;
 	
 	public final static String[] VALEURS = {"Joker", "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Valet", "Dame", "Roi" };
-	public final static String[] COULEURS = {"Coeur", "Carreau", "Pique", "Trèfle"};
+	public final static String[] COULEURS = {"Coeur", "Carreau", "Pique", "TrÃ¨fle"};
 	
 	public Carte(int valeur, int couleur, int points, Action action) {
 		this.valeur = valeur;

@@ -9,10 +9,8 @@ import model.actions.Rejouer;
 
 public class PiocheMonclar extends Pioche {
 	
-	public final String NOM = "Jeu de Monclar";
-	
 	public PiocheMonclar() {
-		super();
+		super("Jeu de Monclar");
 				
 		for (int i = 1; i < 14; i++)
 			for (int k = 0; k < 4; k++) {

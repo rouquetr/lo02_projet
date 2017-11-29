@@ -33,7 +33,6 @@ public class VueLigneDeCommande {
 	public void lancerPartie() {
 		int numeroVariante = utils.demanderInt("Quelle variante choisissez-vous?\n" + utils.listerVariantes(), 1, 2);
 		controller.lancerPartie(numeroVariante);
-		System.out.println(partie.afficherPartie());
 		effectuerTourDeJeu();
 	}
 	
@@ -66,8 +65,8 @@ public class VueLigneDeCommande {
 		afficherScores();
 		String message = "Voulez-vous: \n" 
 						 + "1: relancer une partie?\n"
-						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
-						 + "3: Arrêter de jouer?";
+						 + "2: relancer une partie en changeant les paramï¿½tres (votre nom ainsi que le nombre de joueurs?\n"
+						 + "3: Arrï¿½ter de jouer?";
 		switch (utils.demanderInt(message, 1, 3)) {
 		case 1:
 			lancerPartie();
@@ -92,9 +91,9 @@ public class VueLigneDeCommande {
 	
 	public int faireJouerJoueur() {
 		System.out.println(partie.afficherPartie());
-		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
+		String message = "Indiquez le numï¿½ro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
 		message += utils.listerCartes(joueurEnCours.getMain(), 1);
-		message += "Ou le numéro d'une action a effectuer:\n";
+		message += "Ou le numï¿½ro d'une action a effectuer:\n";
 		message += joueurEnCours.getMain().size() + 1 + ": Annoncer carte\n";
 		message += utils.listerJoueursOrdinateurs(joueurEnCours.getMain().size() + 2, "Contrer ");
 		int max = joueurEnCours.getMain().size() + 1 + (partie.getJoueurs().size() - 1);
@@ -105,11 +104,11 @@ public class VueLigneDeCommande {
 	public void afficherActionEffectuee(int action) {
 		switch (action) {
 		case 0:
-			System.out.println(joueurEnCours.getNom() + " a pioché " + joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
+			System.out.println(joueurEnCours.getNom() + " a piochÃ© " + joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
 			partie.setJoueurEnCours(partie.findJoueurSuivant());
 			break;
 		case 1:
-			System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
+			System.out.println(joueurEnCours.getNom() + " a jouÃ© " + partie.getTalon().afficherTalon());
 			if(partie.getTalon().getLast().getActionMessage() != "") System.out.println(partie.getTalon().getLast().getActionMessage());
 			partie.setJoueurEnCours(partie.findJoueurSuivant());
 			break;
@@ -120,7 +119,7 @@ public class VueLigneDeCommande {
 			System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
 			break;
 		case 4:
-			System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
+			System.out.println(joueurEnCours.getNom() + " a annoncÃ© Carte");
 			break;
 		default:
 			break;

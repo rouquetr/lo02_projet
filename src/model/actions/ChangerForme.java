@@ -12,7 +12,7 @@ public class ChangerForme implements Action {
 		else {
 			LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
 			
-			String message = "Choisissez une couleur\n" + "1: Coeur\n" + "2: Carreau\n" + "3: Pique\n" + "4: Trèfle" ;
+			String message = "Choisissez une couleur\n" + "1: Coeur\n" + "2: Carreau\n" + "3: Pique\n" + "4: TrÃ¨fle" ;
 			
 			Talon.getInstance().setCouleur(utils.demanderInt(message, 1, 4) - 1);
 		}

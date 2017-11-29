@@ -9,10 +9,8 @@ import model.actions.Rejouer;
 
 public class PiocheDeBase extends Pioche {
 	
-	public final String NOM = "Jeu de base";
-	
 	public PiocheDeBase() {
-		super();
+		super("Jeu de base");
 				
 		for (int i = 1; i < 14; i++)
 			for (int k = 0; k < 4; k++) {

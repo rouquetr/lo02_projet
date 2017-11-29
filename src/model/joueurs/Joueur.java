@@ -72,7 +72,7 @@ public class Joueur {
 			this.main.remove(carte);
 			carte.effectuerAction();
 			if(main.size() > 1) aAnnonceCarte = false;
-		} else throw new CarteNonCompatibleException("La carte jouée n'est pas compatible avec le talon.");
+		} else throw new CarteNonCompatibleException("La carte jouÃ©e n'est pas compatible avec le talon.");
 	}
 	
 	public void compterPoints() {
