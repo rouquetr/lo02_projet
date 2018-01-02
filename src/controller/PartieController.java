@@ -1,7 +1,7 @@
 package controller;
 
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import model.cartes.Carte;
@@ -23,11 +23,11 @@ public class PartieController {
 	
 	public void initialiserPartie(int nombreDeJoueurs, String nomJoueur) {
 		
-		Set<Joueur> joueurs = new HashSet<Joueur>();
+		Set<Joueur> joueurs = new LinkedHashSet<Joueur>();
 		
+		joueurs.add(new Joueur(nomJoueur, 0));
 		for (int i = 0; i < nombreDeJoueurs - 1; i++) 
 			joueurs.add(new Ordinateur(nomsOrdinateur[i], i + 1));
-		joueurs.add(new Joueur(nomJoueur, 0));
 		partie.ajouterJoueurs(joueurs);
 	}
 	
@@ -41,8 +41,8 @@ public class PartieController {
 			break;
 		}
 		
-		Iterator<Joueur> iterator = partie.getJoueurs().iterator();
-		while (iterator.hasNext()) iterator.next().getMain().clear();
+		//Iterator<Joueur> iterator = partie.getJoueurs().iterator();
+		//while (iterator.hasNext()) iterator.next().getMain().clear();
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
@@ -68,6 +68,15 @@ public class PartieController {
 	
 	public void faireJouer(Ordinateur ordinateur) {
 		ordinateur.jouerCarte();
+	}
+	
+	public boolean authoriserAJouer(Joueur joueur) {
+		if(joueur.peutJouer()) return true;
+		else {
+			joueur.setPeutJouer(true);
+			partie.setJoueurEnCours(partie.findJoueurSuivant());
+			return false;
+		}
 	}
 	
 	public void terminerPartie() {

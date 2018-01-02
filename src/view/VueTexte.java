@@ -47,7 +47,7 @@ public class VueTexte implements Observer, Runnable {
 		while(true) {
 			joueurEnCours = partie.getJoueurEnCours();
 			joueurEnCours.addObserver(this);
-			if(joueurEnCours.peutJouer()) {
+			if(controller.authoriserAJouer(joueurEnCours)) {
 				try {
 						if (joueurEnCours.getClass() != Ordinateur.class)
 							controller.faireJouer(joueurEnCours, faireJouerJoueur());
@@ -56,10 +56,7 @@ public class VueTexte implements Observer, Runnable {
 				} catch (NoSuchElementException e) {
 					System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
 				}
-			} 	else {
-				System.out.println(joueurEnCours.getNom() + " passe son tour.");
-				joueurEnCours.setPeutJouer(true);
-			}
+			} else System.out.println(joueurEnCours.getNom() + " passe son tour.");
 		}
 	}
 	
