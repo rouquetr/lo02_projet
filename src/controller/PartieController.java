@@ -40,10 +40,15 @@ public class PartieController {
 			partie.setPioche(new PiocheDeBase());
 			break;
 		}
+		
+		Iterator<Joueur> iterator = partie.getJoueurs().iterator();
+		while (iterator.hasNext()) iterator.next().getMain().clear();
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
+		partie.getTalon().clear();
 		partie.getTalon().add(partie.getPioche().tirerUneCarte());
+		
 		partie.setJoueurEnCours(partie.getJoueurs().getFirst());
 	}
 	
@@ -65,15 +70,8 @@ public class PartieController {
 		ordinateur.jouerCarte();
 	}
 	
-	public boolean verifierSiPartieTerminee() {
-		if(partie.getJoueurEnCours().getMain().size() == 0) {
-			partie.mettreAJourScores();
-			return true;
-		}
-		if (partie.getJoueurEnCours().getPosition() == (partie.getJoueurs().size() - 1)) {
-			this.partie.incrementerNumeroTour();
-		}
-		return false;
+	public void terminerPartie() {
+		partie.mettreAJourScores();
 	}
 	
 }

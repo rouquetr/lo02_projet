@@ -120,7 +120,10 @@ public class Partie extends Observable {
 	
 	public void mettreAJourScores() {
 		Iterator<Joueur> iterator = joueurs.iterator();
-		while (iterator.hasNext()) 	iterator.next().compterPoints();
+		while (iterator.hasNext()) 	{
+			Joueur joueur = iterator.next();
+			joueur.compterPoints();
+		}
 	}
 	
 }

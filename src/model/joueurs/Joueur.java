@@ -82,7 +82,8 @@ public class Joueur extends Observable {
 			this.main.remove(carte);
 			carte.effectuerAction();
 			if(main.size() > 1) aAnnonceCarte = false;
-			this.notifyObservers("jouerCarte");	
+			if(main.size() == 0) this.notifyObservers("partieTerminee");
+			else this.notifyObservers("jouerCarte");	
 		} else {
 			this.notifyObservers("jouerCarteErreur");
 		}

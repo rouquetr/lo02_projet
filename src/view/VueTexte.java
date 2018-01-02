@@ -36,7 +36,6 @@ public class VueTexte implements Observer, Runnable {
 		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
 		
 		controller.initialiserPartie(nombreJoueurs, nomJoueur);
-		Iterator<Joueur> joueurs = partie.getJoueurs().iterator();
 	}
 	
 	public void lancerPartie() {
@@ -75,6 +74,30 @@ public class VueTexte implements Observer, Runnable {
 		
 		return utils.demanderInt(message, 0, max);
 	}
+	
+	public void afficherFinDePartie() {
+		System.out.println("Les scores sont: ");
+		Iterator<Joueur> iterator = partie.getJoueursByScore().iterator();
+		while (iterator.hasNext()) {
+			Joueur joueur = iterator.next();
+			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
+		}
+		String message = "Voulez-vous: \n" 
+						 + "1: relancer une partie?\n"
+						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
+						 + "3: Arréter de jouer?";
+		switch (utils.demanderInt(message, 1, 3)) {
+		case 1:
+			lancerPartie();
+			break;
+		case 2:
+			initialiserPartie();
+			break;
+		case 3:
+			System.exit(0);
+			break;
+		}
+	}
 
 	@Override
 	public void update(Observable observable, Object arg1) {
@@ -97,5 +120,9 @@ public class VueTexte implements Observer, Runnable {
 			System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
 		if(observable instanceof Joueur && (String) arg1 == "aAnnonceCarte")
 			System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
+		if(observable instanceof Joueur && (String) arg1 == "partieTerminee") {
+			controller.terminerPartie();
+			afficherFinDePartie();
+		}
 	}
 }
