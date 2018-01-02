@@ -1,7 +1,7 @@
 package main;
 
 import controller.PartieController;
-import view.VueLigneDeCommande;
+import view.VueTexte;
 
 public class Main {
 
@@ -9,10 +9,7 @@ public class Main {
 
 		PartieController controller = new PartieController();
 		
-		VueLigneDeCommande vueLigneDeCommande = new VueLigneDeCommande(controller);
-		
-		vueLigneDeCommande.initialiserPartie();
-		vueLigneDeCommande.lancerPartie();
+		VueTexte vueTexte = new VueTexte(controller);
 	}
 
 }

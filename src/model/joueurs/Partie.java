@@ -4,11 +4,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Set;
 
 import model.cartes.Pioche;
 import model.cartes.Talon;
 
-public class Partie {
+public class Partie extends Observable {
 	
 	private static Partie uniqueInstance;
 
@@ -47,7 +49,7 @@ public class Partie {
 	}
 	
 	public void setPioche(Pioche pioche) {
-		this.pioche = pioche;
+		this.pioche = pioche;	
 	}
 	
 	public LinkedList<Joueur> getJoueurs() {
@@ -65,8 +67,10 @@ public class Partie {
 		return classement;
 	}
 	
-	public void ajouterJoueur(Joueur joueur) {
-		joueurs.add(joueur);
+	public void ajouterJoueurs(Set<Joueur> joueurs) {
+		this.joueurs.addAll(joueurs);
+		this.setChanged();
+		this.notifyObservers("ajouterJoueurs");
 	}
 	
 	public Joueur getJoueurEnCours() {
@@ -75,6 +79,8 @@ public class Partie {
 	
 	public void setJoueurEnCours(Joueur joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
+		this.setChanged();
+		this.notifyObservers("setJoueurEnCours");	
 	}
 	
 	public Joueur findJoueurPrecedent() {

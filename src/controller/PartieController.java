@@ -1,9 +1,10 @@
 package controller;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import model.cartes.Carte;
-import model.cartes.CarteNonCompatibleException;
 import model.cartes.PiocheDeBase;
 import model.cartes.PiocheMonclar;
 import model.joueurs.Joueur;
@@ -22,10 +23,12 @@ public class PartieController {
 	
 	public void initialiserPartie(int nombreDeJoueurs, String nomJoueur) {
 		
-		partie.ajouterJoueur(new Joueur(nomJoueur, 0));
+		Set<Joueur> joueurs = new HashSet<Joueur>();
 		
 		for (int i = 0; i < nombreDeJoueurs - 1; i++) 
-			partie.ajouterJoueur(new Ordinateur(nomsOrdinateur[i], i + 1));
+			joueurs.add(new Ordinateur(nomsOrdinateur[i], i + 1));
+		joueurs.add(new Joueur(nomJoueur, 0));
+		partie.ajouterJoueurs(joueurs);
 	}
 	
 	public void lancerPartie(int numeroVariante) {
@@ -37,7 +40,6 @@ public class PartieController {
 			partie.setPioche(new PiocheDeBase());
 			break;
 		}
-		System.out.println(partie.getPioche().size());
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		
@@ -45,35 +47,22 @@ public class PartieController {
 		partie.setJoueurEnCours(partie.getJoueurs().getFirst());
 	}
 	
-	public int faireJouer(Joueur joueur, int numeroCarte) {
+	public void faireJouer(Joueur joueur, int numeroCarte) {
 		if(numeroCarte == 0) {
 			joueur.piocher();
 			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
-			return 0;
-		} else if (numeroCarte == joueur.getMain().size() + 1) {
-			if(joueur.getMain().size() > 2) return 3;
-			joueur.setaAnnonceCarte(true);
-			return 4;
-		} else {
+		} 
+		else if (numeroCarte == joueur.getMain().size() + 1) joueur.setaAnnonceCarte(true);
+		else {
 			Carte carteVoulue = null;
 			Iterator<Carte> iterator = joueur.getMain().iterator();
 			for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
-			try {
-				joueur.jouerCarte(carteVoulue);
-				return 1;
-			} catch (CarteNonCompatibleException e) {
-				return 2;
-			}
+			joueur.jouerCarte(carteVoulue);
 		}
 	}
 	
-	public int faireJouer(Ordinateur ordinateur) {
-		try {
-			int resultat = ordinateur.jouerCarte();
-			return resultat;
-		} catch (CarteNonCompatibleException e) {
-			return 2;
-		}
+	public void faireJouer(Ordinateur ordinateur) {
+		ordinateur.jouerCarte();
 	}
 	
 	public boolean verifierSiPartieTerminee() {

@@ -3,7 +3,6 @@ package model.joueurs;
 import java.util.Iterator;
 
 import model.cartes.Carte;
-import model.cartes.CarteNonCompatibleException;
 import model.cartes.Talon;
 
 public class Ordinateur extends Joueur {
@@ -12,7 +11,7 @@ public class Ordinateur extends Joueur {
 		super(nom, position);
 	}
 
-	public int jouerCarte() throws CarteNonCompatibleException {
+	public int jouerCarte() {
 		Carte carteAJouer = null;
 		Iterator<Carte> it = this.getMain().iterator();
 		while(it.hasNext()) {

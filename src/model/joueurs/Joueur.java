@@ -1,12 +1,12 @@
 package model.joueurs;
 
 import java.util.Iterator;
+import java.util.Observable;
 
 import model.cartes.Carte;
-import model.cartes.CarteNonCompatibleException;
 import model.cartes.Main;
 
-public class Joueur {
+public class Joueur extends Observable {
 	
 	private String nom;
 	private int position;
@@ -49,8 +49,15 @@ public class Joueur {
 		return aAnnonceCarte;
 	}
 
-	public void setaAnnonceCarte(boolean aAnnonceCarte) {
+	public boolean setaAnnonceCarte(boolean aAnnonceCarte) {
+		this.setChanged();
+		if(this.main.size() > 2) {
+			this.notifyObservers("aAnnonceCarteErreur");	
+			return false; 
+		}
 		this.aAnnonceCarte = aAnnonceCarte;
+		this.notifyObservers("aAnnonceCarte");	
+		return true;
 	}
 
 	@Override
@@ -61,18 +68,24 @@ public class Joueur {
 	public void piocher() {
 		aAnnonceCarte = false;
 		this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
+		this.setChanged();
+		this.notifyObservers("piocher");	
 	}
 	
 	public void piocher(int nombreCartes) {
 		for (int i = 0; i < nombreCartes; i++) piocher();
 	}
 	
-	public void jouerCarte(Carte carte) throws CarteNonCompatibleException {
+	public void jouerCarte(Carte carte) {
+		this.setChanged();
 		if(Partie.getInstance().getTalon().add(carte)) {
 			this.main.remove(carte);
 			carte.effectuerAction();
 			if(main.size() > 1) aAnnonceCarte = false;
-		} else throw new CarteNonCompatibleException("La carte jouée n'est pas compatible avec le talon.");
+			this.notifyObservers("jouerCarte");	
+		} else {
+			this.notifyObservers("jouerCarteErreur");
+		}
 	}
 	
 	public void compterPoints() {
