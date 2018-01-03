@@ -24,6 +24,7 @@ public class LigneDeCommandeUtils {
 			System.out.println(message);
 			try {
 				saisie = scanner.nextInt();
+				if (saisie < min || saisie > max) System.out.println("Veuillez entrer une valeur valide");
 			} catch (InputMismatchException e) {
 				System.out.println("Veuillez entrer une valeur valide");
 				scanner.nextLine();

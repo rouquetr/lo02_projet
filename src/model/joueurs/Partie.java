@@ -8,6 +8,8 @@ import java.util.Observable;
 import java.util.Set;
 
 import model.cartes.Pioche;
+import model.cartes.PiocheDeBase;
+import model.cartes.PiocheMonclar;
 import model.cartes.Talon;
 
 public class Partie extends Observable {
@@ -30,6 +32,19 @@ public class Partie extends Observable {
 	public static Partie getInstance() {
 		if(uniqueInstance == null) uniqueInstance = new Partie();
 		return uniqueInstance;
+	}
+	
+	public void commencerNouvellePartie(Pioche variante) {
+		this.pioche = variante;
+		this.pioche.melanger();
+		this.pioche.distribuerCarte(this.joueurs);
+		
+		this.talon.clear();
+		this.talon.add(this.pioche.tirerUneCarte());
+		
+		this.joueurEnCours = this.joueurs.getFirst();
+		this.setChanged();
+		this.notifyObservers("commencerNouvellePartie");
 	}
 	
 	public void changerSens() {

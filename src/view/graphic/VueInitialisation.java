@@ -1,26 +1,23 @@
 package view.graphic;
 
-import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import controller.PartieController;
 import model.joueurs.Partie;
 
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-
-public class VueInitialisation {
-
-	private PartieController controller;
+public class VueInitialisation extends JPanel {
 	
-	private JFrame frame;
 	private JLabel labelNom;
 	private JLabel labelNombreJoueur;
 	private JLabel labelVariantes;
@@ -31,59 +28,47 @@ public class VueInitialisation {
 	private JScrollPane scrollPane;
 
 	/**
-	 * Create the application.
+	 * Create the panel.
 	 */
 	public VueInitialisation(PartieController controller) {
-		this.controller = controller;
-		initialize();
-		this.frame.setVisible(true);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setSize(768, 432);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setLayout(null);
+		setSize(768, 432);
 		
 		labelNom = new JLabel("Quel est votre nom?");
 		labelNom.setBounds(20, 108, 249, 26);
-		frame.getContentPane().add(labelNom);
+		add(labelNom);
 		
 		fieldNom = new JTextField();
 		fieldNom.setBounds(315, 113, 194, 26);
-		frame.getContentPane().add(fieldNom);
+		add(fieldNom);
 		fieldNom.setColumns(10);
 		
 		labelNombreJoueur = new JLabel("A combien voulez-vous jouer?");
 		labelNombreJoueur.setBounds(20, 156, 191, 16);
-		frame.getContentPane().add(labelNombreJoueur);
+		add(labelNombreJoueur);
 
 		SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(Partie.MINJOUEUR, Partie.MINJOUEUR, Partie.MAXJOUEUR, 1);
 		spinnerNombreJoueur = new JSpinner(spinnerNumberModel);
 		spinnerNombreJoueur.setBounds(315, 151, 37, 26);
-		frame.getContentPane().add(spinnerNombreJoueur);
+		add(spinnerNombreJoueur);
 		
 		labelVariantes = new JLabel("Quelle variante souhaitez-vous choisir?");
 		labelVariantes.setBounds(20, 204, 249, 16);
-		frame.getContentPane().add(labelVariantes);
+		add(labelVariantes);
 		
 		buttonCommencerPartie = new JButton("Commencer la partie !");
 		buttonCommencerPartie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.initialiserPartie((int)spinnerNombreJoueur.getValue(), fieldNom.getText());
-				controller.lancerPartie((int)spinnerNombreJoueur.getValue());
+				controller.lancerPartie((int)spinnerNombreJoueur.getValue() + 1);
 			}
 		});
 		buttonCommencerPartie.setBounds(289, 304, 182, 29);
-		frame.getContentPane().add(buttonCommencerPartie);
+		add(buttonCommencerPartie);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(315, 204, 194, 57);
-		frame.getContentPane().add(scrollPane);
+		add(scrollPane);
 		
 		listVariantes = new JList<String>(new AbstractListModel() {
 			String[] values = new String[] {"Jeu de base", "Variante de Monclar"};
@@ -95,6 +80,6 @@ public class VueInitialisation {
 			}
 		});
 		listVariantes.setBounds(314, 204, 137, 50);
-		scrollPane.setViewportView(listVariantes);
+		scrollPane.setViewportView(listVariantes);	
 	}
 }

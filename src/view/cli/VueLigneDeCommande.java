@@ -99,6 +99,10 @@ public class VueLigneDeCommande implements Observer, Runnable {
 
 	@Override
 	public void update(Observable observable, Object arg1) {
+		if(observable instanceof Partie && (String)arg1 == "commencerNouvellePartie") {
+			System.out.println("Une nouvelle partie commence: ");
+			effectuerTourDeJeu();
+		}
 		if(observable instanceof Partie && (String)arg1 == "setJoueurEnCours")
 			effectuerTourDeJeu();
 		if(observable instanceof Joueur && (String) arg1 == "piocher") {

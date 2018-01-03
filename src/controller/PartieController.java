@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import model.cartes.Carte;
+import model.cartes.Pioche;
 import model.cartes.PiocheDeBase;
 import model.cartes.PiocheMonclar;
 import model.joueurs.Joueur;
@@ -32,23 +33,16 @@ public class PartieController {
 	}
 	
 	public void lancerPartie(int numeroVariante) {
-		System.out.println(numeroVariante);
+		Pioche variante = null;
 		switch (numeroVariante) {
 		case 2:
-			partie.setPioche(new PiocheMonclar());
+			variante = new PiocheMonclar();
 			break;
 		default:
-			partie.setPioche(new PiocheDeBase());
+			variante = new PiocheDeBase();
 			break;
 		}
-		
-		partie.getPioche().melanger();
-		partie.getPioche().distribuerCarte(partie.getJoueurs());
-		
-		partie.getTalon().clear();
-		partie.getTalon().add(partie.getPioche().tirerUneCarte());
-		
-		partie.setJoueurEnCours(partie.getJoueurs().getFirst());
+		partie.commencerNouvellePartie(variante);
 	}
 	
 	public void faireJouer(Joueur joueur, int numeroCarte) {
