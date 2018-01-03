@@ -9,7 +9,7 @@ public class Main {
 
 		PartieController controller = new PartieController();
 		
-		VuePartie window = new VuePartie(controller);
+		VuePartie vuePartie = new VuePartie(controller);
 		VueLigneDeCommande vueLigneDeCommande = new VueLigneDeCommande(controller);
 	}
 

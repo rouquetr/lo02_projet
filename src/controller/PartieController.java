@@ -18,10 +18,6 @@ public class PartieController {
 	
 	private String[] nomsOrdinateur = {"James Bond", "Roger Rabbit", "George Abitbol", "Dark Vador"};
 	
-	public Partie getPartie(){
-		return this.partie ; 
-	}
-	
 	public void initialiserPartie(int nombreDeJoueurs, String nomJoueur) {
 		
 		Set<Joueur> joueurs = new LinkedHashSet<Joueur>();

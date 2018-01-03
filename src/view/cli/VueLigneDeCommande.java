@@ -11,56 +11,70 @@ import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
 
 public class VueLigneDeCommande implements Observer, Runnable {
-	
+
 	private Partie partie = Partie.getInstance();
-	
+
 	private PartieController controller;
-	
+
 	private Joueur joueurEnCours;
-	
+	private boolean nouveauTour = false;
+
 	private LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
+	Thread initialisation = null;
+	Thread tourDeJeu = null;
+	Thread tourDeJeuPrecedent = null;
 
 	public VueLigneDeCommande(PartieController controller) {
 		this.controller = controller;
-		Thread t = new Thread(this);
 		partie.addObserver(this);
-		t.start();
+		initialisation = new Thread(this);
+		initialisation.start();
 	}
-	
+
 	public void run() {
 		initialiserPartie();
 	}
-	
+
 	public void initialiserPartie() {
 		String nomJoueur = utils.demanderString("Saisissez votre nom de joueur");
-		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
-		
+		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR,
+				Partie.MAXJOUEUR);
+
 		controller.initialiserPartie(nombreJoueurs, nomJoueur);
 		lancerPartie();
 	}
-	
+
 	public void lancerPartie() {
 		int numeroVariante = utils.demanderInt("Quelle variante choisissez-vous?\n" + utils.listerVariantes(), 1, 2);
 		controller.lancerPartie(numeroVariante);
 	}
-	
+
 	public void effectuerTourDeJeu() {
-		while(true) {
-			joueurEnCours = partie.getJoueurEnCours();
-			joueurEnCours.addObserver(this);
-			if(controller.authoriserAJouer(joueurEnCours)) {
-				try {
-						if (joueurEnCours.getClass() != Ordinateur.class)
-							controller.faireJouer(joueurEnCours, faireJouerJoueur());
-						else
+		tourDeJeuPrecedent = tourDeJeu;
+		tourDeJeu = new Thread(() -> {
+			while (true) {
+				joueurEnCours = partie.getJoueurEnCours();
+				joueurEnCours.addObserver(this);
+				if (controller.authoriserAJouer(joueurEnCours)) {
+					try {
+						if (joueurEnCours.getClass() != Ordinateur.class) {
+							int action = faireJouerJoueur();
+							controller.faireJouer(joueurEnCours, action);
+						} else
 							controller.faireJouer((Ordinateur) joueurEnCours);
-				} catch (NoSuchElementException e) {
-					System.out.println("Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
-				}
-			} else System.out.println(joueurEnCours.getNom() + " passe son tour.");
-		}
+					} catch (NoSuchElementException e) {
+						System.out.println(
+								"Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+					}
+				} else
+					System.out.println(joueurEnCours.getNom() + " passe son tour.");
+			}
+		});
+		tourDeJeu.start();
+		if(initialisation.isAlive()) initialisation.stop();
+		if(tourDeJeuPrecedent != null) tourDeJeuPrecedent.stop();
 	}
-	
+
 	public int faireJouerJoueur() {
 		System.out.println(partie.afficherPartie());
 		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
@@ -69,10 +83,10 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		message += joueurEnCours.getMain().size() + 1 + ": Annoncer carte\n";
 		message += utils.listerJoueursOrdinateurs(joueurEnCours.getMain().size() + 2, "Contrer ");
 		int max = joueurEnCours.getMain().size() + 1 + (partie.getJoueurs().size() - 1);
-		
+
 		return utils.demanderInt(message, 0, max);
 	}
-	
+
 	public void afficherFinDePartie() {
 		System.out.println("Les scores sont: ");
 		Iterator<Joueur> iterator = partie.getJoueursByScore().iterator();
@@ -80,10 +94,9 @@ public class VueLigneDeCommande implements Observer, Runnable {
 			Joueur joueur = iterator.next();
 			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
 		}
-		String message = "Voulez-vous: \n" 
-						 + "1: relancer une partie?\n"
-						 + "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
-						 + "3: Arréter de jouer?";
+		String message = "Voulez-vous: \n" + "1: relancer une partie?\n"
+				+ "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
+				+ "3: Arréter de jouer?";
 		switch (utils.demanderInt(message, 1, 3)) {
 		case 1:
 			lancerPartie();
@@ -99,30 +112,43 @@ public class VueLigneDeCommande implements Observer, Runnable {
 
 	@Override
 	public void update(Observable observable, Object arg1) {
-		if(observable instanceof Partie && (String)arg1 == "commencerNouvellePartie") {
-			System.out.println("Une nouvelle partie commence: ");
-			effectuerTourDeJeu();
-		}
-		if(observable instanceof Partie && (String)arg1 == "setJoueurEnCours")
-			effectuerTourDeJeu();
-		if(observable instanceof Joueur && (String) arg1 == "piocher") {
-			System.out.println(joueurEnCours.getNom() + " a pioché " + joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
-			partie.setJoueurEnCours(partie.findJoueurSuivant());
-		}
-		if(observable instanceof Joueur && (String) arg1 == "jouerCarte") {
-			System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
-			if(partie.getTalon().getLast().getActionMessage() != "") System.out.println(partie.getTalon().getLast().getActionMessage());
-			partie.setJoueurEnCours(partie.findJoueurSuivant());
-		}
-		if(observable instanceof Joueur && (String) arg1 == "jouerCarteErreur")
-			System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");
-		if(observable instanceof Joueur && (String) arg1 == "aAnnonceCarteErreur")
-			System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
-		if(observable instanceof Joueur && (String) arg1 == "aAnnonceCarte")
-			System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
-		if(observable instanceof Joueur && (String) arg1 == "partieTerminee") {
-			controller.terminerPartie();
-			afficherFinDePartie();
+		if (observable instanceof Partie) {
+			switch ((String) arg1) {
+			case "commencerNouvellePartie":
+				System.out.println("Une nouvelle partie commence: ");
+				effectuerTourDeJeu();
+				break;
+			case "setJoueurEnCours":
+				effectuerTourDeJeu();
+				break;
+			}
+		} else if (observable instanceof Joueur) {
+			switch ((String) arg1) {
+			case "piocher":
+				System.out.println(joueurEnCours.getNom() + " a pioché "
+						+ joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
+				partie.setJoueurEnCours(partie.findJoueurSuivant());
+				break;
+			case "jouerCarte":
+				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
+				if (partie.getTalon().getLast().getActionMessage() != "")
+					System.out.println(partie.getTalon().getLast().getActionMessage());
+				partie.setJoueurEnCours(partie.findJoueurSuivant());
+				break;
+			case "jouerCarteErreur":
+				System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");
+				break;
+			case "aAnnonceCarteErreur":
+				System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
+				break;
+			case "aAnnonceCarte":
+				System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
+				break;
+			case "partieTerminee":
+				controller.terminerPartie();
+				afficherFinDePartie();
+				break;
+			}
 		}
 	}
 }

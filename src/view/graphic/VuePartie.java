@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 public class VuePartie implements Observer, Runnable {
 
 	private PartieController controller;
+	private Partie partie = Partie.getInstance();
 	
 	private JFrame frame;
 
@@ -29,7 +30,7 @@ public class VuePartie implements Observer, Runnable {
 	 */
 	public VuePartie(PartieController controller) {
 		this.controller = controller;
-		Partie.getInstance().addObserver(this);
+		partie.addObserver(this);
 		Thread t = new Thread(this);
 		t.start();
 	}
