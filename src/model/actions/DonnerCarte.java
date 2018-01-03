@@ -4,7 +4,7 @@ import model.cartes.Carte;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
-import view.LigneDeCommandeUtils;
+import view.cli.LigneDeCommandeUtils;
 
 public class DonnerCarte implements Action {
 	
@@ -20,12 +20,12 @@ public class DonnerCarte implements Action {
 			
 			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));
 			
-			message = "Choisissez la carte à donner à " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
+			message = "Choisissez la carte ï¿½ donner ï¿½ " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
 			Carte carteChoisie = partie.getJoueurEnCours().getMain().get(utils.demanderInt(message, 1, partie.getJoueurEnCours().getMain().size()) - 1);
 			
 			joueurChoisi.getMain().add(carteChoisie);
 			partie.getJoueurEnCours().getMain().remove(carteChoisie);
-			System.out.println(partie.getJoueurEnCours().getNom() + " a donné une carte à" + joueurChoisi.getNom());
+			System.out.println(partie.getJoueurEnCours().getNom() + " a donnï¿½ une carte ï¿½" + joueurChoisi.getNom());
 		}
 	}
 	

@@ -32,6 +32,7 @@ public class PartieController {
 	}
 	
 	public void lancerPartie(int numeroVariante) {
+		System.out.println(numeroVariante);
 		switch (numeroVariante) {
 		case 2:
 			partie.setPioche(new PiocheMonclar());
@@ -41,8 +42,6 @@ public class PartieController {
 			break;
 		}
 		
-		//Iterator<Joueur> iterator = partie.getJoueurs().iterator();
-		//while (iterator.hasNext()) iterator.next().getMain().clear();
 		partie.getPioche().melanger();
 		partie.getPioche().distribuerCarte(partie.getJoueurs());
 		

@@ -1,4 +1,4 @@
-package view;
+package view.cli;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

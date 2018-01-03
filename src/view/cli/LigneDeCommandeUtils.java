@@ -1,4 +1,4 @@
-package view;
+package view.cli;
 
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import model.cartes.Carte;
-import model.cartes.PiocheDeBase;
-import model.cartes.PiocheMonclar;
 import model.joueurs.Joueur;
 import model.joueurs.Partie;
 

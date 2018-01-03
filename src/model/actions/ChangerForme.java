@@ -3,7 +3,7 @@ package model.actions;
 import model.cartes.Talon;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
-import view.LigneDeCommandeUtils;
+import view.cli.LigneDeCommandeUtils;
 
 public class ChangerForme implements Action {
 
