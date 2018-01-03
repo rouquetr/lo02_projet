@@ -18,7 +18,7 @@ import java.util.Observer;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
-public class VuePartie implements Observer {
+public class VuePartie implements Observer, Runnable {
 
 	private PartieController controller;
 	
@@ -29,9 +29,15 @@ public class VuePartie implements Observer {
 	 */
 	public VuePartie(PartieController controller) {
 		this.controller = controller;
+		Partie.getInstance().addObserver(this);
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	@Override
+	public void run() {
 		initialize();
 		this.frame.setVisible(true);
-		Partie.getInstance().addObserver(this);
 	}
 
 	/**
