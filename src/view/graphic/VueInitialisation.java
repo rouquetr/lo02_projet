@@ -14,6 +14,8 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+
 public class VueInitialisation {
 
 	private PartieController controller;
@@ -26,6 +28,7 @@ public class VueInitialisation {
 	private JSpinner spinnerNombreJoueur;
 	private JList<String> listVariantes;
 	private JButton buttonCommencerPartie;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the application.
@@ -68,6 +71,20 @@ public class VueInitialisation {
 		labelVariantes.setBounds(20, 204, 249, 16);
 		frame.getContentPane().add(labelVariantes);
 		
+		buttonCommencerPartie = new JButton("Commencer la partie !");
+		buttonCommencerPartie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.initialiserPartie((int)spinnerNombreJoueur.getValue(), fieldNom.getText());
+				controller.lancerPartie((int)spinnerNombreJoueur.getValue());
+			}
+		});
+		buttonCommencerPartie.setBounds(289, 304, 182, 29);
+		frame.getContentPane().add(buttonCommencerPartie);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(315, 204, 194, 57);
+		frame.getContentPane().add(scrollPane);
+		
 		listVariantes = new JList<String>(new AbstractListModel() {
 			String[] values = new String[] {"Jeu de base", "Variante de Monclar"};
 			public int getSize() {
@@ -78,16 +95,6 @@ public class VueInitialisation {
 			}
 		});
 		listVariantes.setBounds(314, 204, 137, 50);
-		frame.getContentPane().add(listVariantes);
-		
-		buttonCommencerPartie = new JButton("Commencer la partie !");
-		buttonCommencerPartie.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.initialiserPartie((int)spinnerNombreJoueur.getValue(), fieldNom.getText());
-				controller.lancerPartie(listVariantes.getSelectedIndex() + 1);
-			}
-		});
-		buttonCommencerPartie.setBounds(289, 304, 182, 29);
-		frame.getContentPane().add(buttonCommencerPartie);
+		scrollPane.setViewportView(listVariantes);
 	}
 }

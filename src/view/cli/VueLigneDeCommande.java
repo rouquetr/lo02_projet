@@ -36,6 +36,7 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR, Partie.MAXJOUEUR);
 		
 		controller.initialiserPartie(nombreJoueurs, nomJoueur);
+		lancerPartie();
 	}
 	
 	public void lancerPartie() {
@@ -98,8 +99,6 @@ public class VueLigneDeCommande implements Observer, Runnable {
 
 	@Override
 	public void update(Observable observable, Object arg1) {
-		if(observable instanceof Partie && (String)arg1 == "ajouterJoueurs")
-			lancerPartie();
 		if(observable instanceof Partie && (String)arg1 == "setJoueurEnCours")
 			effectuerTourDeJeu();
 		if(observable instanceof Joueur && (String) arg1 == "piocher") {
