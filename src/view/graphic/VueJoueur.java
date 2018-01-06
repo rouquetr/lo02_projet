@@ -1,24 +1,29 @@
 package view.graphic;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
 import controller.PartieController;
+import model.cartes.Carte;
+import model.cartes.Main;
+import model.joueurs.Joueur;
 import model.joueurs.Partie;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class VueJoueur extends JPanel {
 	
-	private JLabel lblPartieEnCours;
+	private Partie partie = Partie.getInstance();
+	private Joueur joueurHumain = partie.getJoueurs().get(0);
+	private JScrollPane scrollPane;
+	private JList<String> listCartes;
+	private JButton jouerCarte;
+	private JLabel talon;
 
 	/**
 	 * Create the panel.
@@ -27,12 +32,34 @@ public class VueJoueur extends JPanel {
 		setLayout(null);
 		setSize(768, 432);
 		
-		lblPartieEnCours = new JLabel("PARTIE EN COURS");
-		lblPartieEnCours.setBounds(148, 67, 111, 16);
-		add(lblPartieEnCours);
-
-		SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(Partie.MINJOUEUR, Partie.MINJOUEUR,
-				Partie.MAXJOUEUR, 1);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(229, 310, 194, 90);
+		add(scrollPane);
+		listCartes = new JList<String>();
+		updateMain();
+		listCartes.setBounds(314, 204, 137, 50);
+		scrollPane.setViewportView(listCartes);	
+		
+		jouerCarte = new JButton("Jouer cette carte");
+		jouerCarte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.faireJouer(joueurHumain,listCartes.getSelectedIndex() + 1);
+			}
+		});
+		jouerCarte.setBounds(435, 307, 146, 29);
+		add(jouerCarte);
+		
+		talon = new JLabel("Talon");
+		talon.setBounds(307, 205, 73, 16);
+		talon.setText(partie.getTalon().getLast().afficherCarte());
+		add(talon);
 	}
-
+	
+	private void updateMain() {
+		DefaultListModel<String> model = new DefaultListModel();
+		Main main = joueurHumain.getMain();
+		Iterator<Carte> iterator = main.iterator();
+		while (iterator.hasNext()) model.addElement(iterator.next().afficherCarte());
+		listCartes.setModel(model);
+	}
 }
