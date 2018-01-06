@@ -24,6 +24,7 @@ public class VueJoueur extends JPanel {
 	private JList<String> listCartes;
 	private JButton jouerCarte;
 	private JLabel talon;
+	private JButton piocher;
 
 	/**
 	 * Create the panel.
@@ -36,7 +37,6 @@ public class VueJoueur extends JPanel {
 		scrollPane.setBounds(229, 310, 194, 90);
 		add(scrollPane);
 		listCartes = new JList<String>();
-		updateMain();
 		listCartes.setBounds(314, 204, 137, 50);
 		scrollPane.setViewportView(listCartes);	
 		
@@ -50,9 +50,18 @@ public class VueJoueur extends JPanel {
 		add(jouerCarte);
 		
 		talon = new JLabel("Talon");
-		talon.setBounds(307, 205, 73, 16);
-		talon.setText(partie.getTalon().getLast().afficherCarte());
+		talon.setBounds(260, 209, 184, 16);
 		add(talon);
+		
+		piocher = new JButton("Piocher");
+		piocher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.fairePiocher(joueurHumain);
+			}
+		});
+		piocher.setBounds(435, 337, 146, 29);
+		add(piocher);
+		refresh();
 	}
 	
 	private void updateMain() {
@@ -61,5 +70,10 @@ public class VueJoueur extends JPanel {
 		Iterator<Carte> iterator = main.iterator();
 		while (iterator.hasNext()) model.addElement(iterator.next().afficherCarte());
 		listCartes.setModel(model);
+	}
+	
+	public void refresh() {
+		updateMain();
+		talon.setText(partie.getTalon().getLast().afficherCarte());
 	}
 }

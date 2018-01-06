@@ -127,13 +127,11 @@ public class VueLigneDeCommande implements Observer, Runnable {
 			case "piocher":
 				System.out.println(joueurEnCours.getNom() + " a pioché "
 						+ joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
-				partie.setJoueurEnCours(partie.findJoueurSuivant());
 				break;
 			case "jouerCarte":
 				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
 				if (partie.getTalon().getLast().getActionMessage() != "")
 					System.out.println(partie.getTalon().getLast().getActionMessage());
-				partie.setJoueurEnCours(partie.findJoueurSuivant());
 				break;
 			case "jouerCarteErreur":
 				System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");

@@ -17,7 +17,7 @@ public abstract class Pioche extends Paquet {
 		
 		for (int i = 0; i < 8; i++) {
 			Iterator<Joueur> iterator = joueurs.iterator();
-			while(iterator.hasNext()) iterator.next().piocher();
+			while(iterator.hasNext()) iterator.next().piocher(1);
 		}
 		
 	}

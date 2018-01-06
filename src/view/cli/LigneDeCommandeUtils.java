@@ -1,5 +1,8 @@
 package view.cli;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,19 +18,29 @@ public class LigneDeCommandeUtils {
 	
 	public String demanderString(String message) {
 		System.out.println(message);
-		return scanner.nextLine();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String resultat = null;
+		try {
+			resultat = br.readLine();
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+		return resultat;
 	}
 	
 	public int demanderInt(String message, int min, int max) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int saisie = -1;
 		while (saisie < min || saisie > max) {
 			System.out.println(message);
 			try {
-				saisie = scanner.nextInt();
+				saisie = Integer.parseInt(br.readLine());
 				if (saisie < min || saisie > max) System.out.println("Veuillez entrer une valeur valide");
-			} catch (InputMismatchException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Veuillez entrer une valeur valide");
 				scanner.nextLine();
+			} catch (IOException e) {
+				System.err.println(e.getMessage());
 			}
 		}
 		return saisie;
@@ -59,6 +72,18 @@ public class LigneDeCommandeUtils {
 	
 	public void afficherTalon() {
 		System.out.println("La carte visible du talon est " + Partie.getInstance().getTalon().afficherTalon());
+	}
+	
+	private String lireChaine() {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String resultat = null;
+		try {
+			System.out.println(">");
+			resultat = br.readLine();
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+		return resultat;
 	}
 
 }

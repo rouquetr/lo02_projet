@@ -55,7 +55,18 @@ public class PartieController {
 		}
 	}
 	
+	public void fairePiocher(Joueur joueur) {
+		joueur.piocher();
+		if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
+	}
+	
 	public void faireJouer(Ordinateur ordinateur) {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ordinateur.jouerCarte();
 	}
 	

@@ -69,7 +69,8 @@ public class Joueur extends Observable {
 		aAnnonceCarte = false;
 		this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
 		this.setChanged();
-		this.notifyObservers("piocher");	
+		this.notifyObservers("piocher");
+		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
 	}
 	
 	public void piocher(int nombreCartes) {
@@ -84,7 +85,10 @@ public class Joueur extends Observable {
 			carte.effectuerAction();
 			if(main.size() > 1) aAnnonceCarte = false;
 			if(main.size() == 0) this.notifyObservers("partieTerminee");
-			else this.notifyObservers("jouerCarte");	
+			else {
+				this.notifyObservers("jouerCarte");
+				Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
+			}
 		} else {
 			this.notifyObservers("jouerCarteErreur");
 		}
