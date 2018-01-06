@@ -3,6 +3,7 @@ package model.cartes;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import model.actions.ChangerForme;
 import model.joueurs.Partie;
 
 public class Talon extends Paquet {
@@ -21,11 +22,15 @@ public class Talon extends Paquet {
 
 	@Override
 	public boolean add(Carte carte) {
-		if (size() == 0 || Carte.ComparerCarte(getLast(), carte) || carte.getCouleur() == couleur) {
+		if(size() > 0 && getLast().getAction() instanceof ChangerForme) {
+			if(carte.getCouleur() == couleur) {
+				couleur = carte.getCouleur();
+				return super.add(carte);
+			} else return false;
+		} else if (size() == 0 || Carte.ComparerCarte(getLast(), carte) || carte.getCouleur() == couleur) {
 			couleur = carte.getCouleur();
 			return super.add(carte);
-		}
-		else return false;
+		} else return false;
 	}
 	
 	public int getCouleur() {

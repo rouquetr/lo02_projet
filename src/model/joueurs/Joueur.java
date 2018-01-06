@@ -73,7 +73,8 @@ public class Joueur extends Observable {
 	}
 	
 	public void piocher(int nombreCartes) {
-		for (int i = 0; i < nombreCartes; i++) piocher();
+		aAnnonceCarte = false;
+		for (int i = 0; i < nombreCartes; i++) this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
 	}
 	
 	public void jouerCarte(Carte carte) {

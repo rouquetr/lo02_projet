@@ -92,4 +92,8 @@ public class Carte {
 		return action.message();
 	}
 	
+	public Action getAction() {
+		return action;
+	}
+	
 }

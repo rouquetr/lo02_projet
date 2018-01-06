@@ -145,6 +145,7 @@ public class VueLigneDeCommande implements Observer, Runnable {
 				System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
 				break;
 			case "partieTerminee":
+				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
 				controller.terminerPartie();
 				afficherFinDePartie();
 				break;

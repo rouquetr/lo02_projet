@@ -60,7 +60,7 @@ public class VueInitialisation extends JPanel {
 		buttonCommencerPartie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.initialiserPartie((int)spinnerNombreJoueur.getValue(), fieldNom.getText());
-				controller.lancerPartie((int)spinnerNombreJoueur.getValue() + 1);
+				controller.lancerPartie(listVariantes.getSelectedIndex() + 1);
 			}
 		});
 		buttonCommencerPartie.setBounds(289, 304, 182, 29);
