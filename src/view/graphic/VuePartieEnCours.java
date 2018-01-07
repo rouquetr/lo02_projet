@@ -54,7 +54,7 @@ public class VuePartieEnCours extends JPanel {
 			i++;
 		}
 		
-		talon = new JLabel(partie.getTalon().afficherTalon());
+		talon = new JLabel("talon");
 		talon.setHorizontalAlignment(SwingConstants.CENTER);
 		talon.setBounds(188, 155, 395, 16);
 		add(talon);
@@ -64,6 +64,7 @@ public class VuePartieEnCours extends JPanel {
 		vueJoueur.refresh();
 		Iterator<VueOrdinateur> iterator = vueOrdinateurs.iterator();
 		while (iterator.hasNext()) iterator.next().refresh();
+		talon.setText(partie.getTalon().afficherTalon());
 	}
 
 }

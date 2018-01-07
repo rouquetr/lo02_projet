@@ -45,6 +45,8 @@ public class VueJoueur extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 34, 194, 90);
 		add(scrollPane);
+		listCartes = new JList<String>();
+		scrollPane.setViewportView(listCartes);
 		
 		jouerCarte = new JButton("Jouer cette carte");
 		jouerCarte.addActionListener(new ActionListener() {
@@ -68,9 +70,6 @@ public class VueJoueur extends JPanel {
 		nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
 		nomJoueur.setBounds(23, 6, 352, 16);
 		add(nomJoueur);
-		listCartes = new JList<String>();
-		listCartes.setBounds(23, 34, 190, 86);
-		add(listCartes);
 		
 		nbCartes = new JLabel();
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
