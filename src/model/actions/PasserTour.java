@@ -4,8 +4,11 @@ import model.joueurs.Partie;
 
 public class PasserTour implements Action {
 	
-	public void action() {
+	public void actionCli() {
 		Partie.getInstance().findJoueurSuivant().setPeutJouer(false);
+	}
+	
+	public void actionGui() {
 	}
 	
 	public String message() {

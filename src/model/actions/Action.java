@@ -2,7 +2,8 @@ package model.actions;
 
 public interface Action {
 	
-	public void action();
+	public void actionCli();
+	public void actionGui();
 	public String message();
 
 }

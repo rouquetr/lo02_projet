@@ -8,7 +8,7 @@ import view.cli.LigneDeCommandeUtils;
 
 public class DonnerCarte implements Action {
 	
-	public void action() {
+	public void actionCli() {
 		Partie partie = Partie.getInstance();
 		if(partie.getJoueurEnCours().getClass() == Ordinateur.class) {
 			partie.getJoueurs().get(0).getMain().add(partie.getJoueurEnCours().getMain().get(0));
@@ -27,6 +27,9 @@ public class DonnerCarte implements Action {
 			partie.getJoueurEnCours().getMain().remove(carteChoisie);
 			System.out.println(partie.getJoueurEnCours().getNom() + " a donn� une carte �" + joueurChoisi.getNom());
 		}
+	}
+	
+	public void actionGui() {
 	}
 	
 	public String message() {

@@ -4,8 +4,11 @@ import model.joueurs.Partie;
 
 public class Rejouer implements Action{
 
-	public void action() {
+	public void actionCli() {
 		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrecedent());
+	}
+	
+	public void actionGui() {
 	}
 	
 	public String message() {

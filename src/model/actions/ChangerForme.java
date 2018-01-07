@@ -7,7 +7,7 @@ import view.cli.LigneDeCommandeUtils;
 
 public class ChangerForme implements Action {
 
-	public void action() {
+	public void actionCli() {
 		if(Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1);
 		else {
 			LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
@@ -16,6 +16,8 @@ public class ChangerForme implements Action {
 			
 			Talon.getInstance().setCouleur(utils.demanderInt(message, 1, 4) - 1);
 		}
+	}
+	public void actionGui() {
 	}
 	
 	public String message() {
