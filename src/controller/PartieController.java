@@ -55,7 +55,14 @@ public class PartieController {
 		}
 	}
 	
-	public void fairePiocher(Joueur joueur) {
+	public void boutonJouer(Joueur joueur, int numeroCarte) {
+		Carte carteVoulue = null;
+		Iterator<Carte> iterator = joueur.getMain().iterator();
+		for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
+		joueur.jouerCarte(carteVoulue);
+	}
+	
+	public void boutonPiocher(Joueur joueur) {
 		joueur.piocher();
 		if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
 	}

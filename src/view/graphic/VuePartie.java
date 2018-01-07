@@ -1,31 +1,21 @@
 package view.graphic;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
 import controller.PartieController;
 import model.joueurs.Joueur;
 import model.joueurs.Partie;
 
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
 
 public class VuePartie implements Observer, Runnable {
 
 	private PartieController controller;
 	private Partie partie = Partie.getInstance();
 	private VueInitialisation vueInitialisation;
-	private VueJoueur vueJoueur;
+	private VuePartieEnCours vuePartieEnCours;
 
 	private JFrame frame;
 
@@ -63,23 +53,23 @@ public class VuePartie implements Observer, Runnable {
 		if (observable instanceof Partie) {
 			switch ((String) arg1) {
 			case "commencerNouvellePartie":
-				vueJoueur = new VueJoueur(controller);
-				frame.setContentPane(vueJoueur);
+				vuePartieEnCours = new VuePartieEnCours(controller);
+				frame.setContentPane(vuePartieEnCours);
 				frame.revalidate();
 				Iterator<Joueur> iterator = partie.getJoueurs().iterator();
 				while (iterator.hasNext()) iterator.next().addObserver(this);
 				break;
 			case "setJoueurEnCours":
-				vueJoueur.refresh();
+				vuePartieEnCours.refresh();
 				break;
 			}
 		} else if (observable instanceof Joueur) {
 			switch ((String) arg1) {
 			case "piocher":
-				vueJoueur.refresh();
+				vuePartieEnCours.refresh();
 				break;
 			case "jouerCarte":
-				vueJoueur.refresh();
+				vuePartieEnCours.refresh();
 				break;
 			}
 		}
