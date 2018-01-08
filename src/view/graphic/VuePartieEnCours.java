@@ -12,8 +12,11 @@ import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class VuePartieEnCours extends JPanel {
+	
+	private GraphicUtils utils = new GraphicUtils();
 	
 	private PartieController controller;
 	private VueJoueur vueJoueur;
@@ -21,6 +24,7 @@ public class VuePartieEnCours extends JPanel {
 	private Partie partie = Partie.getInstance();
 	
 	private JLabel talon;
+	private JLabel imagePioche;
 
 	/**
 	 * Create the panel.
@@ -36,7 +40,7 @@ public class VuePartieEnCours extends JPanel {
 		setSize(768, 432);
 
 		vueJoueur = new VueJoueur(controller);
-		vueJoueur.setBounds(188, 281, 395, 145);
+		vueJoueur.setBounds(181, 266, 400, 160);
 		add(vueJoueur);
 		
 		Iterator<Joueur> ordinateurs = partie.getJoueurs().iterator();
@@ -54,17 +58,24 @@ public class VuePartieEnCours extends JPanel {
 			i++;
 		}
 		
-		talon = new JLabel("talon");
+		talon = new JLabel(utils.getResizedIcon(utils.getPath(-1, -1), 60, 90));
 		talon.setHorizontalAlignment(SwingConstants.CENTER);
-		talon.setBounds(188, 155, 395, 16);
+		talon.setBounds(420, 162, 60, 90);
 		add(talon);
+		
+		imagePioche = new JLabel("Nombre cartes");
+		imagePioche.setHorizontalAlignment(SwingConstants.CENTER);
+		imagePioche.setIcon(utils.getResizedIcon(utils.getPath(-1, -1), 60, 90));
+		imagePioche.setBounds(232, 162, 176, 90);
+		add(imagePioche);
 	}
 	
 	public void refresh() {
 		vueJoueur.refresh();
 		Iterator<VueOrdinateur> iterator = vueOrdinateurs.iterator();
 		while (iterator.hasNext()) iterator.next().refresh();
-		talon.setText(partie.getTalon().afficherTalon());
+		talon.setIcon(utils.getResizedIcon(utils.getPath(partie.getTalon().getLast().getValeur(), partie.getTalon().getLast().getCouleur()), 60, 90));
+		imagePioche.setText(Integer.toString(partie.getPioche().size()) + " cartes restantes");
 	}
 
 }

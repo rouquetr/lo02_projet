@@ -60,7 +60,6 @@ public class Carte {
 	}
 
 	public void effectuerAction() {
-		System.out.println(Thread.currentThread().getName());
 		if (Thread.currentThread().getName() == "cli") {
 			action.actionCli();
 		} else action.actionGui();

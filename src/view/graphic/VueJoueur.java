@@ -2,6 +2,7 @@ package view.graphic;
 
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,11 +20,14 @@ import javax.swing.SwingConstants;
 
 public class VueJoueur extends JPanel {
 	
+	GraphicUtils utils = new GraphicUtils();
+	
 	private PartieController controller;
 	private Partie partie = Partie.getInstance();
 	private Joueur joueurHumain = partie.getJoueurs().get(0);
+	
 	private JScrollPane scrollPane;
-	private JList<String> listCartes;
+	private JList<ImageIcon> listCartes;
 	private JButton jouerCarte;
 	private JButton piocher;
 	private JLabel nomJoueur;
@@ -40,12 +44,14 @@ public class VueJoueur extends JPanel {
 	
 	private void initialize() {
 		setLayout(null);
-		setSize(395, 145);
+		setSize(400, 160);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 34, 194, 90);
+		scrollPane =  new JScrollPane();
+		scrollPane.setBounds(23, 34, 194, 109);
 		add(scrollPane);
-		listCartes = new JList<String>();
+		listCartes = new JList<ImageIcon>();
+		listCartes.setLayoutOrientation(JList.VERTICAL_WRAP);
+		listCartes.setVisibleRowCount(-1);
 		scrollPane.setViewportView(listCartes);
 		
 		jouerCarte = new JButton("Jouer cette carte");
@@ -73,15 +79,18 @@ public class VueJoueur extends JPanel {
 		
 		nbCartes = new JLabel();
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
-		nbCartes.setBounds(23, 123, 194, 16);
+		nbCartes.setBounds(219, 116, 175, 16);
 		add(nbCartes);
 	}
 	
 	private void updateMain() {
-		DefaultListModel<String> model = new DefaultListModel();
+		DefaultListModel<ImageIcon> model = new DefaultListModel<ImageIcon>();
 		Main main = joueurHumain.getMain();
 		Iterator<Carte> iterator = main.iterator();
-		while (iterator.hasNext()) model.addElement(iterator.next().afficherCarte());
+		while (iterator.hasNext()) {
+			Carte carte = iterator.next();
+			model.addElement(utils.getResizedIcon(utils.getPath(carte.getValeur(), carte.getCouleur()), 60, 90));
+		}
 		listCartes.setModel(model);
 		nbCartes.setText(main.size() + " cartes");
 	}
