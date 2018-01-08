@@ -16,8 +16,7 @@ public class Ordinateur extends Joueur {
 		Iterator<Carte> it = this.getMain().iterator();
 		while(it.hasNext()) {
 			Carte carteATester = it.next();
-			if(Carte.ComparerCarte(carteATester, Talon.getInstance().getLast()))
-				carteAJouer = carteATester;
+			if(verifierSiJouable(carteATester)) carteAJouer = carteATester;
 		}
 				
 		if(carteAJouer == null) {
@@ -28,5 +27,14 @@ public class Ordinateur extends Joueur {
 			super.jouerCarte(carteAJouer);
 			return 1;
 		}
+	}
+	
+	
+	private boolean verifierSiJouable(Carte carte) {
+		Carte carteTalon = Talon.getInstance().getLast();
+		if(carteTalon.getCouleur() != Talon.getInstance().getCouleur()) {
+			if(carte.getCouleur() == Talon.getInstance().getCouleur() || carte.getValeur() == carteTalon.getValeur()) return true;
+			else return false;
+		} else return Carte.ComparerCarte(carte, carteTalon);
 	}
 }

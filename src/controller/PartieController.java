@@ -63,8 +63,8 @@ public class PartieController {
 	}
 	
 	public void boutonPiocher(Joueur joueur) {
-		joueur.piocher();
 		if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
+		joueur.piocher();
 	}
 	
 	public void faireJouer(Ordinateur ordinateur) {

@@ -68,7 +68,7 @@ public class VuePartieEnCours extends JPanel {
 		talon.setBounds(420, 162, 60, 90);
 		add(talon);
 		
-		imagePioche = new JLabel("Nombre cartes");
+		imagePioche = new JLabel("52 cartes restantes");
 		imagePioche.setForeground(new Color(255, 255, 255));
 		imagePioche.setHorizontalAlignment(SwingConstants.CENTER);
 		imagePioche.setIcon(utils.getResizedIcon(utils.getPath(-1, -1), 60, 90));
@@ -96,7 +96,7 @@ public class VuePartieEnCours extends JPanel {
 			couleur.setVisible(true);
 		} else couleur.setVisible(false);
 		
-		imagePioche.setText("52 cartes restantes");
+		imagePioche.setText(partie.getPioche().size() + " cartes restantes");
 	}
 
 }
