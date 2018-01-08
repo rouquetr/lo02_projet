@@ -5,10 +5,15 @@ import model.joueurs.Partie;
 public class PasserTour implements Action {
 	
 	public void actionCli() {
-		Partie.getInstance().findJoueurSuivant().setPeutJouer(false);
+		action();
 	}
 	
 	public void actionGui() {
+		action();		
+	}
+	
+	public void action() {
+		Partie.getInstance().findJoueurSuivant().setPeutJouer(false);
 	}
 	
 	public String message() {

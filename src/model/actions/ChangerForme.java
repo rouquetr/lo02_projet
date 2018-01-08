@@ -17,7 +17,9 @@ public class ChangerForme implements Action {
 			Talon.getInstance().setCouleur(utils.demanderInt(message, 1, 4) - 1);
 		}
 	}
+	
 	public void actionGui() {
+		//TODO
 	}
 	
 	public String message() {

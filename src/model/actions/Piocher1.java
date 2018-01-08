@@ -5,10 +5,15 @@ import model.joueurs.Partie;
 public class Piocher1 implements Action {
 
 	public void actionCli() {
-		Partie.getInstance().findJoueurSuivant().piocher(1);
+		action();
 	}
 	
 	public void actionGui() {
+		action();
+	}
+	
+	public void action() {
+		Partie.getInstance().findJoueurSuivant().piocher(1);
 	}
 	
 	public String message() {

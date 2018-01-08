@@ -5,10 +5,15 @@ import model.joueurs.Partie;
 public class Rejouer implements Action{
 
 	public void actionCli() {
-		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrecedent());
+		action();
 	}
 	
 	public void actionGui() {
+		action();
+	}
+	
+	public void action() {
+		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrecedent());
 	}
 	
 	public String message() {
