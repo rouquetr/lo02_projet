@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class VueOrdinateur extends JPanel {
 	
@@ -24,6 +25,7 @@ public class VueOrdinateur extends JPanel {
 	 * Create the panel.
 	 */
 	public VueOrdinateur(PartieController controller, Joueur ordinateur) {
+		setBackground(new Color(0, 102, 0));
 		this.controller = controller;
 		this.ordinateur = ordinateur;
 		initialize();
@@ -34,11 +36,13 @@ public class VueOrdinateur extends JPanel {
 		setLayout(null);
 		
 		nom = new JLabel(ordinateur.getNom());
+		nom.setForeground(new Color(255, 255, 255));
 		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		nom.setBounds(16, 6, 107, 16);
 		add(nom);
 		
 		nbCartes = new JLabel("0 cartes");
+		nbCartes.setForeground(new Color(255, 255, 255));
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
 		nbCartes.setBounds(16, 34, 107, 16);
 		add(nbCartes);

@@ -3,6 +3,8 @@ package view.graphic;
 import javax.swing.JPanel;
 
 import controller.PartieController;
+import model.cartes.Carte;
+import model.cartes.Talon;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
@@ -13,6 +15,7 @@ import java.util.Iterator;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class VuePartieEnCours extends JPanel {
 	
@@ -25,11 +28,13 @@ public class VuePartieEnCours extends JPanel {
 	
 	private JLabel talon;
 	private JLabel imagePioche;
+	private JLabel couleur;
 
 	/**
 	 * Create the panel.
 	 */
 	public VuePartieEnCours(PartieController controller) {
+		setBackground(new Color(0, 102, 0));
 		this.controller = controller;
 		initialize();
 		refresh();
@@ -64,18 +69,34 @@ public class VuePartieEnCours extends JPanel {
 		add(talon);
 		
 		imagePioche = new JLabel("Nombre cartes");
+		imagePioche.setForeground(new Color(255, 255, 255));
 		imagePioche.setHorizontalAlignment(SwingConstants.CENTER);
 		imagePioche.setIcon(utils.getResizedIcon(utils.getPath(-1, -1), 60, 90));
-		imagePioche.setBounds(232, 162, 176, 90);
+		imagePioche.setBounds(224, 162, 184, 90);
 		add(imagePioche);
+		
+		couleur = new JLabel("(Couleur)");
+		couleur.setForeground(new Color(255, 255, 255));
+		couleur.setBounds(492, 199, 61, 16);
+		couleur.setVisible(false);
+		add(couleur);
 	}
 	
 	public void refresh() {
+		Carte carteTalon = partie.getTalon().getLast();
+		
 		vueJoueur.refresh();
 		Iterator<VueOrdinateur> iterator = vueOrdinateurs.iterator();
 		while (iterator.hasNext()) iterator.next().refresh();
-		talon.setIcon(utils.getResizedIcon(utils.getPath(partie.getTalon().getLast().getValeur(), partie.getTalon().getLast().getCouleur()), 60, 90));
-		imagePioche.setText(Integer.toString(partie.getPioche().size()) + " cartes restantes");
+		
+		talon.setIcon(utils.getResizedIcon(utils.getPath(carteTalon.getValeur(), carteTalon.getCouleur()), 60, 90));
+		
+		if(partie.getTalon().getCouleur() != carteTalon.getCouleur()) {
+			couleur.setText(Carte.COULEURS[partie.getTalon().getCouleur()]);
+			couleur.setVisible(true);
+		} else couleur.setVisible(false);
+		
+		imagePioche.setText("52 cartes restantes");
 	}
 
 }

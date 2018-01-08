@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class VueJoueur extends JPanel {
 	
@@ -37,6 +38,7 @@ public class VueJoueur extends JPanel {
 	 * Create the panel.
 	 */
 	public VueJoueur(PartieController controller) {
+		setBackground(new Color(0, 102, 0));
 		this.controller = controller;
 		initialize();
 		refresh();
@@ -73,11 +75,13 @@ public class VueJoueur extends JPanel {
 		add(piocher);
 		
 		nomJoueur = new JLabel(joueurHumain.getNom());
+		nomJoueur.setForeground(new Color(255, 255, 255));
 		nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
 		nomJoueur.setBounds(23, 6, 352, 16);
 		add(nomJoueur);
 		
 		nbCartes = new JLabel();
+		nbCartes.setForeground(new Color(255, 255, 255));
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
 		nbCartes.setBounds(219, 116, 175, 16);
 		add(nbCartes);
