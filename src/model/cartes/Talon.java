@@ -22,12 +22,7 @@ public class Talon extends Paquet {
 
 	@Override
 	public boolean add(Carte carte) {
-		if(size() > 0 && getLast().getAction() instanceof ChangerForme) {
-			if(carte.getCouleur() == couleur) {
-				couleur = carte.getCouleur();
-				return super.add(carte);
-			} else return false;
-		} else if (size() == 0 || Carte.ComparerCarte(getLast(), carte) || carte.getCouleur() == couleur) {
+		if(size() == 0 || carte.getCouleur() == couleur || Carte.ComparerCarte(getLast(), carte)) {
 			couleur = carte.getCouleur();
 			return super.add(carte);
 		} else return false;

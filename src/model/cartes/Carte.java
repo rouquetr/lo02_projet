@@ -4,9 +4,9 @@ import model.actions.Action;
 
 public class Carte {
 	
-    public final static int PIC = 0;
-    public final static int COEUR = 1;
-    public final static int CARREAU = 2;
+    public final static int COEUR = 0;
+    public final static int CARREAU = 1;
+    public final static int PIQUE = 2;
     public final static int TREFLE = 3;
 
     public final static int JOKER = 0;
