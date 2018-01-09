@@ -8,6 +8,8 @@ import view.cli.LigneDeCommandeUtils;
 
 public class DonnerCarte implements Action {
 	
+	private String message = "";
+	
 	public void actionCli() {
 		Partie partie = Partie.getInstance();
 		if(partie.getJoueurEnCours().getClass() == Ordinateur.class) {
@@ -20,12 +22,12 @@ public class DonnerCarte implements Action {
 			
 			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));
 			
-			message = "Choisissez la carte � donner � " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
+			message = "Choisissez la carte à donner à " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
 			Carte carteChoisie = partie.getJoueurEnCours().getMain().get(utils.demanderInt(message, 1, partie.getJoueurEnCours().getMain().size()) - 1);
 			
 			joueurChoisi.getMain().add(carteChoisie);
 			partie.getJoueurEnCours().getMain().remove(carteChoisie);
-			System.out.println(partie.getJoueurEnCours().getNom() + " a donn� une carte �" + joueurChoisi.getNom());
+			this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à" + joueurChoisi.getNom();
 		}
 	}
 	
@@ -33,7 +35,7 @@ public class DonnerCarte implements Action {
 	}
 	
 	public String message() {
-		return "";
+		return message;
 	}
 
 }

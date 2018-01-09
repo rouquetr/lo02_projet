@@ -50,10 +50,10 @@ public class VueJoueur extends JPanel implements Observer {
 	
 	private void initialize() {
 		setLayout(null);
-		setSize(400, 160);
+		setSize(768, 160);
 		
 		scrollPane =  new JScrollPane();
-		scrollPane.setBounds(23, 34, 194, 109);
+		scrollPane.setBounds(23, 34, 456, 109);
 		add(scrollPane);
 		listCartes = new JList<ImageIcon>();
 		listCartes.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -66,7 +66,7 @@ public class VueJoueur extends JPanel implements Observer {
 				controller.boutonJouer(joueurHumain,listCartes.getSelectedIndex() + 1);
 			}
 		});
-		jouerCarte.setBounds(229, 34, 146, 29);
+		jouerCarte.setBounds(491, 45, 146, 29);
 		add(jouerCarte);
 		
 		piocher = new JButton("Piocher");
@@ -75,19 +75,19 @@ public class VueJoueur extends JPanel implements Observer {
 				controller.boutonPiocher(joueurHumain);
 			}
 		});
-		piocher.setBounds(229, 75, 146, 29);
+		piocher.setBounds(491, 86, 146, 29);
 		add(piocher);
 		
 		nomJoueur = new JLabel(joueurHumain.getNom());
 		nomJoueur.setForeground(new Color(255, 255, 255));
 		nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
-		nomJoueur.setBounds(23, 6, 352, 16);
+		nomJoueur.setBounds(225, 6, 352, 16);
 		add(nomJoueur);
 		
 		nbCartes = new JLabel();
 		nbCartes.setForeground(new Color(255, 255, 255));
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
-		nbCartes.setBounds(219, 116, 175, 16);
+		nbCartes.setBounds(481, 127, 175, 16);
 		add(nbCartes);
 	}
 	

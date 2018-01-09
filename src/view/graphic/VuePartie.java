@@ -43,6 +43,7 @@ public class VuePartie implements Observer, Runnable {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setSize(768, 432);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(vueInitialisation);

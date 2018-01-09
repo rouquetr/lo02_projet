@@ -1,5 +1,6 @@
 package model.actions;
 
+import model.cartes.Carte;
 import model.cartes.Talon;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
@@ -23,7 +24,7 @@ public class ChangerForme implements Action {
 	}
 	
 	public String message() {
-		return "";
+		return "La couleur devient " + Carte.COULEURS[Talon.getInstance().getCouleur()];
 	}
 	
 }

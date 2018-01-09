@@ -11,15 +11,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class VueOrdinateur extends JPanel {
 	
-	Joueur ordinateur;
-	PartieController controller;
+	private GraphicUtils utils = new GraphicUtils();
 	
-	JLabel nom;
-	JLabel nbCartes;
-	JButton contrer;
+	private Joueur ordinateur;
+	private PartieController controller;
+	
+	private JLabel nom;
+	private JLabel nbCartes;
+	private JButton contrer;
+	private JLabel main;
 
 	/**
 	 * Create the panel.
@@ -44,7 +48,7 @@ public class VueOrdinateur extends JPanel {
 		nbCartes = new JLabel("0 cartes");
 		nbCartes.setForeground(new Color(255, 255, 255));
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
-		nbCartes.setBounds(16, 34, 107, 16);
+		nbCartes.setBounds(16, 101, 107, 16);
 		add(nbCartes);
 		
 		contrer = new JButton("Contrer");
@@ -52,8 +56,12 @@ public class VueOrdinateur extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		contrer.setBounds(16, 61, 117, 29);
+		contrer.setBounds(6, 122, 138, 29);
 		add(contrer);
+		
+		main = new JLabel(new ImageIcon(VueOrdinateur.class.getResource("/icones/main.png")));
+		main.setBounds(16, 27, 117, 73);
+		add(main);
 	}
 	
 	public void refresh() {

@@ -25,7 +25,7 @@ public abstract class Pioche extends Paquet {
 	public Carte tirerUneCarte() {
 		Carte cartePiochee = this.getLast();
 		this.remove(cartePiochee);
-		
+		if(isEmpty()) Talon.getInstance().transformerEnPioche();
 		return cartePiochee;
 	}
 	

@@ -42,10 +42,7 @@ public class PartieController {
 	}
 	
 	public void faireJouer(Joueur joueur, int numeroCarte) {
-		if(numeroCarte == 0) {
-			joueur.piocher();
-			if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
-		} 
+		if(numeroCarte == 0) joueur.piocher();
 		else if (numeroCarte == joueur.getMain().size() + 1) joueur.setaAnnonceCarte(true);
 		else {
 			Carte carteVoulue = null;
@@ -63,7 +60,6 @@ public class PartieController {
 	}
 	
 	public void boutonPiocher(Joueur joueur) {
-		if(partie.getPioche().isEmpty()) partie.getTalon().transformerEnPioche();
 		joueur.piocher();
 	}
 	
