@@ -72,7 +72,7 @@ public class Partie extends Observable {
 	}
 	
 	public LinkedList<Joueur> getJoueursByScore() {
-		LinkedList<Joueur> classement = joueurs;
+		LinkedList<Joueur> classement = new LinkedList(joueurs);
 		classement.sort(new Comparator<Joueur>() {
 			@Override
 			public int compare(Joueur o1, Joueur o2) {
@@ -86,6 +86,10 @@ public class Partie extends Observable {
 		this.joueurs.addAll(joueurs);
 		this.setChanged();
 		this.notifyObservers("ajouterJoueurs");
+	}
+	
+	public void retirerTousLesJoueurs() {
+		this.joueurs.removeAll(this.joueurs);
 	}
 	
 	public Joueur getJoueurEnCours() {

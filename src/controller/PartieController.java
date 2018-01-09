@@ -25,6 +25,7 @@ public class PartieController {
 		joueurs.add(new Joueur(nomJoueur, 0));
 		for (int i = 0; i < nombreDeJoueurs - 1; i++) 
 			joueurs.add(new Ordinateur(nomsOrdinateur[i], i + 1));
+		partie.retirerTousLesJoueurs();
 		partie.ajouterJoueurs(joueurs);
 	}
 	
