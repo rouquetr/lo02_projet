@@ -1,6 +1,9 @@
 package view.graphic;
 
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -19,7 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
-public class VueJoueur extends JPanel {
+public class VueJoueur extends JPanel implements Observer {
 	
 	GraphicUtils utils = new GraphicUtils();
 	
@@ -38,6 +41,7 @@ public class VueJoueur extends JPanel {
 	 * Create the panel.
 	 */
 	public VueJoueur(PartieController controller) {
+		partie.addObserver(this);
 		setBackground(new Color(0, 102, 0));
 		this.controller = controller;
 		initialize();
@@ -101,5 +105,23 @@ public class VueJoueur extends JPanel {
 	
 	public void refresh() {
 		updateMain();
+		if(partie.getJoueurEnCours().getNom() == joueurHumain.getNom()) {
+			piocher.setEnabled(true);
+			jouerCarte.setEnabled(true);
+		} else {
+			piocher.setEnabled(false);
+			jouerCarte.setEnabled(false);
+		}
+	}
+
+	@Override
+	public void update(Observable observable, Object arg1) {
+		if (observable instanceof Partie) {
+			switch ((String) arg1) {
+			case "setJoueurEnCours":
+				refresh();
+				break;
+			}
+		}
 	}
 }

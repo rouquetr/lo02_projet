@@ -38,7 +38,6 @@ public class LigneDeCommandeUtils {
 				if (saisie < min || saisie > max) System.out.println("Veuillez entrer une valeur valide");
 			} catch (NumberFormatException e) {
 				System.out.println("Veuillez entrer une valeur valide");
-				scanner.nextLine();
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
 			}
@@ -72,18 +71,6 @@ public class LigneDeCommandeUtils {
 	
 	public void afficherTalon() {
 		System.out.println("La carte visible du talon est " + Partie.getInstance().getTalon().afficherTalon());
-	}
-	
-	private String lireChaine() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String resultat = null;
-		try {
-			System.out.println(">");
-			resultat = br.readLine();
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-		return resultat;
 	}
 
 }

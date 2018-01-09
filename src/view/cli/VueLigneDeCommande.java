@@ -52,23 +52,21 @@ public class VueLigneDeCommande implements Observer, Runnable {
 	public void effectuerTourDeJeu() {
 		tourDeJeuPrecedent = tourDeJeu;
 		tourDeJeu = new Thread(() -> {
-			while (true) {
-				joueurEnCours = partie.getJoueurEnCours();
-				joueurEnCours.addObserver(this);
-				if (controller.authoriserAJouer(joueurEnCours)) {
-					try {
-						if (joueurEnCours.getClass() != Ordinateur.class) {
-							int action = faireJouerJoueur();
-							controller.faireJouer(joueurEnCours, action);
-						} else
-							controller.faireJouer((Ordinateur) joueurEnCours);
-					} catch (NoSuchElementException e) {
-						System.out.println(
-								"Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
-					}
-				} else
-					System.out.println(joueurEnCours.getNom() + " passe son tour.");
-			}
+			joueurEnCours = partie.getJoueurEnCours();
+			joueurEnCours.addObserver(this);
+			if (controller.authoriserAJouer(joueurEnCours)) {
+				try {
+					if (joueurEnCours.getClass() != Ordinateur.class) {
+						int action = faireJouerJoueur();
+						controller.faireJouer(joueurEnCours, action);
+					} else
+						controller.faireJouer((Ordinateur) joueurEnCours);
+				} catch (NoSuchElementException e) {
+					System.out.println(
+							"Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
+				}
+			} else
+				System.out.println(joueurEnCours.getNom() + " passe son tour.");
 		});
 		tourDeJeu.start();
 		tourDeJeu.setName("cli");
