@@ -23,6 +23,7 @@ public class VueLigneDeCommande implements Observer, Runnable {
 	Thread initialisation = null;
 	Thread tourDeJeu = null;
 	Thread tourDeJeuPrecedent = null;
+	Thread finDePartie = null;
 
 	public VueLigneDeCommande(PartieController controller) {
 		this.controller = controller;
@@ -59,8 +60,10 @@ public class VueLigneDeCommande implements Observer, Runnable {
 					if (joueurEnCours.getClass() != Ordinateur.class) {
 						int action = faireJouerJoueur();
 						controller.faireJouer(joueurEnCours, action);
-					} else
+					} else {
+						tourDeJeu.setName("Ordinateur");
 						controller.faireJouer((Ordinateur) joueurEnCours);
+					}
 				} catch (NoSuchElementException e) {
 					System.out.println(
 							"Il n'y a plus de carte dans le paquet et une seule carte dans le talon, vous ne pouvez donc pas piocher");
@@ -71,7 +74,8 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		tourDeJeu.start();
 		tourDeJeu.setName("cli");
 		if(initialisation.isAlive()) initialisation.stop();
-		if(tourDeJeuPrecedent != null) tourDeJeuPrecedent.stop();
+		if(finDePartie != null) finDePartie.stop();
+		if(tourDeJeuPrecedent != null && tourDeJeuPrecedent.getName() != "Ordinateur") tourDeJeuPrecedent.stop();
 	}
 
 	public int faireJouerJoueur() {
@@ -87,26 +91,32 @@ public class VueLigneDeCommande implements Observer, Runnable {
 	}
 
 	public void afficherFinDePartie() {
-		System.out.println("Les scores sont: ");
-		Iterator<Joueur> iterator = partie.getJoueursByScore().iterator();
-		while (iterator.hasNext()) {
-			Joueur joueur = iterator.next();
-			System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
-		}
-		String message = "Voulez-vous: \n" + "1: relancer une partie?\n"
-				+ "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
-				+ "3: Arréter de jouer?";
-		switch (utils.demanderInt(message, 1, 3)) {
-		case 1:
-			lancerPartie();
-			break;
-		case 2:
-			initialiserPartie();
-			break;
-		case 3:
-			System.exit(0);
-			break;
-		}
+		finDePartie = new Thread(() -> {
+			System.out.println("Les scores sont: ");
+			Iterator<Joueur> iterator = partie.getJoueursByScore().iterator();
+			while (iterator.hasNext()) {
+				Joueur joueur = iterator.next();
+				System.out.println(joueur.getNom() + ": " + joueur.getPoints() + " points");
+			}
+			String message = "Voulez-vous: \n" + "1: relancer une partie?\n"
+					+ "2: relancer une partie en changeant les paramètres (votre nom ainsi que le nombre de joueurs?\n"
+					+ "3: Arréter de jouer?";
+			switch (utils.demanderInt(message, 1, 3)) {
+			case 1:
+				lancerPartie();
+				break;
+			case 2:
+				initialiserPartie();
+				break;
+			case 3:
+				System.exit(0);
+				break;
+			}
+		});
+		finDePartie.start();
+		if(initialisation.isAlive()) initialisation.stop();
+		if(tourDeJeu != null && tourDeJeu.getName() != "Ordinateur") tourDeJeu.stop();
+		if(tourDeJeuPrecedent != null && tourDeJeuPrecedent.getName() != "Ordinateur") tourDeJeuPrecedent.stop();
 	}
 
 	@Override
@@ -119,6 +129,10 @@ public class VueLigneDeCommande implements Observer, Runnable {
 				break;
 			case "setJoueurEnCours":
 				effectuerTourDeJeu();
+				break;
+			case "mettreAJourScores":
+				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
+				afficherFinDePartie();
 				break;
 			}
 		} else if (observable instanceof Joueur) {
@@ -140,11 +154,6 @@ public class VueLigneDeCommande implements Observer, Runnable {
 				break;
 			case "aAnnonceCarte":
 				System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
-				break;
-			case "partieTerminee":
-				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
-				controller.terminerPartie();
-				afficherFinDePartie();
 				break;
 			}
 		}

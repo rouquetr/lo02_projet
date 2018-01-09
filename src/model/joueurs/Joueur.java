@@ -84,7 +84,7 @@ public class Joueur extends Observable {
 			this.main.remove(carte);
 			carte.effectuerAction();
 			if(main.size() > 1) aAnnonceCarte = false;
-			if(main.size() == 0) this.notifyObservers("partieTerminee");
+			if(main.size() == 0) Partie.getInstance().mettreAJourScores();
 			else {
 				this.notifyObservers("jouerCarte");
 				Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());

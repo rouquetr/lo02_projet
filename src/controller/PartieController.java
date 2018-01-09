@@ -82,8 +82,4 @@ public class PartieController {
 		}
 	}
 	
-	public void terminerPartie() {
-		partie.mettreAJourScores();
-	}
-	
 }

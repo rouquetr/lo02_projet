@@ -1,5 +1,6 @@
 package view.graphic;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import controller.PartieController;
@@ -62,6 +63,15 @@ public class VuePartie implements Observer, Runnable {
 				break;
 			case "setJoueurEnCours":
 				vuePartieEnCours.refresh();
+				break;
+			case "mettreAJourScores":				
+				vuePartieEnCours.refresh();
+				JDialog finDePartie = new JDialog(frame, true);
+				finDePartie.add(new VueFinDePartie(controller));
+				finDePartie.pack();
+				finDePartie.setLocation(200, 200);
+				finDePartie.setSize(450, 300);
+				finDePartie.setVisible(true);
 				break;
 			}
 		} else if (observable instanceof Joueur) {

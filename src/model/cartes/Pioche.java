@@ -15,7 +15,7 @@ public abstract class Pioche extends Paquet {
 	
 	public void distribuerCarte(LinkedList<Joueur> joueurs) {
 		
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 1; i++) {
 			Iterator<Joueur> iterator = joueurs.iterator();
 			while(iterator.hasNext()) iterator.next().piocher(1);
 		}

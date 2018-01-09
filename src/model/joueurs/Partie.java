@@ -139,6 +139,8 @@ public class Partie extends Observable {
 			Joueur joueur = iterator.next();
 			joueur.compterPoints();
 		}
+		this.setChanged();
+		this.notifyObservers("mettreAJourScores");	
 	}
 	
 }
