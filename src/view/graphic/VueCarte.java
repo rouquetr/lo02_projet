@@ -10,8 +10,8 @@ import javax.swing.JLabel;
 
 public class VueCarte extends JPanel {
 	
-	GraphicUtils utils = new GraphicUtils();
-	JLabel carte;
+	private GraphicUtils utils = new GraphicUtils();
+	private JLabel carte;
 
 	/**
 	 * Create the panel.

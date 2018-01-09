@@ -24,7 +24,7 @@ import java.awt.Color;
 
 public class VueJoueur extends JPanel implements Observer {
 	
-	GraphicUtils utils = new GraphicUtils();
+	private GraphicUtils utils = new GraphicUtils();
 	
 	private PartieController controller;
 	private Partie partie = Partie.getInstance();

@@ -18,7 +18,7 @@ public class VuePartie implements Observer, Runnable {
 	private VueInitialisation vueInitialisation;
 	private VuePartieEnCours vuePartieEnCours;
 
-	private JFrame frame;
+	public static JFrame frame;
 
 	/**
 	 * Create the application.
@@ -71,6 +71,7 @@ public class VuePartie implements Observer, Runnable {
 				finDePartie.pack();
 				finDePartie.setLocation(200, 200);
 				finDePartie.setSize(450, 300);
+				finDePartie.setResizable(false);
 				finDePartie.setVisible(true);
 				break;
 			}

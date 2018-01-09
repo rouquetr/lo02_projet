@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VuePartieEnCours extends JPanel implements Observer {
 	
@@ -79,7 +82,7 @@ public class VuePartieEnCours extends JPanel implements Observer {
 		imagePioche.setBounds(224, 162, 184, 90);
 		add(imagePioche);
 		
-		couleur = new JLabel("(Couleur)");
+		couleur = new JLabel();
 		couleur.setForeground(new Color(255, 255, 255));
 		couleur.setBounds(492, 199, 258, 16);
 		couleur.setVisible(false);
@@ -95,8 +98,10 @@ public class VuePartieEnCours extends JPanel implements Observer {
 		
 		talon.setIcon(utils.getResizedIcon(utils.getPath(carteTalon.getValeur(), carteTalon.getCouleur()), 60, 90));
 		
-		couleur.setText(partie.getTalon().getLast().getActionMessage());
-		couleur.setVisible(true);
+		if(partie.getTalon().size() > 1) {
+			couleur.setText(partie.getTalon().getLast().getActionMessage());
+			couleur.setVisible(true);
+		}
 		
 		imagePioche.setText(partie.getPioche().size() + " cartes restantes");
 	}

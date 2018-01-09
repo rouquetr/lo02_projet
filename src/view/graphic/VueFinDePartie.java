@@ -25,8 +25,8 @@ import java.awt.event.ActionEvent;
 
 public class VueFinDePartie extends JPanel {
 	
-	Partie partie = Partie.getInstance();
-	PartieController controller;
+	private Partie partie = Partie.getInstance();
+	private PartieController controller;
 	
 	private JButton relancer;
 	private JButton nouvellePartie;
