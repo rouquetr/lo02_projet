@@ -24,7 +24,7 @@ public class Partie extends Observable {
 	private LinkedList<Joueur> joueurs = new LinkedList<Joueur>();
 	private Joueur joueurEnCours = null;
 	
-    public final static int MINJOUEUR = 1;
+    public final static int MINJOUEUR = 2;
     public final static int MAXJOUEUR = 5;
 	
 	private Partie() {	}
