@@ -4,6 +4,8 @@ import model.joueurs.Partie;
 
 public class Piocher4 implements Action {
 	
+	private String message = "";
+	
 	public void actionCli() {
 		action();
 	}
@@ -14,10 +16,11 @@ public class Piocher4 implements Action {
 	
 	public void action() {
 		Partie.getInstance().findJoueurSuivant().piocher(4);
+		message = Partie.getInstance().findJoueurSuivant().getNom() + " pioche 4 cartes";
 	}
 	
 	public String message() {
-		return Partie.getInstance().findJoueurSuivant().getNom() + " pioche 4 cartes";
+		return message;
 	}
 	
 }

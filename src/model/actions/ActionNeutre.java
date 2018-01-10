@@ -2,6 +2,8 @@ package model.actions;
 
 public class ActionNeutre implements Action{
 	
+	private String message = "";
+	
 	public void actionCli() {
 	}
 	
@@ -9,7 +11,7 @@ public class ActionNeutre implements Action{
 	}
 	
 	public String message() {
-		return "";
+		return message;
 	}
 	
 }

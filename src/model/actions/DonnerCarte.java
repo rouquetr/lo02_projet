@@ -43,7 +43,7 @@ public class DonnerCarte implements Action {
 			
 			joueurChoisi.getMain().add(carteChoisie);
 			partie.getJoueurEnCours().getMain().remove(carteChoisie);
-			this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à" + joueurChoisi.getNom();
+			this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à " + joueurChoisi.getNom();
 		}
 	}
 	
@@ -95,6 +95,7 @@ public class DonnerCarte implements Action {
 						Carte carteChoisie = Partie.getInstance().getJoueurEnCours().getMain().get(listCartes.getSelectedIndex());
 						joueur.getMain().add(carteChoisie);
 						Partie.getInstance().getJoueurEnCours().getMain().remove(carteChoisie);
+						message = Partie.getInstance().getJoueurEnCours().getNom() + " a donné une carte à " + joueur.getNom();
 						dialog.dispose();
 					}
 				});
@@ -125,6 +126,7 @@ public class DonnerCarte implements Action {
 		Carte carteChoisie = partie.getJoueurEnCours().getMain().get(0);
 		partie.getJoueurs().get(0).getMain().add(carteChoisie);
 		partie.getJoueurEnCours().getMain().remove(carteChoisie);
+		this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à " + partie.getJoueurs().get(0).getNom();
 	}
 	
 	public String message() {

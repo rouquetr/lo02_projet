@@ -3,6 +3,8 @@ package model.actions;
 import model.joueurs.Partie;
 
 public class Rejouer implements Action{
+	
+	private String message = "";
 
 	public void actionCli() {
 		action();
@@ -13,11 +15,12 @@ public class Rejouer implements Action{
 	}
 	
 	public void action() {
-		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurPrecedent());
+		Partie.getInstance().getJoueurEnCours().setDoitRejouer(true);
+		message = Partie.getInstance().getJoueurEnCours().getNom() + " rejoue";
 	}
 	
 	public String message() {
-		return Partie.getInstance().findJoueurSuivant().getNom() + " rejoue";
+		return message;
 	}
 	
 }

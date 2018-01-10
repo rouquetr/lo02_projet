@@ -13,6 +13,7 @@ public class Joueur extends Observable {
 	private int points;
 	
 	private boolean peutJouer = true;
+	private boolean doitRejouer = false;
 	private boolean aAnnonceCarte = false;
 	
 	private Main main;
@@ -43,6 +44,10 @@ public class Joueur extends Observable {
 	
 	public void setPeutJouer(boolean peutJouer) {
 		this.peutJouer = peutJouer;
+	}
+	
+	public void setDoitRejouer(boolean doitRejouer) {
+		this.doitRejouer = doitRejouer;
 	}
 	
 	public boolean aAnnonceCarte() {
@@ -87,7 +92,11 @@ public class Joueur extends Observable {
 			if(main.size() == 0) Partie.getInstance().mettreAJourScores();
 			else {
 				this.notifyObservers("jouerCarte");
-				Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
+				if(this.doitRejouer) {
+					Partie.getInstance().setJoueurEnCours(Partie.getInstance().getJoueurEnCours());
+					this.doitRejouer = false;
+				}
+				else Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
 			}
 		} else {
 			this.notifyObservers("jouerCarteErreur");
