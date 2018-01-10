@@ -79,7 +79,6 @@ public class PartieController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(partie.findJoueurSuivant() == partie.getJoueurs().get(0)) ordinateur.contrerJoueur(partie.findJoueurSuivant());
 		ordinateur.jouerCarte();
 	}
 	
