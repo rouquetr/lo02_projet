@@ -7,7 +7,8 @@ import model.cartes.Talon;
 
 public class Ordinateur extends Joueur {
 	
-	private double proba = 0.75;
+	private double probaContrer = 0.75;
+	private double probaAnnoncer = 0.60;
 
 	public Ordinateur(String nom, int position) {
 		super(nom, position);
@@ -46,10 +47,8 @@ public class Ordinateur extends Joueur {
 		Iterator<Joueur> iterator = partie.getJoueurs().iterator();
 		while (iterator.hasNext()) {
 			Joueur joueur = iterator.next();
-			if(Math.random() > this.proba && joueur.getMain().size() == 1 && joueur != this) this.contrerJoueur(joueur);
+			if(Math.random() > this.probaContrer && joueur.getMain().size() == 1 && joueur != this) this.contrerJoueur(joueur);
 		}
-		if(Math.random() > this.proba && this.getMain().size() <= 2) {
-			this.setaAnnonceCarte(true);
-		}
+		if(Math.random() > this.probaAnnoncer && this.getMain().size() <= 2) this.setaAnnonceCarte(true);
 	}
 }

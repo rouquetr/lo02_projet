@@ -74,7 +74,7 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		tourDeJeu.start();
 		tourDeJeu.setName("cli");
 		if(initialisation.isAlive()) initialisation.stop();
-		if(finDePartie != null) finDePartie.stop();
+		if(finDePartie != null && finDePartie.isAlive()) finDePartie.stop();
 		if(tourDeJeuPrecedent != null && tourDeJeuPrecedent.getName() != "Ordinateur") tourDeJeuPrecedent.stop();
 	}
 
