@@ -138,8 +138,9 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		} else if (observable instanceof Joueur) {
 			switch ((String) arg1) {
 			case "piocher":
-				System.out.println(joueurEnCours.getNom() + " a pioché "
+				if(!(joueurEnCours instanceof Ordinateur)) System.out.println(joueurEnCours.getNom() + " a pioché "
 						+ joueurEnCours.getMain().getLast().afficherCarteAvecDeterminant());
+				else System.out.println(joueurEnCours.getNom() + " a pioché une carte");
 				break;
 			case "jouerCarte":
 				System.out.println(joueurEnCours.getNom() + " a joué " + partie.getTalon().afficherTalon());
@@ -148,12 +149,6 @@ public class VueLigneDeCommande implements Observer, Runnable {
 				break;
 			case "jouerCarteErreur":
 				System.out.println(joueurEnCours.getNom() + " ne peut pas jouer cette carte");
-				break;
-			case "aAnnonceCarteErreur":
-				System.out.println(joueurEnCours.getNom() + " ne peut pas annoncer Carte");
-				break;
-			case "aAnnonceCarte":
-				System.out.println(joueurEnCours.getNom() + " a annoncé Carte");
 				break;
 			}
 		}

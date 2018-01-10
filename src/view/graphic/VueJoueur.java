@@ -36,6 +36,7 @@ public class VueJoueur extends JPanel implements Observer {
 	private JButton piocher;
 	private JLabel nomJoueur;
 	private JLabel nbCartes;
+	private JButton btnAnnoncerCarte;
 
 	/**
 	 * Create the panel.
@@ -89,6 +90,15 @@ public class VueJoueur extends JPanel implements Observer {
 		nbCartes.setHorizontalAlignment(SwingConstants.CENTER);
 		nbCartes.setBounds(481, 127, 175, 16);
 		add(nbCartes);
+		
+		btnAnnoncerCarte = new JButton("Annoncer");
+		btnAnnoncerCarte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.boutonAnnoncer(joueurHumain);
+			}
+		});
+		btnAnnoncerCarte.setBounds(643, 45, 119, 29);
+		add(btnAnnoncerCarte);
 	}
 	
 	private void updateMain() {

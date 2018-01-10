@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import controller.PartieController;
 import model.joueurs.Joueur;
+import model.joueurs.Ordinateur;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -54,6 +55,8 @@ public class VueOrdinateur extends JPanel {
 		contrer = new JButton("Contrer");
 		contrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.boutonContrer((Ordinateur)ordinateur);
+				refresh();
 			}
 		});
 		contrer.setBounds(6, 122, 138, 29);

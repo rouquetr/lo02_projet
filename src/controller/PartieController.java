@@ -64,6 +64,14 @@ public class PartieController {
 		joueur.piocher();
 	}
 	
+	public void boutonAnnoncer(Joueur joueur) {
+		joueur.setaAnnonceCarte(true);
+	}
+	
+	public void boutonContrer(Ordinateur ordinateur) {
+		partie.getJoueurs().get(0).contrerJoueur(ordinateur);		
+	}
+	
 	public void faireJouer(Ordinateur ordinateur) {
 		try {
 			Thread.sleep(500);
@@ -71,6 +79,7 @@ public class PartieController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(partie.findJoueurSuivant() == partie.getJoueurs().get(0)) ordinateur.contrerJoueur(partie.findJoueurSuivant());
 		ordinateur.jouerCarte();
 	}
 	

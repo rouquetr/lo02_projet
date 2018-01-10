@@ -55,13 +55,12 @@ public class Joueur extends Observable {
 	}
 
 	public boolean setaAnnonceCarte(boolean aAnnonceCarte) {
-		this.setChanged();
 		if(this.main.size() > 2) {
-			this.notifyObservers("aAnnonceCarteErreur");	
+			System.out.println(this.getNom() + " ne peut pas annoncer Carte");
 			return false; 
 		}
 		this.aAnnonceCarte = aAnnonceCarte;
-		this.notifyObservers("aAnnonceCarte");	
+		System.out.println(this.getNom() + " a annoncé Carte");	
 		return true;
 	}
 
@@ -112,7 +111,10 @@ public class Joueur extends Observable {
 	
 	
 	public void contrerJoueur(Joueur joueur) {
-		if(joueur.getMain().size() == 1 && joueur.aAnnonceCarte() == false) joueur.piocher(2);
+		if(joueur.getMain().size() == 1 && joueur.aAnnonceCarte() == false) {
+			joueur.piocher(2);
+			System.out.println(this.getNom() + " a contré " + joueur.getNom());
+		}
 	}
 
 }
