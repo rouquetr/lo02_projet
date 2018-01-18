@@ -3,19 +3,24 @@ package view.cli;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import model.cartes.Carte;
 import model.joueurs.Joueur;
 import model.joueurs.Partie;
 
+/**
+ * Représente les commandes dans la console pour communiquer avec le joueur
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
+
 public class LigneDeCommandeUtils {
 	
-	private Scanner scanner = new Scanner(System.in);
-	
+	/**
+	 * Affichage d'un message pour demander une chaine de caractère à l'utilisateur (nom du joueur, ..)
+	 */
 	public String demanderString(String message) {
 		System.out.println(message);
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,6 +33,9 @@ public class LigneDeCommandeUtils {
 		return resultat;
 	}
 	
+	/**
+	 * Affichage d'un message pour demander un entier à l'utilisateur (nombre de joueurs, carte à jouer)
+	 */
 	public int demanderInt(String message, int min, int max) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int saisie = -1;
@@ -45,6 +53,12 @@ public class LigneDeCommandeUtils {
 		return saisie;
 	}
 	
+	/**
+	 * permet de lister les cartes
+	 * @param	cartes			liste de cartes 
+	 * @param	numeroDepart	affiche le numero de la carte dans la liste
+	 * @return message
+	 */
 	public String listerCartes(LinkedList<Carte> cartes, int numeroDepart) {
 		Iterator<Carte> iterator = cartes.iterator();
 		String message = "";
@@ -52,6 +66,12 @@ public class LigneDeCommandeUtils {
 		return message;
 	}
 	
+	/**
+	 * permet de lister les joueurs artificiels
+	 * @param	numeroDepart	numéro de l'ordinateur dans la liste
+	 * @param	subMessage		
+	 * @return message
+	 */
 	public String listerJoueursOrdinateurs(int numeroDepart, String subMessage) {
 		Iterator<Joueur> iteratorJoueurs = Partie.getInstance().getJoueurs().iterator();
 		String message = "";
@@ -62,13 +82,20 @@ public class LigneDeCommandeUtils {
 		return message;
 	}
 	
+	/**
+	 * permet de lister les variantes du jeu
+	 * @return message
+	 */
 	public String listerVariantes() {
 		String message = "1: Jeu de base\n";
 		message += "2: Variante de Monclar";
 		
 		return message;
 	}
-	
+
+	/**
+	 * affiche la carte visible du talon
+	 */
 	public void afficherTalon() {
 		System.out.println("La carte visible du talon est " + Partie.getInstance().getTalon().afficherTalon());
 	}

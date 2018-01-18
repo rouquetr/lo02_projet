@@ -23,20 +23,32 @@ import view.cli.LigneDeCommandeUtils;
 import view.graphic.GraphicUtils;
 import view.graphic.VuePartie;
 
+/**
+ * 
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
+
 public class DonnerCarte implements Action {
 	
+	/**
+	 * message indiquant le résultat de l'action
+	 */
 	private String message = "";
 	
+	/** 
+	 * Le joueur donne la carte de son choix au joueur choisi 
+	 **/
 	public void actionCli() {
 		Partie partie = Partie.getInstance();
 		if(partie.getJoueurEnCours().getClass() == Ordinateur.class) actionOrdinateur();
 		else {
 			LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
 			
-			String message = "A qui allez vous donner une carte?\n";
+			String message = "A qui allez vous donner une carte?\n";		//Choix du joueur à qui donner la carte
 			message += utils.listerJoueursOrdinateurs(1, "");
 			
-			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));
+			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));		//joueur choisi
 			
 			message = "Choisissez la carte à donner à " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
 			Carte carteChoisie = partie.getJoueurEnCours().getMain().get(utils.demanderInt(message, 1, partie.getJoueurEnCours().getMain().size()) - 1);
@@ -121,6 +133,9 @@ public class DonnerCarte implements Action {
 		}
 	}
 	
+	/**
+	 * permet à l'ordinateur de donner une carte à un autre joueur
+	 */
 	public void actionOrdinateur() {
 		Partie partie = Partie.getInstance();
 		Carte carteChoisie = partie.getJoueurEnCours().getMain().get(0);
@@ -129,6 +144,9 @@ public class DonnerCarte implements Action {
 		this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à " + partie.getJoueurs().get(0).getNom();
 	}
 	
+	/**
+	 * Affichage du message indiquant le joueur choisi pour donner une carte
+	 */
 	public String message() {
 		return message;
 	}

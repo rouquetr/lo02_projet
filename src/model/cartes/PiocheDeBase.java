@@ -7,8 +7,17 @@ import model.actions.ChangerForme;
 import model.actions.Piocher4;
 import model.actions.Rejouer;
 
+/**
+ * Représente la pioche du jeu original
+ * Hérite de la classe Pioche
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
 public class PiocheDeBase extends Pioche {
 	
+	/** Constructeur de la pioche de base
+	 * 
+	 */
 	public PiocheDeBase() {
 		super("Jeu de base");
 				

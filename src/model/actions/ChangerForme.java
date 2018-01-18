@@ -3,45 +3,48 @@ package model.actions;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import model.cartes.Carte;
-import model.cartes.Main;
 import model.cartes.Talon;
-import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
 import view.cli.LigneDeCommandeUtils;
 import view.graphic.GraphicUtils;
 import view.graphic.VuePartie;
 
+/**
+ * Représente une classe permet à une carte de changer de couleur
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
+
 public class ChangerForme implements Action {
 
 	public void actionCli() {
-		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1);
+		
+		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1); //choix automatique si le joueur est un ordinateur
 		else {
 			LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
 
-			String message = "Choisissez une couleur\n" + "1: Coeur\n" + "2: Carreau\n" + "3: Pique\n" + "4: Trèfle";
+			String message = "Choisissez une couleur\n" + "1: Coeur\n" + "2: Carreau\n" + "3: Pique\n" + "4: Trèfle"; // Choix de la carte à donner 
 
 			Talon.getInstance().setCouleur(utils.demanderInt(message, 1, 4) - 1);
 		}
 	}
 
+	/**
+	 * Vue Graphique de l'action
+	 */
 	public void actionGui() {
 		GraphicUtils utils = new GraphicUtils();
 		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1);
 		else {
-			JDialog dialog = new JDialog(VuePartie.frame, true);
+			JDialog dialog = new JDialog(VuePartie.frame, true); 	
 			dialog.setLocation(200, 200);
 			dialog.setSize(450, 300);
 			dialog.setResizable(false);

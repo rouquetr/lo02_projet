@@ -10,21 +10,52 @@ import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
 
+/**
+ * Représente la vue en ligne de commande dans la console
+ * Implémente les interfaces Observer et Runnable
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
+
 public class VueLigneDeCommande implements Observer, Runnable {
 
+	/**
+	 * instance de la partie en cours
+	 */
 	private Partie partie = Partie.getInstance();
 
+	/**
+	 * controlleur de la partie en cours
+	 */
 	private PartieController controller;
 
+	/** 
+	 * joueur en cours
+	 */
 	private Joueur joueurEnCours;
-	private boolean nouveauTour = false;
-
+	
 	private LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
+	/**
+	 * thread d'initialisation de la partie
+	 */
 	Thread initialisation = null;
+	/**
+	 * thread d'un tour de jeu
+	 */
 	Thread tourDeJeu = null;
+	/**
+	 * thread du tour de jeu précédent
+	 */
 	Thread tourDeJeuPrecedent = null;
+	/**
+	 * thread de fin de partie
+	 */
 	Thread finDePartie = null;
 
+	/**
+	 * initialisation du thread de la partie et initialisation de la vue en ligne de commande
+	 * @param	controller
+	 */
 	public VueLigneDeCommande(PartieController controller) {
 		this.controller = controller;
 		partie.addObserver(this);
@@ -32,10 +63,16 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		initialisation.start();
 	}
 
+	/**
+	 * Initialisation du thread
+	 */
 	public void run() {
 		initialiserPartie();
 	}
 
+	/**
+	 * Le joueur saisie son nom et choisit le nombre de joueurs dans la partie
+	 */
 	public void initialiserPartie() {
 		String nomJoueur = utils.demanderString("Saisissez votre nom de joueur");
 		int nombreJoueurs = utils.demanderInt("Combien de joueurs doit comporter la partie?", Partie.MINJOUEUR,
@@ -45,11 +82,17 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		lancerPartie();
 	}
 
+	/**
+	 * Le joueur choisit la variante qu'il souhaite
+	 */
 	public void lancerPartie() {
 		int numeroVariante = utils.demanderInt("Quelle variante choisissez-vous?\n" + utils.listerVariantes(), 1, 2);
 		controller.lancerPartie(numeroVariante);
 	}
 
+	/**
+	 * lancement d'un tour de jeu
+	 */
 	public void effectuerTourDeJeu() {
 		tourDeJeuPrecedent = tourDeJeu;
 		tourDeJeu = new Thread(() -> {
@@ -78,6 +121,9 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		if(tourDeJeuPrecedent != null && tourDeJeuPrecedent.getName() != "Ordinateur") tourDeJeuPrecedent.stop();
 	}
 
+	/**
+	 * le joueur choisit le numéro de la carte à jouer ou le numéro de l'action à affectuer
+	 */
 	public int faireJouerJoueur() {
 		System.out.println(partie.afficherPartie());
 		String message = "Indiquez le numéro de la carte que vous voulez jouer:\n" + "0: Piocher\n";
@@ -90,6 +136,10 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		return utils.demanderInt(message, 0, max);
 	}
 
+	/**
+	 * Affichage des scores de chaque joueur
+	 * Le joueur peut choisir de rejouer
+	 */
 	public void afficherFinDePartie() {
 		finDePartie = new Thread(() -> {
 			System.out.println("Les scores sont: ");
@@ -119,6 +169,11 @@ public class VueLigneDeCommande implements Observer, Runnable {
 		if(tourDeJeuPrecedent != null && tourDeJeuPrecedent.getName() != "Ordinateur") tourDeJeuPrecedent.stop();
 	}
 
+	/**
+	 * indique les changements au cours de la partie
+	 * @param	observable
+	 * @param	arg1
+	 */
 	@Override
 	public void update(Observable observable, Object arg1) {
 		if (observable instanceof Partie) {

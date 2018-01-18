@@ -7,8 +7,17 @@ import model.actions.ChangerForme;
 import model.actions.Piocher3;
 import model.actions.Rejouer;
 
+/**
+ * Représente la variante Pioche Monclar
+ * Hérite de la classe Paquet
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
 public class PiocheMonclar extends Pioche {
 	
+	/** Constructeur de la pioche Monclar
+	 * 
+	 */
 	public PiocheMonclar() {
 		super("Jeu de Monclar");
 				

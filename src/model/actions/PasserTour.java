@@ -14,9 +14,10 @@ public class PasserTour implements Action {
 		action();		
 	}
 	
+	/** Le joueur suivant passe son tour **/
 	public void action() {
-		Partie.getInstance().findJoueurSuivant().setPeutJouer(false);
-		message = Partie.getInstance().findJoueurSuivant().getNom() + " passe son tour";
+		Partie.getInstance().findJoueurSuivant().setPeutJouer(false);	//Le joueur suivant passe son tour
+		message = Partie.getInstance().findJoueurSuivant().getNom() + " passe son tour";	//Affichage du nom du joueur qui passe son tour 
 	}
 
 	public String message() {
