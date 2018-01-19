@@ -83,12 +83,12 @@ public class VueInitialisation extends JPanel {
 		scrollPane.setBounds(314, 260, 194, 57);
 		add(scrollPane);
 		
-		listVariantes = new JList<String>(new AbstractListModel() {
+		listVariantes = new JList<String>(new AbstractListModel<String>() {
 			String[] values = new String[] {"Jeu de base", "Variante de Monclar"};
 			public int getSize() {
 				return values.length;
 			}
-			public Object getElementAt(int index) {
+			public String getElementAt(int index) {
 				return values[index];
 			}
 		});

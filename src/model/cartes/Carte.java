@@ -42,7 +42,7 @@ public class Carte {
 	 *  Constructeur de la carte
 	 *  @param	valeur	Roi, Dame, Valet, AS, Chiffre
 	 *  @param	couleur	Trèfle, Coeur, Carreau, Pique
-	 *  @param	points	points de la carte
+	 *  @param	points	points que la carte donnera en fin de partie
 	 *  @param	action	effet de la carte sur le jeu
 	 *  
 	**/
@@ -54,7 +54,7 @@ public class Carte {
 	}
 	
 	/** 
-	 * retourne la valeur de la carte
+	 * @return la valeur de la carte
 	 **/
 	public int getValeur() {
 		return valeur;
@@ -69,7 +69,7 @@ public class Carte {
 	}
 	
 	/** 
-	 * retourne la couleur de la carte 
+	 * @return la couleur de la carte 
 	**/
 	public int getCouleur() {
 		return couleur;
@@ -84,7 +84,7 @@ public class Carte {
 	}
 	
 	/** 
-	 * retourne les points de la carte
+	 * @return les points de la carte
 	 * 
 	 */
 	public int getPoints() {
@@ -103,12 +103,13 @@ public class Carte {
 	 *  appel des méthodes d'actions graphiques et en ligne de commande
 	 */
 	public void effectuerAction() {
-		if (Thread.currentThread().getName() == "cli") action.actionCli();
-		else action.actionGui();
+		if (Thread.currentThread().getName() == "cli") action.actionCli();		// si le thread depuis lequel est joué la carte est actionCli, alors l'effet est en CLI
+		else action.actionGui();													// sinon, en vue graphique
 	}
 	
 	/** 
-	 * Comparaison de deux cartes pour décider si une cate pouvait être posée sur le talon
+	 * Méthode statique
+	 * Comparaison de deux cartes pour décider si une cate peut être posée sur le talon
 	 * @param	carte1	carte à comparer avec celle du talon
 	 * @param	carte2	carte du talon
 	 */
@@ -118,15 +119,16 @@ public class Carte {
 	}
 	
 	/** 
-	 * Affichage de la valeur et la couleur de la carte
+	 * Permet de récupérer la valeur et la couleur de la carte dans une chaîne de caractères
+	 * @return la chaîne de caractères
 	 */
 	public String afficherCarte() {
 		return VALEURS[valeur] + " de " + COULEURS[couleur];
 	}
 	
 	/** 
-	 * Permet d'afficher la valeur et la couleur de la carte de manière formatée
-	 *
+	 * Permet de récupérer la valeur et la couleur de la carte de manière formatée
+	 * @return la chaine de caractères
 	 */
 	public String afficherCarteAvecDeterminant() {
 		switch (this.valeur) {
@@ -140,14 +142,16 @@ public class Carte {
 	}
 	
 	/**
-	 * récupère le message de l'action effectuée
+	 * Permet de récupérer le message de l'action effectuée
+	 * @return la chaîne de caractères
 	 */
 	public String getActionMessage() {
 		return action.message();
 	}
 	
 	/**
-	 * récupère l'action en cours
+	 * Permet de récupérer l'action liée à la carte
+	 * @return une action
 	 */
 	public Action getAction() {
 		return action;

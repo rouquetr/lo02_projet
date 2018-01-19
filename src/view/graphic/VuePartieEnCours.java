@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import controller.PartieController;
 import model.cartes.Carte;
-import model.cartes.Talon;
 import model.joueurs.Joueur;
 import model.joueurs.Ordinateur;
 import model.joueurs.Partie;
@@ -16,11 +15,7 @@ import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VuePartieEnCours extends JPanel implements Observer {
 	

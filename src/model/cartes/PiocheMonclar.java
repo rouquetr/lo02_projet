@@ -15,8 +15,8 @@ import model.actions.Rejouer;
  */
 public class PiocheMonclar extends Pioche {
 	
-	/** Constructeur de la pioche Monclar
-	 * 
+	/** 
+	 * Constructeur de la pioche Monclar
 	 */
 	public PiocheMonclar() {
 		super("Jeu de Monclar");

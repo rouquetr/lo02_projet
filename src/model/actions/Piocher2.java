@@ -22,7 +22,7 @@ public class Piocher2 implements Action {
 	/** Le joueur suivant pioche 2 cartes **/
 	public void action() {
 		Partie.getInstance().findJoueurSuivant().piocher(2);	/** faire piocher 2 carte au joueur suivant **/
-		message = Partie.getInstance().findJoueurSuivant() + " pioche 2 cartes";	//Affichage du nom du joueur qui pioche les carte
+		message = Partie.getInstance().findJoueurSuivant().getNom()+ " pioche 2 cartes";	//Affichage du nom du joueur qui pioche les carte
 	}
 	
 	public String message() {

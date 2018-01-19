@@ -25,6 +25,9 @@ import view.graphic.VuePartie;
 
 public class ChangerForme implements Action {
 
+	/**
+	 * Le joueur change la couleur du talon (version cli)
+	 */
 	public void actionCli() {
 		
 		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1); //choix automatique si le joueur est un ordinateur
@@ -38,12 +41,11 @@ public class ChangerForme implements Action {
 	}
 
 	/**
-	 * Vue Graphique de l'action
+	 * Le joueur change la couleur du talon (version graphique)
 	 */
 	public void actionGui() {
-		GraphicUtils utils = new GraphicUtils();
-		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1);
-		else {
+		if (Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) Talon.getInstance().setCouleur(1); // si le joueur est un ordinateur, la valeur de la couleur passe a 1
+		else { 			// sinon, on ouvre un dialog avec un bouton pour chaque couleur et un intitulé pour indiquer l'action a effectuer
 			JDialog dialog = new JDialog(VuePartie.frame, true); 	
 			dialog.setLocation(200, 200);
 			dialog.setSize(450, 300);
@@ -59,13 +61,12 @@ public class ChangerForme implements Action {
 			instructions.setBounds(20, 20, 450, 16);
 			instructions.setForeground(new Color(255, 255, 255));
 			panel.add(instructions);
-
-			JButton coeur = new JButton("Coeur");
+																
+			JButton coeur = new JButton("Coeur");				
 			coeur.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Talon.getInstance().setCouleur(Carte.COEUR);
-					System.out.println(Talon.getInstance().getCouleur());
-					dialog.dispose();
+					Talon.getInstance().setCouleur(Carte.COEUR);		// pour chaque bouton, on lui assigne la couleur qu'il devra assigner au talon
+					dialog.dispose();								// puis on ferme le dialog quand l'action est effectuée
 				}
 			});
 			coeur.setBounds(20, 100, 170, 29);

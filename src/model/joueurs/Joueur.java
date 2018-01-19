@@ -8,6 +8,7 @@ import model.cartes.Main;
 
 /**
  * Représente un joueur réel
+ * Hérite la classe Observable
  * @author Rouquet Raphael - Mannan Ismail
  *
  */
@@ -18,10 +19,12 @@ public class Joueur extends Observable {
 	 * nom du joueur
 	 */
 	private String nom;
+	
 	/**
 	 * position du joueur réel par rapport aux autres
 	 */
 	private int position;
+	
 	/**
 	 * nombre de points du joueur
 	 */
@@ -31,10 +34,12 @@ public class Joueur extends Observable {
 	 * permet de savoir si le joueur peut poser une carte sur le talon ou non
 	 */
 	private boolean peutJouer = true;
+	
 	/**
 	 * permet de faire rejouer le joueur
 	 */
 	private boolean doitRejouer = false;
+	
 	/**
 	 * permet de savoir si oui ou non le joueur a annoncé Carte
 	 */
@@ -58,33 +63,40 @@ public class Joueur extends Observable {
 	}
 	
 	/**
-	 * retourne le nom du joueur
+	 * Permer de récupérer le nom du joueur
+	 * @return la chaine de caractères
 	 */
 	public String getNom() {
 		return nom;
 	}
 	
 	/**
-	 * retourne la position du joueur
+	 * Permer de récupérer la position du joueur
+	 * @return le numéro
 	 */
 	public int getPosition() {
 		return position;
 	}
+	
 	/**
-	 * retourne le nombre de points du joueur
+	 * Permer de récupérer le nombre de points du joueur
+	 * @return le nombre de points
 	 */
 	public int getPoints() {
 		return points;
 	}
 
 	/**
-	 * retourne la main du joueur
+	 * Permer de récupérer la main du joueur
+	 * @return la main du joueur
 	 */
 	public Main getMain() {
 		return main;
 	}
+	
 	/**
-	 * retourne si le joueur peut jouer ou non
+	 * Permer de savoir si le joueur peut jouer ou non
+	 * @return true si le joueur peut jouer, false sinon
 	 */
 	public boolean peutJouer() {
 		return peutJouer;
@@ -99,7 +111,7 @@ public class Joueur extends Observable {
 	}
 	
 	/**
-	 * modifie le fait que le joueur dit rejouer ou non
+	 * modifie le fait que le joueur doit rejouer ou non
 	 * @param	doitRejouer
 	 */
 	public void setDoitRejouer(boolean doitRejouer) {
@@ -107,16 +119,17 @@ public class Joueur extends Observable {
 	}
 	
 	/**
-	 * retourne si le joueur a annoncé carte ou non
+	 * Permer de savoir si le joueur a annoncé carte ou non
+	 * @return true si le jouer a bien annoncé carte
 	 */
-	
 	public boolean aAnnonceCarte() {
 		return aAnnonceCarte;
 	}
 
 	/**
-	 * modifie le fait d'annoncer Carte
+	 * Permet d'annoncer Carte
 	 * @param aAnnonceCarte
+	 * @return true si le joueur peut annoncer carte, false sinon
 	 */
 	public boolean setaAnnonceCarte(boolean aAnnonceCarte) {
 		if(this.main.size() > 2) {
@@ -127,14 +140,6 @@ public class Joueur extends Observable {
 		System.out.println(this.getNom() + " a annoncé Carte");	
 		return true;
 	}
-
-	/**
-	 * Affichage du nom, de la position, des points et de la main du joueur
-	 */
-	@Override
-	public String toString() {
-		return "Joueur [nom=" + nom + ", position=" + position + ", points=" + points + ", main=" + main + "]";
-	}
 	
 	/**
 	 * permet au joueur de piocher une carte
@@ -142,13 +147,13 @@ public class Joueur extends Observable {
 	public void piocher() {
 		aAnnonceCarte = false;
 		this.main.add(Partie.getInstance().getPioche().tirerUneCarte());
-		this.setChanged();
-		this.notifyObservers("piocher");
+		this.setChanged();		
+		this.notifyObservers("piocher");		// on notifie les observers que le joueur a pioché
 		Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
 	}
 	
 	/**
-	 * permet au joueur de piocher un nombre donné de carte
+	 * permet au joueur de piocher un nombre donné de carte sans notifier les observer
 	 * @param	nombreCartes	le nombre de cartes a piocher
 	 */
 	public void piocher(int nombreCartes) {
@@ -162,21 +167,21 @@ public class Joueur extends Observable {
 	 */
 	public void jouerCarte(Carte carte) {
 		this.setChanged();
-		if(Partie.getInstance().getTalon().add(carte)) {
-			this.main.remove(carte);
-			carte.effectuerAction();
+		if(Partie.getInstance().getTalon().add(carte)) {		// si on peut bien ajouter la carte au talon
+			this.main.remove(carte);							// on retire la carte de la main du joueur
+			carte.effectuerAction();							// puis on effectue son action
 			if(main.size() > 1) aAnnonceCarte = false;
-			if(main.size() == 0) Partie.getInstance().mettreAJourScores();
+			if(main.size() == 0) Partie.getInstance().mettreAJourScores();		// si c'était la dernière carte du joueur, la partie se termine
 			else {
-				this.notifyObservers("jouerCarte");
-				if(this.doitRejouer) {
+				this.notifyObservers("jouerCarte");		// on notifie les observers que le joueur a joué une carte
+				if(this.doitRejouer) {					// si le joueur doit rejouer, on le replace comme joueur en cours
 					Partie.getInstance().setJoueurEnCours(Partie.getInstance().getJoueurEnCours());
 					this.doitRejouer = false;
 				}
-				else Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());
+				else Partie.getInstance().setJoueurEnCours(Partie.getInstance().findJoueurSuivant());		// sinon, on indique que c'est au joueur suivant de jouer
 			}
 		} else {
-			this.notifyObservers("jouerCarteErreur");
+			this.notifyObservers("jouerCarteErreur"); 	// on notifie les observers que le joueur ne peut pas jouer cette carte
 		}
 	}
 	
@@ -197,7 +202,7 @@ public class Joueur extends Observable {
 	public void contrerJoueur(Joueur joueur) {
 		if(joueur.getMain().size() == 1 && joueur.aAnnonceCarte() == false) {
 			joueur.piocher(2);
-			System.out.println(this.getNom() + " a contr� " + joueur.getNom());
+			System.out.println(this.getNom() + " a contré " + joueur.getNom());
 		}
 	}
 

@@ -8,8 +8,8 @@ package model.cartes;
  */
 public class Main extends Paquet {
 	
-	/** Constructeur de la main du joueur 
-	 * 
+	/**  
+	 * Constructeur de la main du joueur
 	 */
 	public Main() {
 		super();

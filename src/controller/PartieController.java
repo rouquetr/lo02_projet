@@ -19,9 +19,8 @@ import model.joueurs.Partie;
  */
 
 public class PartieController {
-	/**
-	 * Retourne la partie en cours
-	 */
+
+	 /** Partie en cours */
 	private Partie partie = Partie.getInstance();
 	
 	/** Nom de l'ordinateur */
@@ -30,8 +29,8 @@ public class PartieController {
 	/**
 	 * initialisation d'une nouvelle partie
 	 * Ajout du joueur réel et des ordinateurs
-	 * @param	nombreDeJoueurs		permet de choisir le nombre de joueurs composant la partie, de 2 à 5
-	 * @param	nomJoueur			enregistre le nom du joueur réel
+	 * @param	nombreDeJoueurs		Nombre de joueurs de la partie
+	 * @param	nomJoueur			Nom du joueur réel
 	 */
 	public void initialiserPartie(int nombreDeJoueurs, String nomJoueur) {
 		
@@ -40,14 +39,13 @@ public class PartieController {
 		joueurs.add(new Joueur(nomJoueur, 0));
 		for (int i = 0; i < nombreDeJoueurs - 1; i++) 
 			joueurs.add(new Ordinateur(nomsOrdinateur[i], i + 1));
-		partie.retirerTousLesJoueurs();
+		partie.retirerTousLesJoueurs();		// on retire tous les joueurs afin d'éviter des duplicatas lorsque l'on relance une partie
 		partie.ajouterJoueurs(joueurs);
 	}
 	
 	/** 
 	 * Création d'une nouvelle partie 
-	 * Le joueur choisit à quel type de variante il veut jouer
-	 * @param	numeroVariante	permet de choisir la variante du jeu que l'on veut jouer 
+	 * @param	numeroVariante	numero de la variante à laquelle on veut jouer 
 	 */
 	public void lancerPartie(int numeroVariante) {
 		Pioche variante = null;
@@ -59,27 +57,57 @@ public class PartieController {
 			variante = new PiocheDeBase();
 			break;
 		}
-		partie.commencerNouvellePartie(variante);
+		partie.commencerNouvellePartie(variante); // on effectue toutes les opérations nécessaires pour commencer une nouvelle partie
 	}
 	
 	/** Le joueur choisit la carte qu'il souhaite jouer
 	 * @param	joueur	le joueur qui joue une carte
-	 * @param	numeroCarte   la carte à jouer
+	 * @param	numeroAction   le numero de l'action a effectuer
 	 */
-	public void faireJouer(Joueur joueur, int numeroCarte) {
-		if(numeroCarte == 0) joueur.piocher();
-		else if (numeroCarte == joueur.getMain().size() + 1) joueur.setaAnnonceCarte(true);
-		else {
+	public void faireJouer(Joueur joueur, int numeroAction) {
+		if(numeroAction == 0) joueur.piocher();				// si 0, le joueur pioche
+		else if (numeroAction == joueur.getMain().size() + 1) joueur.setaAnnonceCarte(true);		// si le numero est superieur de 1 au nombre de cartes dans la main, le joueur annonce Carte
+		else {		// sinon, on recupere la carte choisie par le joueur, et on lui fait la jouer
 			Carte carteVoulue = null;
 			Iterator<Carte> iterator = joueur.getMain().iterator();
-			for (int i = 0; i < numeroCarte && iterator.hasNext(); i++) carteVoulue = iterator.next();
+			for (int i = 0; i < numeroAction && iterator.hasNext(); i++) carteVoulue = iterator.next();
 			joueur.jouerCarte(carteVoulue);
 		}
 	}
 	
-	/** Création d'un bouton pour jouer une partie
-	 * @param	joueur	le joueur qui joue une carte
-	 * @param	numeroCarte	la carte que l'on souhaite jouer
+	/**
+	 *  L'ordinateur joue après le joueur 
+	 * @param	ordinateur	l'ordinateur qui doit jouer
+	 */
+	public void faireJouer(Ordinateur ordinateur) {
+		try {
+			Thread.sleep(500);		// on delaye légèrement pour permettre de suivre les différents coups des ordinateurs
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ordinateur.jouerCarte();
+	}
+	
+	/**
+	 *  Permet de vérifier si un joueur peut jouer
+	 * @param	joueur	le joueur dont on veut verifier s'il peut jouer
+	 * @return 	boolean 	true si le joueur peut jouer, false sinon
+	 */
+	public boolean authoriserAJouer(Joueur joueur) {
+		if(joueur.peutJouer()) return true;
+		else {														// si le joueur ne peut pas jouer, il passe son tour
+			joueur.setPeutJouer(true);								// on l'authorise à jouer pour le prochain tour
+			partie.setJoueurEnCours(partie.findJoueurSuivant());
+			return false;
+		}
+	}
+	
+	
+	/** 
+	 * Permet de faire jouer une carte au joueur humain
+	 * @param	joueur	le joueur humain
+	 * @param	numeroCarte	la carte que le joueur souhaite joueur
 	 */
 	public void boutonJouer(Joueur joueur, int numeroCarte) {
 		Carte carteVoulue = null;
@@ -96,7 +124,7 @@ public class PartieController {
 		joueur.piocher();
 	}
 	
-	/** Le joueur peut annoncer Carte
+	/** Permet au joueur d'annoncer Carte
 	 * @param	joueur	Le joueur qui annonce Carte
 	 */
 	public void boutonAnnoncer(Joueur joueur) {
@@ -104,39 +132,11 @@ public class PartieController {
 	}
 	
 	/**
-	 *  Le joueur peut contrer l'ordinateur
+	 *  Permet au joueur de contrer un ordinateur
 	 * @param	ordinateur	l'ordinateur qui sera contré
 	 */
 	public void boutonContrer(Ordinateur ordinateur) {
 		partie.getJoueurs().get(0).contrerJoueur(ordinateur);		
-	}
-	
-	
-	/**
-	 *  L'ordinateur joue après le joueur 
-	 * @param	ordinateur	l'ordinateur qui joue une carte
-	 */
-	public void faireJouer(Ordinateur ordinateur) {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ordinateur.jouerCarte();
-	}
-	
-	/**
-	 *  le joueur est autorisé à jouer
-	 * @param	joueur	le joueur qui peut jouer une carte
-	 */
-	public boolean authoriserAJouer(Joueur joueur) {
-		if(joueur.peutJouer()) return true;
-		else {
-			joueur.setPeutJouer(true);
-			partie.setJoueurEnCours(partie.findJoueurSuivant());
-			return false;
-		}
 	}
 	
 }

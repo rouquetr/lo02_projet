@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import java.awt.Font;
-import java.awt.Window;
 import java.util.Iterator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -131,12 +130,12 @@ public class VueFinDePartie extends JPanel {
 		scrollPane.setBounds(125, 100, 193, 70);
 		add(scrollPane);
 		
-		JList<String> listVariantes = new JList<String>(new AbstractListModel() {
+		JList<String> listVariantes = new JList<String>(new AbstractListModel<String>() {
 			String[] values = new String[] {"Jeu de base", "Variante de Monclar"};
 			public int getSize() {
 				return values.length;
 			}
-			public Object getElementAt(int index) {
+			public String getElementAt(int index) {
 				return values[index];
 			}
 		});

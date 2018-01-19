@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import model.joueurs.Joueur;
 
 /**
- * Représente les cartes que le joueur peut piocher
+ * Représente la pioche d'une partie
  * @author Rouquet Raphael - Mannan Ismail
  *
  */
@@ -23,7 +23,7 @@ public abstract class Pioche extends Paquet {
 	}
 	
 	/** Les cartes sont distribuées aux joueurs
-	 * @param	joueurs		Collection de joueurs présent dans la partie
+	 * @param	joueurs		Collection de joueurs présents dans la partie
 	 */
 	public void distribuerCarte(LinkedList<Joueur> joueurs) {
 
@@ -38,18 +38,20 @@ public abstract class Pioche extends Paquet {
 		
 	}
 	
-	/** Permet de piocher une carte 
-	 * 
+	/** 
+	 * Permet de piocher une carte 
+	 * @return la carte piochée
 	 */
 	public Carte tirerUneCarte() {
-		Carte cartePiochee = this.getLast();
-		this.remove(cartePiochee);
-		if(isEmpty()) Talon.getInstance().transformerEnPioche();
+		Carte cartePiochee = this.getLast();		// on récupère la carte sur le dessus de la pioche
+		this.remove(cartePiochee);				// on la retire de la pioche
+		if(isEmpty()) Talon.getInstance().transformerEnPioche();		// si la pioche est vide, on transforme le talon en pioche
 		return cartePiochee;
 	}
 	
-	/** Retourne le nom de la pioche
-	 * 
+	/** 
+	 * Retourne le nom de la pioche
+	 * @return la chaîne de caractères
 	 */
 	public String getNom() {
 		return nom;

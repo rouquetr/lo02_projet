@@ -1,9 +1,6 @@
 package view.graphic;
 
-import java.awt.Image;
 import javax.swing.JPanel;
-
-import model.cartes.Carte;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

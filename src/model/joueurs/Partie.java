@@ -14,7 +14,6 @@ import model.cartes.Talon;
  * Représente la partie en cours
  * Hérite de la classe Observable
  * @author Rouquet Rafael - Mannan Ismail
- *
  */
 
 public class Partie extends Observable {
@@ -28,6 +27,7 @@ public class Partie extends Observable {
 	 * récupère le talon pour la partie
 	 */
 	private Talon talon = Talon.getInstance();
+	
 	/**
 	 * pioche disponible pour la partie
 	 */
@@ -35,8 +35,10 @@ public class Partie extends Observable {
 	
 	/**
 	 * liste des joueurs qui composent la partie
+	 * On a choisi LinkedList pour garantir l'ordre des joueurs au cours de la partie (à cause de l'enchaînement des tours)
 	 */
 	private LinkedList<Joueur> joueurs = new LinkedList<Joueur>();
+	
 	/**
 	 * joueur en cours
 	 */
@@ -46,6 +48,7 @@ public class Partie extends Observable {
 	 * Nombre minimal de joueur pour une partie
 	 */
     public final static int MINJOUEUR = 2;
+    
     /**
 	 * Nombre maximal de joueur pour une partie
 	 */
@@ -67,19 +70,19 @@ public class Partie extends Observable {
 	/**
 	 * Permet au joueur de commencer une nouvelle partie
 	 * Mélange, distribution des cartes
-	 * @param	variante
+	 * @param	un objet de type pioche: la variante choisie
 	 */
 	public void commencerNouvellePartie(Pioche variante) {
-		this.pioche = variante;
-		this.pioche.melanger();
-		this.pioche.distribuerCarte(this.joueurs);
+		this.pioche = variante;		
+		this.pioche.melanger();						//on mélange la pioche
+		this.pioche.distribuerCarte(this.joueurs);	// puis on distribue les cartes
 		
-		this.talon.clear();
-		this.talon.add(this.pioche.tirerUneCarte());
+		this.talon.clear();							// on nettoie le talon, s'il y'avait une partie en cours précédemment
+		this.talon.add(this.pioche.tirerUneCarte());	// on ajoute une carte au talon
 		
-		this.joueurEnCours = this.joueurs.getFirst();
+		this.joueurEnCours = this.joueurs.getFirst(); // on lance le premier tour de jeu
 		this.setChanged();
-		this.notifyObservers("commencerNouvellePartie");
+		this.notifyObservers("commencerNouvellePartie");	// on notifie les observers qu'une partie vient de commencer
 	}
 	
 	/**
@@ -90,40 +93,36 @@ public class Partie extends Observable {
 	}
 	
 	/** 
-	 * retourne le talon 
+	 * Permet de récupérer le talon 
+	 * @return le talon
 	 */
 	public Talon getTalon() {
 		return talon;
 	}
 	
 	/**
-	 * retourne la pioche
+	 * Permet de récupérer la pioche
+	 * @return la pioche
 	 */
 	public Pioche getPioche() {
 		return pioche;
 	}
 	
 	/**
-	 * modifie la pioche
-	 * @param	pioche
-	 */
-	public void setPioche(Pioche pioche) {
-		this.pioche = pioche;	
-	}
-	
-	/**
-	 * retourne les joueurs qui composent la partie
+	 * Permet de récupérer les joueurs qui composent la partie
+	 * @return la liste des joueurs
 	 */
 	public LinkedList<Joueur> getJoueurs() {
 		return joueurs;
 	}
 	
 	/**
-	 * retourne les points de chaque joueur pour établir un classement
+	 * Permet de récupérer les joueurs ordonnés selon leurs points
+	 * @return	la liste des joueurs ordonnée selon leurs points
 	 */
 	public LinkedList<Joueur> getJoueursByScore() {
-		LinkedList<Joueur> classement = new LinkedList<>(joueurs);
-		classement.sort(new Comparator<Joueur>() {
+		LinkedList<Joueur> classement = new LinkedList<>(joueurs);		// on créé une nouvelle liste afin de ne pas altérer l'ancienne
+		classement.sort(new Comparator<Joueur>() {		// on compare chaque joueur pour les ordonner selon leur nombre de points
 			@Override
 			public int compare(Joueur o1, Joueur o2) {
 				return Integer.compare(o1.getPoints(), o2.getPoints());
@@ -132,21 +131,26 @@ public class Partie extends Observable {
 		return classement;
 	}
 	
+	/**
+	 * Permet d'ajouter des joueurs à la partie
+	 * @param un Set de joueurs à ajouter, afin de garantir l'unicité des joueurs
+	 */
 	public void ajouterJoueurs(Set<Joueur> joueurs) {
 		this.joueurs.addAll(joueurs);
 		this.setChanged();
-		this.notifyObservers("ajouterJoueurs");
+		this.notifyObservers("ajouterJoueurs");	// on notifie les observers que des joueurs ont été ajoutés à la partie
 	}
 	
 	/**
-	 * permet de retirer les joueurs de la collection
+	 * permet de nettoyer la partie en retirant tous les joueurs
 	 */
 	public void retirerTousLesJoueurs() {
 		this.joueurs.removeAll(this.joueurs);
 	}
 	
 	/**
-	 * récupère le joueur en cours
+	 * Permet de récupérer le joueur en cours
+	 * @return le joueur en cours
 	 */
 	public Joueur getJoueurEnCours() {
 		return joueurEnCours;
@@ -158,46 +162,49 @@ public class Partie extends Observable {
 	public void setJoueurEnCours(Joueur joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
 		this.setChanged();
-		this.notifyObservers("setJoueurEnCours");	
+		this.notifyObservers("setJoueurEnCours");	// on notifie les observers que le joueur en cours a été changé, et donc que c'est à un autre joueur de jouer
 	}
 	
 	/** 
-	 * permet de connaitre l'identité du joueur précédent le joueur en cours
+	 * Permet de récupérer le joueur précédent le joueur en cours
+	 * @return le joueur précédent
 	 */
 	public Joueur findJoueurPrecedent() {
-		Iterator<Joueur> iterator = joueurs.descendingIterator();
+		Iterator<Joueur> iterator = joueurs.descendingIterator();		// on créé un iterator descendant
 		while(iterator.hasNext()) 
-			if(iterator.next().equals(joueurEnCours)) {
-				if (!iterator.hasNext()) return joueurs.get(joueurs.size() - 1);
-				return iterator.next();
+			if(iterator.next().equals(joueurEnCours)) {		// on cherche le joueur en cours
+				if (!iterator.hasNext()) return joueurs.get(joueurs.size() - 1);		// si il n'y a pas de suite à l'iterator, on retourne le dernier joueur de la liste
+				return iterator.next();												// sinon on retourne la suite de l'iterator
 			}
-		return null;
+		return null;																	// si on ne trouve personne (erreur ou nombre de joueurs égal à 1), on retourne null
 	}
 	
 	/**
-	 * permet de connaitre l'identité du joueur suivant le joueur en cours
+	 * Permet de récupérer le joueur suivant le joueur en cours
+	 * @return le joueur suivant
 	 */
 	public Joueur findJoueurSuivant() {
 		Iterator<Joueur> iterator = joueurs.iterator();
 		while(iterator.hasNext()) 
-			if(iterator.next().equals(joueurEnCours)) {
-				if (!iterator.hasNext()) return joueurs.get(0);
-				return iterator.next();
+			if(iterator.next().equals(joueurEnCours)) {		// on cherche le joueur en cours
+				if (!iterator.hasNext()) return joueurs.get(0);	// si il n'y a pas de suite à l'itérateur, on retourne le premier joueur de la liste
+				return iterator.next();							// sinon on retourne le joueur suivant
 			}
-		return null;
+		return null;												// si on ne trouve personne (erreur ou nombre de joueurs égal à 1), on retourne null
 	}
 	
 	/**
-	 * permet d'afficher la partie avec le nom de la variante, les joueurs qui la compose et la carte visible du talon
+	 * permet de retourner un message les informations de la partie (le nom de la variante, les joueurs qui la compose et la carte visible du talon)
+	 * @return la chaîne de caractères
 	 */
 	public String afficherPartie() {
-		String message = "La partie (variante: " + pioche.getNom() +") est compos�e de:\n";
+		String message = "La partie (variante: " + pioche.getNom() +") est composée de:\n";		// on donne le nom de la variante jouée
 		Iterator<Joueur> iterator = joueurs.iterator();
-		while (iterator.hasNext()) {
+		while (iterator.hasNext()) {			// on liste les joueurs avec leur nom et leur nombre de cartes
 			Joueur joueur = iterator.next();
 			message += joueur.getNom() + " avec " + joueur.getMain().size() + " cartes\n";
 		}
-		message += "La carte visible du talon est " + talon.afficherTalon();
+		message += "La carte visible du talon est " + talon.afficherTalon();	// on affiche la carte visible du talon
 		return message;
 	}
 	
@@ -211,7 +218,7 @@ public class Partie extends Observable {
 			joueur.compterPoints();
 		}
 		this.setChanged();
-		this.notifyObservers("mettreAJourScores");	
+		this.notifyObservers("mettreAJourScores");		// on notifie les observers que la partie vient de se terminer
 	}
 	
 }

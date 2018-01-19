@@ -37,7 +37,7 @@ public class DonnerCarte implements Action {
 	private String message = "";
 	
 	/** 
-	 * Le joueur donne la carte de son choix au joueur choisi 
+	 * Le joueur donne la carte de son choix au joueur choisi (version cli)
 	 **/
 	public void actionCli() {
 		Partie partie = Partie.getInstance();
@@ -45,24 +45,27 @@ public class DonnerCarte implements Action {
 		else {
 			LigneDeCommandeUtils utils = new LigneDeCommandeUtils();
 			
-			String message = "A qui allez vous donner une carte?\n";		//Choix du joueur à qui donner la carte
+			String message = "A qui allez vous donner une carte?\n";
 			message += utils.listerJoueursOrdinateurs(1, "");
 			
-			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));		//joueur choisi
+			Joueur joueurChoisi = partie.getJoueurs().get(utils.demanderInt(message, 1, partie.getJoueurs().size()));		//On demande au joueur humain de choisir un de ses adversaires
 			
 			message = "Choisissez la carte à donner à " + joueurChoisi.getNom() + ": \n" + utils.listerCartes(partie.getJoueurEnCours().getMain(), 1);
-			Carte carteChoisie = partie.getJoueurEnCours().getMain().get(utils.demanderInt(message, 1, partie.getJoueurEnCours().getMain().size()) - 1);
+			Carte carteChoisie = partie.getJoueurEnCours().getMain().get(utils.demanderInt(message, 1, partie.getJoueurEnCours().getMain().size()) - 1);	// Puis de choisir une carte
 			
-			joueurChoisi.getMain().add(carteChoisie);
-			partie.getJoueurEnCours().getMain().remove(carteChoisie);
+			joueurChoisi.getMain().add(carteChoisie);						// On ajoute la carte a la main de l'adversaire
+			partie.getJoueurEnCours().getMain().remove(carteChoisie);			// On la retire de celle du joueur en cours
 			this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à " + joueurChoisi.getNom();
 		}
 	}
 	
+	/** 
+	 * Le joueur donne la carte de son choix au joueur choisi (version graphique)
+	 **/
 	public void actionGui() {
 		GraphicUtils utils = new GraphicUtils();
 		if(Partie.getInstance().getJoueurEnCours().getClass() == Ordinateur.class) actionOrdinateur();
-		else {
+		else {														// On ouvre un dialog avec la liste des cartes et un bouton par joueur à qui donner une carte
 			JDialog dialog = new JDialog(VuePartie.frame, true);
 			dialog.setLocation(200, 200);
 			dialog.setSize(450, 300);
@@ -79,7 +82,7 @@ public class DonnerCarte implements Action {
 			instructions.setForeground(new Color(255, 255, 255));
 			panel.add(instructions);
 			
-			JScrollPane scrollPane =  new JScrollPane();
+			JScrollPane scrollPane =  new JScrollPane();			// On affiche une liste avec les différentes cartes du joueur Humain
 			scrollPane.setBounds(20, 50, 400, 100);
 			JList<ImageIcon> listCartes = new JList<ImageIcon>();
 			listCartes.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -96,7 +99,7 @@ public class DonnerCarte implements Action {
 			}
 			listCartes.setModel(model);
 			
-			Iterator<Joueur> joueurs = Partie.getInstance().getJoueurs().iterator();
+			Iterator<Joueur> joueurs = Partie.getInstance().getJoueurs().iterator();		// On affiche un bouton par ordinateur
 			joueurs.next();
 			int i = 0;
 			while (joueurs.hasNext()) {
@@ -104,11 +107,11 @@ public class DonnerCarte implements Action {
 				JButton donnerCarte = new JButton(joueur.getNom());
 				donnerCarte.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Carte carteChoisie = Partie.getInstance().getJoueurEnCours().getMain().get(listCartes.getSelectedIndex());
-						joueur.getMain().add(carteChoisie);
-						Partie.getInstance().getJoueurEnCours().getMain().remove(carteChoisie);
+						Carte carteChoisie = Partie.getInstance().getJoueurEnCours().getMain().get(listCartes.getSelectedIndex());	 // On recupere la carte choisie par le joueur
+						joueur.getMain().add(carteChoisie);				// Puis on l'ajoute à la main de l'adversaire choisi
+						Partie.getInstance().getJoueurEnCours().getMain().remove(carteChoisie);		// Et on la retire de celle du joueur humain
 						message = Partie.getInstance().getJoueurEnCours().getNom() + " a donné une carte à " + joueur.getNom();
-						dialog.dispose();
+						dialog.dispose();			// Enfin, on ferme le dialog
 					}
 				});
 				switch (i) {
@@ -138,8 +141,8 @@ public class DonnerCarte implements Action {
 	 */
 	public void actionOrdinateur() {
 		Partie partie = Partie.getInstance();
-		Carte carteChoisie = partie.getJoueurEnCours().getMain().get(0);
-		partie.getJoueurs().get(0).getMain().add(carteChoisie);
+		Carte carteChoisie = partie.getJoueurEnCours().getMain().get(0);		// l'ordinateur prend toujours la premiere carte de sa main
+		partie.getJoueurs().get(0).getMain().add(carteChoisie);				// Et la donne toujours au joueur humain
 		partie.getJoueurEnCours().getMain().remove(carteChoisie);
 		this.message = partie.getJoueurEnCours().getNom() + " a donné une carte à " + partie.getJoueurs().get(0).getNom();
 	}

@@ -21,7 +21,7 @@ public class ChangerSens implements Action {
 	/** On récupère l'instance de la Partie et on change le sens de cette partie **/
 	public void action() {
 		Partie partie = Partie.getInstance();		//on récupère la partie en cours
-		if(partie.getJoueurs().size() == 2) partie.findJoueurSuivant().setPeutJouer(false);			//Si la artie est composée de 2 joueurs, le joueur suivant passe son tour
+		if(partie.getJoueurs().size() == 2) partie.findJoueurSuivant().setPeutJouer(false);			//Si la partie est composée de 2 joueurs, le joueur suivant passe son tour
 		else partie.changerSens();			//sinon on change de sens 
 	}
 	

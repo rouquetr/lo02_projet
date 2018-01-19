@@ -16,8 +16,6 @@ import javax.swing.ImageIcon;
 
 public class VueOrdinateur extends JPanel {
 	
-	private GraphicUtils utils = new GraphicUtils();
-	
 	private Joueur ordinateur;
 	private PartieController controller;
 	

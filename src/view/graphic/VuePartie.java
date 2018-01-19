@@ -34,7 +34,7 @@ public class VuePartie implements Observer, Runnable {
 	@Override
 	public void run() {
 		initialize();
-		this.frame.setVisible(true);
+		frame.setVisible(true);
 	}
 
 	/**
