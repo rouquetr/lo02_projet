@@ -19,8 +19,16 @@ import model.joueurs.Partie;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * Représente la vue d'initialisation de la partie
+ * @author Rouquet Raphael - Mannan Ismail
+ *
+ */
 public class VueInitialisation extends JPanel {
 	
+	/**
+	 * Les différents composants graphiques
+	 */
 	private JLabel labelNom;
 	private JLabel labelNombreJoueur;
 	private JLabel labelVariantes;
@@ -33,7 +41,8 @@ public class VueInitialisation extends JPanel {
 	private JLabel titre;
 
 	/**
-	 * Create the panel.
+	 * Création du panel
+	 * @param controller le controlleur de la partie
 	 */
 	public VueInitialisation(PartieController controller) {
 		setBackground(new Color(0, 102, 0));
@@ -57,6 +66,7 @@ public class VueInitialisation extends JPanel {
 		labelNombreJoueur.setBounds(19, 212, 191, 16);
 		add(labelNombreJoueur);
 
+		// Spinner pour le nomre de joueur voulu, allant du nombre minimum de joueurs au nombre maximum
 		SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(Partie.MINJOUEUR, Partie.MINJOUEUR, Partie.MAXJOUEUR, 1);
 		spinnerNombreJoueur = new JSpinner(spinnerNumberModel);
 		spinnerNombreJoueur.setForeground(new Color(255, 255, 255));
@@ -71,7 +81,7 @@ public class VueInitialisation extends JPanel {
 		
 		buttonCommencerPartie = new JButton("Commencer la partie !");
 		buttonCommencerPartie.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {		// bouton pour commencer la partie avec la variante choisie, le nombre de joueurs et le nom du joueur Humain
 				controller.initialiserPartie((int)spinnerNombreJoueur.getValue(), fieldNom.getText());
 				controller.lancerPartie(listVariantes.getSelectedIndex() + 1);
 			}
@@ -83,7 +93,7 @@ public class VueInitialisation extends JPanel {
 		scrollPane.setBounds(314, 260, 194, 57);
 		add(scrollPane);
 		
-		listVariantes = new JList<String>(new AbstractListModel<String>() {
+		listVariantes = new JList<String>(new AbstractListModel<String>() {		// liste de chaîne de caractères pour les différentes variantes
 			String[] values = new String[] {"Jeu de base", "Variante de Monclar"};
 			public int getSize() {
 				return values.length;

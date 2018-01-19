@@ -22,14 +22,37 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
+/**
+ * Vue du joueur humain
+ * implémente l'interface observer
+ * hérite de JPanel
+ * @author Rouquet Raphael - Mannan Ismail
+ */
 public class VueJoueur extends JPanel implements Observer {
 	
+	/**
+	 * Les utilitaires graphiques
+	 */
 	private GraphicUtils utils = new GraphicUtils();
 	
+	/**
+	 * Le controller de la partie
+	 */
 	private PartieController controller;
+	
+	/**
+	 * l'instance de la partie
+	 */
 	private Partie partie = Partie.getInstance();
+	
+	/**
+	 * Le joueur humain, toujours en position 0
+	 */
 	private Joueur joueurHumain = partie.getJoueurs().get(0);
 	
+	/**
+	 * les différents éléments graphiques
+	 */
 	private JScrollPane scrollPane;
 	private JList<ImageIcon> listCartes;
 	private JButton jouerCarte;
@@ -39,16 +62,21 @@ public class VueJoueur extends JPanel implements Observer {
 	private JButton btnAnnoncerCarte;
 
 	/**
-	 * Create the panel.
+	 * Creation du panel
+	 * @param controller le controlleur de la partie
 	 */
 	public VueJoueur(PartieController controller) {
-		partie.addObserver(this);
+		partie.addObserver(this);	// on observe le joueur humain
 		setBackground(new Color(0, 102, 0));
 		this.controller = controller;
-		initialize();
-		refresh();
+		initialize();		// on initialise
+		refresh();			// et raffraichit aussitôt
 	}
 	
+	/**
+	 * Méthode privée
+	 * Initialisation de la vue
+	 */
 	private void initialize() {
 		setLayout(null);
 		setSize(768, 160);
@@ -56,14 +84,14 @@ public class VueJoueur extends JPanel implements Observer {
 		scrollPane =  new JScrollPane();
 		scrollPane.setBounds(23, 34, 456, 109);
 		add(scrollPane);
-		listCartes = new JList<ImageIcon>();
+		listCartes = new JList<ImageIcon>();		// on créée une nouvelle liste d'images
 		listCartes.setLayoutOrientation(JList.VERTICAL_WRAP);
 		listCartes.setVisibleRowCount(-1);
 		scrollPane.setViewportView(listCartes);
 		
 		jouerCarte = new JButton("Jouer cette carte");
 		jouerCarte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {		// bouton pour jouer la carte sélectionnée dans la liste
 				controller.boutonJouer(joueurHumain,listCartes.getSelectedIndex() + 1);
 			}
 		});
@@ -72,7 +100,7 @@ public class VueJoueur extends JPanel implements Observer {
 		
 		piocher = new JButton("Piocher");
 		piocher.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {		// bouton pour piocher une carte
 				controller.boutonPiocher(joueurHumain);
 			}
 		});
@@ -93,7 +121,7 @@ public class VueJoueur extends JPanel implements Observer {
 		
 		btnAnnoncerCarte = new JButton("Annoncer");
 		btnAnnoncerCarte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {		//bouton pour annoncer une carte
 				controller.boutonAnnoncer(joueurHumain);
 			}
 		});
@@ -101,11 +129,15 @@ public class VueJoueur extends JPanel implements Observer {
 		add(btnAnnoncerCarte);
 	}
 	
+	/**
+	 * Méthode privée
+	 * Permet de mettre à jour la liste des cartes du joueur
+	 */
 	private void updateMain() {
-		DefaultListModel<ImageIcon> model = new DefaultListModel<ImageIcon>();
+		DefaultListModel<ImageIcon> model = new DefaultListModel<ImageIcon>(); // on créée un modèle de liste d'images
 		Main main = joueurHumain.getMain();
 		Iterator<Carte> iterator = main.iterator();
-		while (iterator.hasNext()) {
+		while (iterator.hasNext()) {		// on parcourt la main du joueur pour ajouter chacune de ses cartes à la liste
 			Carte carte = iterator.next();
 			model.addElement(utils.getResizedIcon(utils.getPath(carte.getValeur(), carte.getCouleur()), 60, 90));
 		}
@@ -113,21 +145,29 @@ public class VueJoueur extends JPanel implements Observer {
 		nbCartes.setText(main.size() + " cartes");
 	}
 	
+	/**
+	 * Permet de raffraichir la vue du joueur
+	 */
 	public void refresh() {
-		updateMain();
-		if(partie.getJoueurEnCours().getNom() == joueurHumain.getNom()) {
+		updateMain();		// met à jouer la main
+		if(partie.getJoueurEnCours().getNom() == joueurHumain.getNom()) { // active les actions du joueur si c'est son tour
 			piocher.setEnabled(true);
 			jouerCarte.setEnabled(true);
-		} else {
+		} else {															// les bloque sinon
 			piocher.setEnabled(false);
 			jouerCarte.setEnabled(false);
 		}
 	}
 
+	/**
+	 * Indique les actions des objets observables
+	 * @param	observable
+	 * @param	arg1
+	 */
 	@Override
 	public void update(Observable observable, Object arg1) {
 		if (observable instanceof Partie) {
-			switch ((String) arg1) {
+			switch ((String) arg1) {		// a chaque changement de joueur en cours, raffraichit la vue
 			case "setJoueurEnCours":
 				refresh();
 				break;

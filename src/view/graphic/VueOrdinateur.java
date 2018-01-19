@@ -14,18 +14,33 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
+/**
+ * Vue d'un ordinateur
+ * hérite de JPanel
+ * @author Rouquet Raphael - Mannan Ismail
+ */
 public class VueOrdinateur extends JPanel {
 	
+	/**
+	 * L'ordinateur lié à la vue
+	 */
 	private Joueur ordinateur;
+	
+	/**
+	 * Le controleur de la partie
+	 */
 	private PartieController controller;
 	
+	/**
+	 * Les composants graphiques
+	 */
 	private JLabel nom;
 	private JLabel nbCartes;
 	private JButton contrer;
 	private JLabel main;
 
 	/**
-	 * Create the panel.
+	 * Creation du panel
 	 */
 	public VueOrdinateur(PartieController controller, Joueur ordinateur) {
 		setBackground(new Color(0, 102, 0));
@@ -35,7 +50,11 @@ public class VueOrdinateur extends JPanel {
 		refresh();
 	}
 	
-	public void initialize() {
+	/**
+	 * Méthode privée
+	 * Initialisation
+	 */
+	private void initialize() {
 		setLayout(null);
 		
 		nom = new JLabel(ordinateur.getNom());
@@ -51,7 +70,7 @@ public class VueOrdinateur extends JPanel {
 		add(nbCartes);
 		
 		contrer = new JButton("Contrer");
-		contrer.addActionListener(new ActionListener() {
+		contrer.addActionListener(new ActionListener() {		// permet de contrer cet ordinateur
 			public void actionPerformed(ActionEvent e) {
 				controller.boutonContrer((Ordinateur)ordinateur);
 				refresh();
@@ -65,6 +84,10 @@ public class VueOrdinateur extends JPanel {
 		add(main);
 	}
 	
+	/**
+	 * Méthode privée
+	 * Permet de raffraichir le nombre de cartes
+	 */
 	public void refresh() {
 		nbCartes.setText(ordinateur.getMain().size() + " cartes");
 	}
