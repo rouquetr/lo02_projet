@@ -11,7 +11,7 @@ import model.joueurs.Joueur;
 import model.joueurs.Partie;
 
 /**
- * Représente les commandes dans la console pour communiquer avec le joueur
+ * Représente les différents utilitaires nécessaires pour la vue de la ligne de commande
  * @author Rouquet Raphael - Mannan Ismail
  *
  */
@@ -19,7 +19,9 @@ import model.joueurs.Partie;
 public class LigneDeCommandeUtils {
 	
 	/**
-	 * Affichage d'un message pour demander une chaine de caractère à l'utilisateur (nom du joueur, ..)
+	 * Affichage d'un message pour demander une chaine de caractère à l'utilisateur (nom du joueur, ..) et demande de saisie
+	 * @param Le message à afficher
+	 * @return la saisie de l'utilisateur
 	 */
 	public String demanderString(String message) {
 		System.out.println(message);
@@ -34,17 +36,20 @@ public class LigneDeCommandeUtils {
 	}
 	
 	/**
-	 * Affichage d'un message pour demander un entier à l'utilisateur (nombre de joueurs, carte à jouer)
+	 * Affichage d'un message pour demander un entier à l'utilisateur (nombre de joueurs, carte à jouer) et demande de saisie de l'entier entre deux bornes
+	 * @param min la valeur minimale de l'entier
+	 * @param max la valeur maximale de l'entier
+	 * @return l'entier saisi
 	 */
 	public int demanderInt(String message, int min, int max) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int saisie = -1;
-		while (saisie < min || saisie > max) {
+		int saisie = -1;		// on initialise la saisie à -1 qui est une valeur qui ne sera jamais valide
+		while (saisie < min || saisie > max) {		// tant que la saisie n'est pas dans les bornes, on redemande une valeur valide
 			System.out.println(message);
 			try {
-				saisie = Integer.parseInt(br.readLine());
+				saisie = Integer.parseInt(br.readLine());		// on parse la saisie pour vérifier que c'est bien un entier
 				if (saisie < min || saisie > max) System.out.println("Veuillez entrer une valeur valide");
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {		// si la saisie n'est pas un entier, on en redemande une
 				System.out.println("Veuillez entrer une valeur valide");
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
@@ -54,10 +59,10 @@ public class LigneDeCommandeUtils {
 	}
 	
 	/**
-	 * permet de lister les cartes
+	 * permet de lister les cartes avec leur numéro
 	 * @param	cartes			liste de cartes 
-	 * @param	numeroDepart	affiche le numero de la carte dans la liste
-	 * @return message
+	 * @param	numeroDepart		numéro de départ de la liste
+	 * @return la liste des cartes avec le numéro qui leur est lié
 	 */
 	public String listerCartes(LinkedList<Carte> cartes, int numeroDepart) {
 		Iterator<Carte> iterator = cartes.iterator();
@@ -67,10 +72,10 @@ public class LigneDeCommandeUtils {
 	}
 	
 	/**
-	 * permet de lister les joueurs artificiels
-	 * @param	numeroDepart	numéro de l'ordinateur dans la liste
-	 * @param	subMessage		
-	 * @return message
+	 * permet de lister les ordinateurs
+	 * @param	numeroDepart		numéro de l'ordinateur dans la liste des joueurs
+	 * @param	subMessage		message annexe
+	 * @return 	message			la liste des ordinateurs
 	 */
 	public String listerJoueursOrdinateurs(int numeroDepart, String subMessage) {
 		Iterator<Joueur> iteratorJoueurs = Partie.getInstance().getJoueurs().iterator();
@@ -84,7 +89,7 @@ public class LigneDeCommandeUtils {
 	
 	/**
 	 * permet de lister les variantes du jeu
-	 * @return message
+	 * @return message	la liste des variantes
 	 */
 	public String listerVariantes() {
 		String message = "1: Jeu de base\n";
